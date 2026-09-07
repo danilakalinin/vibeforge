@@ -1,128 +1,128 @@
 # VibeForge
 
-> A local JavaScript / TypeScript / PHP scratchpad with a built-in AI assistant — no browser, no cloud, runs entirely on your machine.
+> Локальный блокнот для JavaScript / TypeScript / PHP со встроенным AI-ассистентом — без браузера, без облака, всё выполняется на вашей машине.
 
-**[danilakalinin.github.io/vibeforge](https://danilakalinin.github.io/vibeforge/)** · [Releases](https://github.com/danilakalinin/vibeforge/releases) · [Русская версия](README.ru.md)
-
----
-
-## What it is
-
-VibeForge is a desktop scratchpad for the kind of code you write to answer a question, not to ship: *does this regex actually match?*, *what does this API return?*, *how do I reshape this array?*
-
-You get a real editor (Monaco — the one inside VS Code), a Run button, and streaming output. Nothing is uploaded anywhere: your code runs through the Node.js and PHP already installed on your machine, and snippets live in a local SQLite file.
-
-It is built with Tauri v2, so the whole thing is a small native app rather than a bundled browser.
-
-## Who it's for
-
-- **You keep a "scratch.js" file around** and run it with `node scratch.js` in a terminal loop. This replaces that loop with one window.
-- **You write PHP or Laravel** and want a `tinker`-like pad with autocomplete for your project's own classes — link a project folder and VibeForge reads its `composer.json` and class map.
-- **You want an AI assistant that already sees your code.** No copy-pasting into a chat tab: the assistant gets your editor contents and your project's installed packages automatically.
-- **You dislike leaving code in web tools.** Everything is local; API keys, if you add any, stay in `~/.vibeforge/settings.json`.
-
-If you need a debugger, a file tree, or a build pipeline, use a real IDE — that is deliberately not what this is.
+**[danilakalinin.github.io/vibeforge](https://danilakalinin.github.io/vibeforge/)** · [Релизы](https://github.com/danilakalinin/vibeforge/releases) · [English version](README.en.md)
 
 ---
 
-## Fork notice
+## Что это
 
-VibeForge is a fork of **[VibeLab](https://github.com/CybertronianKelvin/vibelab)** by Cybertronian, MIT-licensed. All credit for the original application — the executor, the AI chat panel, the npm manager, the project linking and the snippet library — belongs there.
+VibeForge — десктопный блокнот для кода, который пишут не чтобы выкатить, а чтобы получить ответ: *сработает ли этот код?*, *что вернёт этот API?*, *как перебрать этот массив?*
 
-This fork continues from VibeLab 0.2.0 and reworks the interface, adds a theming system, adds a provider, and adds localisation. What follows is the complete list.
+Внутри настоящий редактор (Monaco - тот самый, что в VS Code), кнопка запуска и потоковый вывод. Никуда ничего не отправляется: код выполняется через Node.js и PHP, уже установленные у вас, а сниппеты лежат в локальном файле SQLite.
 
-## What this fork adds
+Приложение собрано на Tauri v2, поэтому это компактная нативная программа, а не упакованный браузер.
 
-### Glass themes with real macOS vibrancy
+## Кому пригодится
 
-The window is genuinely transparent, and macOS blurs your desktop behind it through an `NSVisualEffectView` — this is the system material, not a CSS blur imitating one. **Glass Dark** is the new default; **Glass Light** is there for bright rooms. Picking any solid theme clears the vibrancy automatically.
+- **Вы держите под рукой файл «scratch.js»** и гоняете его через `node scratch.js` в терминале. Этот цикл заменяется одним окном.
+- **Вы пишете на PHP или Laravel** и хотите блокнот в духе `tinker` с автодополнением по собственным классам проекта — привяжите папку, и VibeForge прочитает `composer.json` и карту классов.
+- **Вам нужен AI-ассистент, который уже видит ваш код.** Не надо копировать код во вкладку с чатом: ассистент сам получает содержимое редактора и список установленных пакетов проекта.
+- **Вам не нравится оставлять код в веб-сервисах.** Всё локально; API-ключи, если вы их добавите, остаются в `~/.vibeforge/settings.json`.
 
-Getting this right meant two non-obvious constraints, both documented in `src/index.css`:
-
-- **Exactly one translucent layer.** Tinting both `<body>` and each panel composites to roughly 60% opacity and the frost turns to mud. The window chrome is now fully transparent and each panel contributes a single tint.
-- **No `backdrop-filter` on a full-window surface.** Inside a transparent window there is no web content behind the page for WebKit to sample, so it composites the region opaquely — which *kills* the vibrancy instead of blurring it. `backdrop-filter` is reserved for dialogs and popovers, which do have app content behind them.
-
-This requires Tauri's `macos-private-api` feature, so a build of this fork cannot be submitted to the Mac App Store. Since the app is distributed as an unsigned `.dmg` anyway, that costs nothing in practice.
-
-### Eleven more editor themes
-
-Dracula, Nord, Night Owl, Monokai, Tomorrow Night, GitHub Dark, GitHub Light, Solarized Dark, Solarized Light, Oceanic Next and Cobalt2.
-
-Upstream had a dark/light toggle that only recoloured the code pane — most of the interface was hardcoded dark regardless. Here the whole palette (`surface-*`, `brand-*`, and the text ramp) runs through CSS custom properties, so a theme repaints the editor, toolbar, sidebar, output panel and dialogs together. Theme definitions are vendored under `src/themes/`; adding one is a JSON file plus two short entries.
-
-### Themes and language apply the moment you pick them
-
-No Save, no restart. Selecting a theme repaints the interface, swaps the native window material and re-themes Monaco in one go; Cancel rolls the preview back to what you had.
-
-### DeepSeek as a first-class AI provider
-
-Previously the only way to use a DeepSeek key was to route it through OpenRouter — extra hop, extra markup — or to paste it into the OpenAI slot, where it simply failed against `api.openai.com`. DeepSeek now talks to its own OpenAI-compatible endpoint directly.
-
-Selecting any provider also fills in a sensible default model, so a fresh setup no longer looks configured while silently missing the model field.
-
-### English and Russian interface
-
-Switchable in **Settings → Appearance**, applied instantly. Translations are a small hand-rolled catalogue with no runtime dependency; English defines the key set, so a missing translation falls back to English at the type level rather than crashing. Russian plural rules are handled properly (*1 строка* / *5 строк*).
-
-The macOS menu bar is still English — it is built before settings load.
-
-### Redesigned interface
-
-Rebuilt around a small component layer modelled on GitHub's Primer: 1px borders instead of drop shadows, 6px radii, medium rather than bold label weight, and one consistent focus ring. Buttons now have an actual hierarchy — primary, default, invisible, danger — rather than each call site inventing its own Tailwind string.
-
-Concretely: the toolbar is tighter and Run is the primary action; the code-language switcher is a proper segmented control instead of three accent-filled buttons; Settings is grouped into Appearance / Execution / Runtimes / AI assistant; dialogs share a single frame; the resize handle is a 1px seam with a wide grab area.
-
-The accent colour changed from amber to blue, and the app has a new icon.
-
-### Renamed, with a separate identity
-
-VibeLab → VibeForge throughout: bundle identifier `dev.vibeforge.app`, data directory `~/.vibeforge`. An existing VibeLab install is a **separate application** — its snippets and settings are not migrated, and it is not replaced. Uninstall it separately if you no longer want it.
-
-### Fixes
-
-- OpenRouter-only attribution headers (`HTTP-Referer`, `X-Title`) were being sent to every OpenAI-compatible provider. Now scoped to OpenRouter.
-- Changing the theme only reached Monaco on the next launch.
-- `cargo test` did not compile: a snippet test helper was never updated when project memory added two fields in 0.2.0.
+Если нужен отладчик, дерево файлов или сборка — берите полноценную IDE, этим VibeForge сознательно не занимается.
 
 ---
 
-## Features
+## О форке
 
-- **Monaco editor** — the editor from VS Code, with highlighting for JavaScript, TypeScript, PHP and more
-- **Live execution** — run JS/TS directly, with stdout/stderr streaming into the output panel
-- **AI chat panel** — Claude, OpenAI, Groq, DeepSeek and OpenRouter; the assistant sees your editor contents and your project's installed packages
-- **npm package manager** — search, install and remove packages without leaving the app
-- **Project linking** — point at a local folder and the assistant reads its `package.json` or `composer.json`; Laravel projects also get facade, helper and project-class completion
-- **Themeable** — 13 themes, including two that use the native macOS window material
-- **Bilingual** — English and Russian
-- **Find in output** — Cmd/Ctrl+F search in the console panel, with per-run folding
-- **Snippet library** — a local SQLite store, plus run history that remembers which project it belonged to
+VibeForge — форк проекта **[VibeLab](https://github.com/CybertronianKelvin/vibelab)** авторства Cybertronian, лицензия MIT. Вся заслуга за исходное приложение — исполнитель кода, панель AI-чата, менеджер npm, привязка проектов и библиотека сниппетов — принадлежит оригиналу.
+
+Форк продолжает VibeLab 0.2.0: переработан интерфейс, добавлена система тем, новый AI-провайдер и локализация. Ниже — полный список изменений.
+
+## Что добавлено в форке
+
+### Стеклянные темы с настоящей вибрантностью macOS
+
+Окно по-настоящему прозрачное, и macOS размывает за ним рабочий стол через `NSVisualEffectView` — это системный материал, а не CSS-блюр, который его имитирует. **Glass Dark** — новая тема по умолчанию, **Glass Light** — для светлых помещений. Выбор любой непрозрачной темы гасит вибрантность автоматически.
+
+Чтобы это заработало, пришлось соблюсти два неочевидных условия — оба описаны в `src/index.css`:
+
+- **Ровно один полупрозрачный слой.** Если тонировать и `<body>`, и каждую панель, при наложении выходит примерно 60% непрозрачности, и стекло превращается в кашу. Теперь хром окна полностью прозрачен, а тонирует ровно одна панель.
+- **Никакого `backdrop-filter` на полноэкранной поверхности.** Внутри прозрачного окна под страницей нет веб-контента, который WebKit мог бы взять для размытия, поэтому он композитит эту область непрозрачно — то есть *убивает* вибрантность вместо того чтобы её размыть. `backdrop-filter` оставлен только для диалогов и всплывающих панелей, под которыми действительно есть контент приложения.
+
+Для этого нужна фича Tauri `macos-private-api`, поэтому сборку форка нельзя опубликовать в Mac App Store. Приложение и так раздаётся неподписанным `.dmg`, так что на практике это ничего не стоит.
+
+### Ещё одиннадцать тем редактора
+
+Dracula, Nord, Night Owl, Monokai, Tomorrow Night, GitHub Dark, GitHub Light, Solarized Dark, Solarized Light, Oceanic Next и Cobalt2.
+
+В оригинале был переключатель dark/light, который перекрашивал только панель с кодом — почти весь остальной интерфейс оставался жёстко тёмным. Здесь вся палитра (`surface-*`, `brand-*` и шкала текста) идёт через CSS-переменные, поэтому тема разом перекрашивает редактор, тулбар, сайдбар, панель вывода и диалоги. Определения тем лежат в `src/themes/`; добавить новую — это JSON-файл и две короткие записи.
+
+### Тема и язык применяются сразу при выборе
+
+Без «Сохранить» и без перезапуска. Выбор темы разом перекрашивает интерфейс, меняет нативный материал окна и переключает Monaco; «Отмена» откатывает превью к тому, что было.
+
+### DeepSeek как полноценный AI-провайдер
+
+Раньше ключ DeepSeek можно было использовать только через OpenRouter — лишний посредник и наценка — либо вставить его в поле OpenAI, где он просто не работал против `api.openai.com`. Теперь DeepSeek обращается напрямую к собственному OpenAI-совместимому эндпоинту.
+
+При выборе любого провайдера теперь подставляется разумная модель по умолчанию — свежая настройка больше не выглядит готовой, молча оставаясь без заполненной модели.
+
+### Интерфейс на английском и русском
+
+Переключается в **Настройки → Внешний вид**, применяется мгновенно. Переводы — небольшой самописный словарь без внешних зависимостей; английский задаёт набор ключей, поэтому отсутствующий перевод типобезопасно откатывается к английскому, а не роняет интерфейс. Русские формы множественного числа обрабатываются корректно (*1 строка* / *5 строк*).
+
+Меню в строке меню macOS пока на английском — оно строится до загрузки настроек.
+
+### Переработанный интерфейс
+
+Пересобран вокруг небольшого слоя компонентов по образцу GitHub Primer: границы в 1px вместо теней, скругление 6px, средняя (а не жирная) насыщенность подписей и единое кольцо фокуса. У кнопок появилась настоящая иерархия — primary, default, invisible, danger — вместо того чтобы каждое место вызова сочиняло свою строку Tailwind.
+
+Конкретно: тулбар стал плотнее, «Запуск» — основное действие; переключатель языка кода стал полноценным сегментированным контролом вместо трёх кнопок, залитых акцентом; настройки разбиты на блоки «Внешний вид» / «Выполнение» / «Среды выполнения» / «AI-ассистент»; диалоги получили общую рамку; разделитель панелей стал швом в 1px с широкой зоной захвата.
+
+Акцентный цвет сменился с янтарного на голубой, у приложения новая иконка.
+
+### Переименование и отдельная идентичность
+
+VibeLab → VibeForge по всему проекту: идентификатор `dev.vibeforge.app`, папка данных `~/.vibeforge`. Установленный VibeLab — это **отдельное приложение**: его сниппеты и настройки не переносятся, и он не заменяется. Если он больше не нужен, удалите его отдельно.
+
+### Исправления
+
+- Заголовки атрибуции OpenRouter (`HTTP-Referer`, `X-Title`) отправлялись всем OpenAI-совместимым провайдерам. Теперь только OpenRouter.
+- Смена темы доходила до Monaco только при следующем запуске.
+- `cargo test` не собирался: тестовый хелпер сниппетов не обновили, когда в 0.2.0 добавили два поля для памяти проектов.
 
 ---
 
-## Install
+## Возможности
 
-**macOS only for now.** Windows and Linux installers will be added when available.
+- **Редактор Monaco** — тот же, что в VS Code, с подсветкой JavaScript, TypeScript, PHP и других языков
+- **Живое выполнение** — запуск JS/TS напрямую, stdout/stderr стримятся в панель вывода
+- **Панель AI-чата** — Claude, OpenAI, Groq, DeepSeek и OpenRouter; ассистент видит содержимое редактора и установленные пакеты проекта
+- **Менеджер npm-пакетов** — поиск, установка и удаление, не выходя из приложения
+- **Привязка проекта** — укажите локальную папку, и ассистент прочитает `package.json` или `composer.json`; для Laravel добавляется автодополнение фасадов, хелперов и классов проекта
+- **Темы** — 13 штук, включая две на нативном материале окна macOS
+- **Два языка интерфейса** — английский и русский
+- **Поиск по выводу** — Cmd/Ctrl+F в панели консоли, со сворачиванием по запускам
+- **Библиотека сниппетов** — локальная база SQLite и история запусков, помнящая привязанный проект
 
-1. Download the `.dmg` for your chip from the [Releases page](https://github.com/danilakalinin/vibeforge/releases/latest) — `arm64` for Apple Silicon, `x64` for Intel
-2. Open it and drag **VibeForge** to `/Applications`
-3. The app is unsigned, so Gatekeeper blocks it on first launch. Run this once:
+---
+
+## Установка
+
+**Пока только macOS.** Установщики для Windows и Linux появятся позже.
+
+1. Скачайте `.dmg` под свой процессор со [страницы релизов](https://github.com/danilakalinin/vibeforge/releases/latest) — `arm64` для Apple Silicon, `x64` для Intel
+2. Откройте и перетащите **VibeForge** в `/Applications`
+3. Приложение неподписанное, поэтому Gatekeeper заблокирует первый запуск. Выполните один раз:
 
 ```bash
 xattr -cr /Applications/VibeForge.app
 ```
 
-Then open it normally.
+После этого открывайте как обычно.
 
-## Uninstall
+## Удаление
 
-**Help → Uninstall VibeForge…** from the menu bar. Confirm, and the app closes and removes all of its data — snippets database, settings, npm workspace and caches. No Terminal required.
+**Help → Uninstall VibeForge…** в строке меню. Подтвердите — приложение закроется и удалит все свои данные: базу сниппетов, настройки, npm-воркспейс и кэши. Терминал не понадобится.
 
 ---
 
-## Development
+## Разработка
 
-Requirements: [Rust](https://rustup.rs), [Node.js 18+](https://nodejs.org), and the [Tauri v2 prerequisites](https://tauri.app/start/prerequisites/).
+Требуется: [Rust](https://rustup.rs), [Node.js 18+](https://nodejs.org) и [предварительные требования Tauri v2](https://tauri.app/start/prerequisites/).
 
 ```bash
 git clone git@github.com:danilakalinin/vibeforge.git
@@ -131,32 +131,32 @@ npm install
 npm run tauri dev
 ```
 
-Run the tests:
+Запуск тестов:
 
 ```bash
 npm test && (cd src-tauri && cargo test)
 ```
 
-Build a release locally:
+Локальная сборка релиза:
 
 ```bash
 npm run tauri build
-# Output: src-tauri/target/release/bundle/
+# Результат: src-tauri/target/release/bundle/
 ```
 
-### Adding a theme
+### Как добавить тему
 
-1. Drop a [monaco-themes](https://github.com/brijeshb42/monaco-themes)-format JSON into `src/themes/`
-2. Add a row to `THEMES` in `src/lib/themes.ts`
-3. Add a `:root[data-theme="your-id"]` block to `src/index.css` with the palette
+1. Положите JSON в формате [monaco-themes](https://github.com/brijeshb42/monaco-themes) в `src/themes/`
+2. Добавьте запись в `THEMES` в `src/lib/themes.ts`
+3. Добавьте блок `:root[data-theme="ваш-id"]` с палитрой в `src/index.css`
 
-### Adding a language
+### Как добавить язык
 
-1. Add an entry to `LOCALES` in `src/lib/i18n.ts`
-2. Add a catalogue to `CATALOGUES` — it is a `Partial` of the English keys, so you can translate incrementally
+1. Добавьте запись в `LOCALES` в `src/lib/i18n.ts`
+2. Добавьте словарь в `CATALOGUES` — это `Partial` от английских ключей, так что переводить можно постепенно
 
 ---
 
-## Licence
+## Лицензия
 
-MIT — see [LICENSE](LICENSE). Original work © 2026 Cybertronian; fork changes © 2026 Danila Kalinin.
+MIT — см. [LICENSE](LICENSE). Исходная работа © 2026 Cybertronian; изменения форка © 2026 Данила Калинин.
