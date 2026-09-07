@@ -4,8 +4,6 @@
 
 **[danilakalinin.github.io/vibeforge](https://danilakalinin.github.io/vibeforge/)** · [Releases](https://github.com/danilakalinin/vibeforge/releases) · [Русская версия](README.ru.md)
 
-![VibeForge screenshot](docs/screenshot.png)
-
 ---
 
 ## What it is
