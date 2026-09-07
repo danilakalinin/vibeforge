@@ -167,4 +167,4 @@ npm run tauri build
 
 ## Лицензия
 
-MIT — см. [LICENSE](LICENSE). Исходная работа © 2026 Cybertronian; изменения форка © 2026 Данила Калинин.
+MIT — см. [LICENSE](LICENSE). Исходная работа © 2026 Cybertronian; изменения форка © 2026 Danila Kalinin.
