@@ -1,6 +1,6 @@
 # VibeForge
 
-> Локальный блокнот для JavaScript / TypeScript / PHP со встроенным AI-ассистентом — без браузера, без облака, всё выполняется на вашей машине.
+> Бесплатная open-source альтернатива платным блокнотам для кода вроде RunJS: JavaScript / TypeScript / PHP со встроенным AI-ассистентом — без браузера, без облака, всё выполняется на вашей машине.
 
 **[danilakalinin.github.io/vibeforge](https://danilakalinin.github.io/vibeforge/)** · [Релизы](https://github.com/danilakalinin/vibeforge/releases) · [English version](README.en.md)
 

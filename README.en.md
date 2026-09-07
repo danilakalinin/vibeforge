@@ -1,6 +1,6 @@
 # VibeForge
 
-> A local JavaScript / TypeScript / PHP scratchpad with a built-in AI assistant — no browser, no cloud, runs entirely on your machine.
+> A free, open-source alternative to paid code scratchpads such as RunJS: JavaScript / TypeScript / PHP with a built-in AI assistant — no browser, no cloud, entirely on your machine.
 
 **[danilakalinin.github.io/vibeforge](https://danilakalinin.github.io/vibeforge/)** · [Releases](https://github.com/danilakalinin/vibeforge/releases) · [Русская версия](README.md)
 
