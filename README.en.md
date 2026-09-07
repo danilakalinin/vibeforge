@@ -4,6 +4,8 @@
 
 **[danilakalinin.github.io/vibeforge](https://danilakalinin.github.io/vibeforge/)** · [Releases](https://github.com/danilakalinin/vibeforge/releases) · [Русская версия](README.md)
 
+![The VibeForge window: editor on the left, colourised output on the right](docs/shots/editor.png)
+
 ---
 
 ## What it is
@@ -42,9 +44,13 @@ Getting this right meant two non-obvious constraints, both documented in `src/in
 - **Exactly one translucent layer.** Tinting both `<body>` and each panel composites to roughly 60% opacity and the frost turns to mud. The window chrome is now fully transparent and each panel contributes a single tint.
 - **No `backdrop-filter` on a full-window surface.** Inside a transparent window there is no web content behind the page for WebKit to sample, so it composites the region opaquely — which *kills* the vibrancy instead of blurring it. `backdrop-filter` is reserved for dialogs and popovers, which do have app content behind them.
 
+![The save-snippet dialog over a blurred interface](docs/shots/snippet.png)
+
 This requires Tauri's `macos-private-api` feature, so a build of this fork cannot be submitted to the Mac App Store. Since the app is distributed as an unsigned `.dmg` anyway, that costs nothing in practice.
 
 ### Eleven more editor themes
+
+![Picking a theme in settings](docs/shots/themes.png)
 
 Dracula, Nord, Night Owl, Monokai, Tomorrow Night, GitHub Dark, GitHub Light, Solarized Dark, Solarized Light, Oceanic Next and Cobalt2.
 
@@ -55,6 +61,8 @@ Upstream had a dark/light toggle that only recoloured the code pane — most of 
 No Save, no restart. Selecting a theme repaints the interface, swaps the native window material and re-themes Monaco in one go; Cancel rolls the preview back to what you had.
 
 ### DeepSeek as a first-class AI provider
+
+![Picking an AI provider in settings](docs/shots/ai-providers.png)
 
 Previously the only way to use a DeepSeek key was to route it through OpenRouter — extra hop, extra markup — or to paste it into the OpenAI slot, where it simply failed against `api.openai.com`. DeepSeek now talks to its own OpenAI-compatible endpoint directly.
 

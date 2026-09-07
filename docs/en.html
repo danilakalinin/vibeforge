@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" type="image/png" href="favicon.png" />
-<title>VibeForge — локальный блокнот для кода с AI</title>
-<meta name="description" content="Локальный блокнот для JavaScript, TypeScript и PHP со встроенным AI-ассистентом. Без браузера, без облака." />
+<title>VibeForge — a local code scratchpad with AI</title>
+<meta name="description" content="A local scratchpad for JavaScript, TypeScript and PHP with a built-in AI assistant. No browser, no cloud." />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* Палитра темы Glass Light из самого приложения */
+  /* The app's own Glass Light palette */
   :root {
     --bg:       #f8f9fc;
     --panel:    #ffffff;
@@ -38,7 +38,7 @@
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
 
-  /* ── Шапка: матовое стекло, как панели в приложении ── */
+  /* Header: frosted glass, like the panels in the app */
   nav {
     position: sticky; top: 0; z-index: 10;
     height: 52px;
@@ -54,7 +54,7 @@
   .nav-links a { color: var(--muted); font-size: 13px; }
   .nav-links a:hover { color: var(--text); text-decoration: none; }
 
-  /* ── Кнопки: тот же UI-kit, что в программе ── */
+  /* Buttons: the same UI kit as the app */
   .btn {
     display: inline-flex; align-items: center; gap: 7px;
     height: 34px; padding: 0 16px;
@@ -68,7 +68,7 @@
   .btn-default { background: var(--panel); border-color: var(--border); color: var(--text); }
   .btn-default:hover { background: var(--subtle); }
 
-  /* ── Первый экран ── */
+  /* Hero */
   header.hero { padding: 72px 0 40px; text-align: center; }
   .tag {
     display: inline-block; margin-bottom: 18px;
@@ -81,7 +81,7 @@
   .cta { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
   .note { margin-top: 14px; font-size: 12.5px; color: var(--faint); }
 
-  /* ── Скриншоты ── */
+  /* Screenshots */
   figure { margin: 0; }
   .shot {
     width: 100%; display: block;
@@ -91,13 +91,13 @@
   }
   figcaption { margin-top: 10px; font-size: 13px; color: var(--faint); text-align: center; }
 
-  /* ── Секции ── */
+  /* Sections */
   section { padding: 56px 0; }
   section + section { border-top: 1px solid var(--border); }
   h2 { font-size: 20px; font-weight: 600; letter-spacing: -.3px; margin-bottom: 6px; }
   .sub { color: var(--muted); font-size: 14.5px; margin-bottom: 28px; }
 
-  /* 6 ячеек: ровно 3x2, иначе auto-fit оставляет пустые клетки */
+  /* 6 cells: exactly 3x2 — auto-fit would leave empty cells */
   .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
   @media (max-width: 860px) { .grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
@@ -108,7 +108,7 @@
   .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   @media (max-width: 760px) { .pair { grid-template-columns: 1fr; } }
 
-  /* ── Скачивание ── */
+  /* Download */
   .dl { text-align: center; }
   .dl-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 22px; }
   .soon { display: inline-flex; align-items: center; height: 34px; padding: 0 16px; border: 1px dashed var(--border); border-radius: var(--radius); color: var(--faint); font-size: 14px; }
@@ -128,10 +128,10 @@
   <div class="wrap">
     <span class="brand"><img src="favicon.png" alt="" />VibeForge</span>
     <span class="nav-links">
-      <a href="#features">Возможности</a>
-      <a href="#download">Скачать</a>
+      <a href="#features">Features</a>
+      <a href="#download">Download</a>
       <a href="https://github.com/danilakalinin/vibeforge">GitHub</a>
-      <a href="en.html">EN</a>
+      <a href="index.html">RU</a>
     </span>
   </div>
 </nav>
@@ -139,93 +139,93 @@
 <div class="wrap">
 
   <header class="hero">
-    <span class="tag">Открытый исходный код · MIT</span>
-    <h1>Блокнот для кода,<br>который отвечает сразу</h1>
-    <p class="lede">JavaScript, TypeScript и PHP со встроенным AI-ассистентом. Всё выполняется у вас на машине — без браузера и без облака.</p>
+    <span class="tag">Open source · MIT</span>
+    <h1>A scratchpad that<br>answers right away</h1>
+    <p class="lede">JavaScript, TypeScript and PHP with a built-in AI assistant. Everything runs on your own machine — no browser, no cloud.</p>
     <div class="cta">
       <a href="#download" class="btn btn-primary">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 12l-4-4h2.5V2h3v6H12L8 12zm-6 2h12v1.5H2V14z"/></svg>
-        Скачать для macOS
+        Download for macOS
       </a>
       <a href="https://github.com/danilakalinin/vibeforge" class="btn btn-default">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.49-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.69 7.69 0 018 4.07c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.19c0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-        Исходный код
+        Source code
       </a>
     </div>
-    <p class="note">Apple Silicon · ~7 МБ · бесплатно</p>
+    <p class="note">Apple Silicon · ~7 MB · free</p>
   </header>
 
   <figure>
-    <img class="shot" src="shots/editor.png" alt="Окно VibeForge: редактор слева, цветной вывод справа" />
+    <img class="shot" src="shots/editor.png" alt="The VibeForge window: editor on the left, colourised output on the right" />
   </figure>
 
   <section id="features">
-    <h2>Что внутри</h2>
-    <p class="sub">Одно окно вместо связки «редактор + терминал + вкладка с чатом».</p>
+    <h2>What you get</h2>
+    <p class="sub">One window instead of an editor, a terminal and a chat tab.</p>
     <div class="grid">
       <div class="cell">
-        <h3>Редактор Monaco</h3>
-        <p>Тот же движок, что в VS Code: подсветка, свёртка, автодополнение.</p>
+        <h3>Monaco editor</h3>
+        <p>The same engine as VS Code: highlighting, folding, completion.</p>
       </div>
       <div class="cell">
-        <h3>Запуск на лету</h3>
-        <p>Вывод стримится построчно через ваши Node.js и PHP. Опционально — автозапуск при вводе.</p>
+        <h3>Live execution</h3>
+        <p>Output streams line by line through your own Node.js and PHP. Auto-run on type is optional.</p>
       </div>
       <div class="cell">
-        <h3>AI видит ваш код</h3>
-        <p>Claude, OpenAI, Groq, DeepSeek, OpenRouter. Содержимое редактора и зависимости проекта уходят в контекст сами.</p>
+        <h3>The AI sees your code</h3>
+        <p>Claude, OpenAI, Groq, DeepSeek, OpenRouter. Your editor contents and the project's dependencies go into the context automatically.</p>
       </div>
       <div class="cell">
-        <h3>Привязка проекта</h3>
-        <p>Укажите папку — ассистент прочитает <code>package.json</code> или <code>composer.json</code>. Для Laravel добавляется автодополнение фасадов и классов.</p>
+        <h3>Project linking</h3>
+        <p>Point at a folder and the assistant reads its <code>package.json</code> or <code>composer.json</code>. Laravel projects also get facade and class completion.</p>
       </div>
       <div class="cell">
-        <h3>13 тем</h3>
-        <p>Включая две на нативном материале окна macOS. Применяются мгновенно.</p>
+        <h3>13 themes</h3>
+        <p>Two of them use the native macOS window material. They apply instantly.</p>
       </div>
       <div class="cell">
-        <h3>Сниппеты и история</h3>
-        <p>Локальная база SQLite. История запусков помнит, к какому проекту относилась.</p>
+        <h3>Snippets and history</h3>
+        <p>A local SQLite store. Run history remembers which project it belonged to.</p>
       </div>
     </div>
   </section>
 
   <section>
-    <h2>Темы и настройки</h2>
-    <p class="sub">Тема и язык интерфейса переключаются сразу — без сохранения и перезапуска.</p>
+    <h2>Themes and settings</h2>
+    <p class="sub">Theme and interface language switch instantly — no Save, no restart.</p>
     <div class="pair">
       <figure>
-        <img class="shot" src="shots/themes.png" alt="Выбор темы в настройках VibeForge" />
-        <figcaption>13 тем, две из них стеклянные</figcaption>
+        <img class="shot" src="shots/themes.png" alt="Picking a theme in VibeForge settings" />
+        <figcaption>13 themes, two of them glass</figcaption>
       </figure>
       <figure>
-        <img class="shot" src="shots/ai-providers.png" alt="Выбор AI-провайдера в настройках VibeForge" />
-        <figcaption>Пять AI-провайдеров на выбор</figcaption>
+        <img class="shot" src="shots/ai-providers.png" alt="Picking an AI provider in VibeForge settings" />
+        <figcaption>Five AI providers to choose from</figcaption>
       </figure>
     </div>
   </section>
 
   <section>
-    <h2>Стекло по-настоящему</h2>
-    <p class="sub">Темы Glass используют нативную вибрантность macOS: окно прозрачное, и система размывает за ним рабочий стол. Это системный материал, а не CSS-имитация.</p>
+    <h2>Real glass, not a filter</h2>
+    <p class="sub">The Glass themes use the native macOS vibrancy: the window is genuinely transparent and the system blurs your desktop behind it. That is the system material, not a CSS imitation.</p>
     <figure>
-      <img class="shot" src="shots/snippet.png" alt="Диалог сохранения сниппета поверх размытого интерфейса" />
+      <img class="shot" src="shots/snippet.png" alt="The save-snippet dialog over a blurred interface" />
     </figure>
   </section>
 
   <section id="download" class="dl">
-    <h2>Скачать</h2>
-    <p class="sub">Свежая версия — на <a href="https://github.com/danilakalinin/vibeforge/releases/latest">странице релизов</a>.</p>
+    <h2>Download</h2>
+    <p class="sub">The latest build lives on the <a href="https://github.com/danilakalinin/vibeforge/releases/latest">releases page</a>.</p>
     <div class="dl-row">
       <a href="https://github.com/danilakalinin/vibeforge/releases/latest" class="btn btn-primary">macOS · Apple Silicon</a>
-      <span class="soon">Intel · скоро</span>
-      <span class="soon">Windows · скоро</span>
-      <span class="soon">Linux · скоро</span>
+      <span class="soon">Intel · soon</span>
+      <span class="soon">Windows · soon</span>
+      <span class="soon">Linux · soon</span>
     </div>
     <div class="gate">
-      <strong>Первый запуск.</strong> Приложение не подписано сертификатом Apple, поэтому Gatekeeper его заблокирует. Выполните один раз:
+      <strong>First launch.</strong> The app is not signed with an Apple certificate, so Gatekeeper will block it. Run this once:
       <pre><code>xattr -cr /Applications/VibeForge.app</code></pre>
-      Дальше открывается как обычно. <strong>Удаление:</strong> Help → Uninstall VibeForge… — приложение само снесёт все свои данные.
+      After that it opens normally. <strong>Uninstalling:</strong> Help → Uninstall VibeForge… — the app removes all of its own data.
     </div>
   </section>
 
@@ -233,7 +233,7 @@
 
 <footer>
   <div class="wrap">
-    MIT · форк <a href="https://github.com/CybertronianKelvin/vibelab">VibeLab</a> · Tauri v2, Rust, React, TypeScript · <a href="https://github.com/danilakalinin/vibeforge">GitHub</a>
+    MIT · a fork of <a href="https://github.com/CybertronianKelvin/vibelab">VibeLab</a> · Tauri v2, Rust, React, TypeScript · <a href="https://github.com/danilakalinin/vibeforge">GitHub</a>
   </div>
 </footer>
 
