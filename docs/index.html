@@ -118,6 +118,35 @@
   pre { margin: 10px 0; background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 12px; overflow-x: auto; }
   pre code { border: none; background: none; padding: 0; }
 
+
+  /* ── Эмодзи: лёгкое покачивание, ускоряется при наведении ── */
+  .ico {
+    display: inline-block; font-size: 21px; line-height: 1; margin-bottom: 9px;
+    animation: bob 3.4s ease-in-out infinite; animation-delay: var(--d, 0s);
+  }
+  .cell { transition: background-color .15s; }
+  .cell:hover { background: var(--subtle); }
+  .cell:hover .ico { animation-duration: .7s; }
+  @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+  .h2ico { display: inline-block; margin-right: 8px; animation: bob 3.4s ease-in-out infinite; }
+
+  .spark { display: inline-block; animation: twinkle 2.6s ease-in-out infinite; }
+  @keyframes twinkle {
+    0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+    50%      { opacity: .55; transform: scale(1.18) rotate(12deg); }
+  }
+
+  .btn .em { display: inline-block; font-size: 14px; }
+  .btn-primary .em { animation: nudge 3s ease-in-out infinite; }
+  @keyframes nudge { 0%, 86%, 100% { transform: translateY(0); } 93% { transform: translateY(2px); } }
+
+  /* Уважаем системную настройку «уменьшить движение» */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+
   footer { border-top: 1px solid var(--border); padding: 28px 0 40px; text-align: center; font-size: 13px; color: var(--faint); }
   footer a { color: var(--muted); }
 </style>
@@ -139,13 +168,13 @@
 <div class="wrap">
 
   <header class="hero">
-    <span class="tag">Открытый исходный код · MIT</span>
+    <span class="tag"><span class="spark">✨</span> Открытый исходный код · MIT</span>
     <h1>Блокнот для кода,<br>который отвечает сразу</h1>
     <p class="lede">JavaScript, TypeScript и PHP со встроенным AI-ассистентом. Всё выполняется у вас на машине — без браузера и без облака.</p>
     <div class="cta">
       <a href="#download" class="btn btn-primary">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 12l-4-4h2.5V2h3v6H12L8 12zm-6 2h12v1.5H2V14z"/></svg>
-        Скачать для macOS
+        <span class="em">🍎</span> Скачать для macOS
       </a>
       <a href="https://github.com/danilakalinin/vibeforge" class="btn btn-default">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.49-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.69 7.69 0 018 4.07c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.19c0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -160,30 +189,36 @@
   </figure>
 
   <section id="features">
-    <h2>Что внутри</h2>
+    <h2><span class="h2ico">🧩</span>Что внутри</h2>
     <p class="sub">Одно окно вместо связки «редактор + терминал + вкладка с чатом».</p>
     <div class="grid">
       <div class="cell">
+        <span class="ico" style="--d:0s">📝</span>
         <h3>Редактор Monaco</h3>
         <p>Тот же движок, что в VS Code: подсветка, свёртка, автодополнение.</p>
       </div>
       <div class="cell">
+        <span class="ico" style="--d:.25s">⚡</span>
         <h3>Запуск на лету</h3>
         <p>Вывод стримится построчно через ваши Node.js и PHP. Опционально — автозапуск при вводе.</p>
       </div>
       <div class="cell">
+        <span class="ico" style="--d:.5s">🤖</span>
         <h3>AI видит ваш код</h3>
         <p>Claude, OpenAI, Groq, DeepSeek, OpenRouter. Содержимое редактора и зависимости проекта уходят в контекст сами.</p>
       </div>
       <div class="cell">
+        <span class="ico" style="--d:.75s">🔗</span>
         <h3>Привязка проекта</h3>
         <p>Укажите папку — ассистент прочитает <code>package.json</code> или <code>composer.json</code>. Для Laravel добавляется автодополнение фасадов и классов.</p>
       </div>
       <div class="cell">
+        <span class="ico" style="--d:1s">🎨</span>
         <h3>13 тем</h3>
         <p>Включая две на нативном материале окна macOS. Применяются мгновенно.</p>
       </div>
       <div class="cell">
+        <span class="ico" style="--d:1.25s">📚</span>
         <h3>Сниппеты и история</h3>
         <p>Локальная база SQLite. История запусков помнит, к какому проекту относилась.</p>
       </div>
@@ -191,7 +226,7 @@
   </section>
 
   <section>
-    <h2>Темы и настройки</h2>
+    <h2><span class="h2ico">🎛️</span>Темы и настройки</h2>
     <p class="sub">Тема и язык интерфейса переключаются сразу — без сохранения и перезапуска.</p>
     <div class="pair">
       <figure>
@@ -206,7 +241,7 @@
   </section>
 
   <section>
-    <h2>Стекло по-настоящему</h2>
+    <h2><span class="h2ico">🪟</span>Стекло по-настоящему</h2>
     <p class="sub">Темы Glass используют нативную вибрантность macOS: окно прозрачное, и система размывает за ним рабочий стол. Это системный материал, а не CSS-имитация.</p>
     <figure>
       <img class="shot" src="shots/snippet.png" alt="Диалог сохранения сниппета поверх размытого интерфейса" />
@@ -214,13 +249,13 @@
   </section>
 
   <section id="download" class="dl">
-    <h2>Скачать</h2>
+    <h2><span class="h2ico">⬇️</span>Скачать</h2>
     <p class="sub">Свежая версия — на <a href="https://github.com/danilakalinin/vibeforge/releases/latest">странице релизов</a>.</p>
     <div class="dl-row">
-      <a href="https://github.com/danilakalinin/vibeforge/releases/latest" class="btn btn-primary">macOS · Apple Silicon</a>
-      <span class="soon">Intel · скоро</span>
-      <span class="soon">Windows · скоро</span>
-      <span class="soon">Linux · скоро</span>
+      <a href="https://github.com/danilakalinin/vibeforge/releases/latest" class="btn btn-primary"><span class="em">🍎</span> macOS · Apple Silicon</a>
+      <span class="soon">🖥️ Intel · скоро</span>
+      <span class="soon">🪟 Windows · скоро</span>
+      <span class="soon">🐧 Linux · скоро</span>
     </div>
     <div class="gate">
       <strong>Первый запуск.</strong> Приложение не подписано сертификатом Apple, поэтому Gatekeeper его заблокирует. Выполните один раз:
