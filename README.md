@@ -104,7 +104,7 @@ VibeLab → VibeForge по всему проекту: идентификатор
 
 **Пока только macOS.** Установщики для Windows и Linux появятся позже.
 
-1. Скачайте `.dmg` под свой процессор со [страницы релизов](https://github.com/danilakalinin/vibeforge/releases/latest) — `arm64` для Apple Silicon, `x64` для Intel
+1. Скачайте `.dmg` со [страницы релизов](https://github.com/danilakalinin/vibeforge/releases/latest). Сейчас собирается только сборка `aarch64` — под Apple Silicon (M1 и новее); сборку под Intel добавлю позже
 2. Откройте и перетащите **VibeForge** в `/Applications`
 3. Приложение неподписанное, поэтому Gatekeeper заблокирует первый запуск. Выполните один раз:
 

@@ -104,7 +104,7 @@ VibeLab → VibeForge throughout: bundle identifier `dev.vibeforge.app`, data di
 
 **macOS only for now.** Windows and Linux installers will be added when available.
 
-1. Download the `.dmg` for your chip from the [Releases page](https://github.com/danilakalinin/vibeforge/releases/latest) — `arm64` for Apple Silicon, `x64` for Intel
+1. Download the `.dmg` from the [Releases page](https://github.com/danilakalinin/vibeforge/releases/latest). Only an `aarch64` build is published so far — Apple Silicon (M1 and newer); an Intel build will follow
 2. Open it and drag **VibeForge** to `/Applications`
 3. The app is unsigned, so Gatekeeper blocks it on first launch. Run this once:
 

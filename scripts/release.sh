@@ -66,10 +66,14 @@ awk -v ver="$VERSION" '
   { print }
 ' src-tauri/Cargo.toml > src-tauri/Cargo.toml.tmp && mv src-tauri/Cargo.toml.tmp src-tauri/Cargo.toml
 
+# Keep Cargo.lock in step, otherwise the build rewrites it and leaves the
+# working tree dirty right after a release.
+(cd src-tauri && cargo update --workspace --quiet 2>/dev/null) || true
+
 echo "  Bumped versions to $VERSION"
 
 # --- Commit, tag, push --------------------------------------------------
-git add package.json src-tauri/tauri.conf.json src-tauri/Cargo.toml
+git add package.json src-tauri/tauri.conf.json src-tauri/Cargo.toml src-tauri/Cargo.lock
 if git diff --cached --quiet; then
   echo "  Versions already at $VERSION — skipping version commit"
 else
