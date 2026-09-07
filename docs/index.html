@@ -102,7 +102,8 @@
   .cell h3 { font-size: 14px; font-weight: 600; margin-bottom: 5px; }
   .cell p { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
-  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; width: calc(100% + 64px); margin-left: -32px; }
+  @media (max-width: 1040px) { .pair { width: auto; margin-left: 0; } }
   @media (max-width: 760px) { .pair { grid-template-columns: 1fr; } }
 
   /* ── Скачивание ── */
