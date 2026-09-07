@@ -6,10 +6,10 @@ import { useStore } from "../store";
 import { useExecution } from "./useExecution";
 import { useSettings } from "./useSettings";
 
-const WEBSITE  = "https://cybertroniankelvin.github.io/vibelab/";
-const GITHUB   = "https://github.com/CybertronianKelvin/vibelab";
-const ISSUES   = "https://github.com/CybertronianKelvin/vibelab/issues/new";
-const RELEASES = "https://github.com/CybertronianKelvin/vibelab/releases";
+const WEBSITE  = "https://danilakalinin.github.io/vibeforge/";
+const GITHUB   = "https://github.com/danilakalinin/vibeforge";
+const ISSUES   = "https://github.com/danilakalinin/vibeforge/issues/new";
+const RELEASES = "https://github.com/danilakalinin/vibeforge/releases";
 
 type StoreState = ReturnType<typeof useStore.getState>;
 
@@ -55,18 +55,18 @@ async function handleAction(
 
   switch (id) {
     // ── File ──────────────────────────────────────────────────────────────
-    case "new-scratch":      window.dispatchEvent(new CustomEvent("vibelab:new-scratch")); break;
+    case "new-scratch":      window.dispatchEvent(new CustomEvent("vibeforge:new-scratch")); break;
     case "new-snippet":      store.toggleSnippetModal(); break;
-    case "link-project":     window.dispatchEvent(new CustomEvent("vibelab:link-project")); break;
-    case "unlink-project":   window.dispatchEvent(new CustomEvent("vibelab:unlink-project")); break;
+    case "link-project":     window.dispatchEvent(new CustomEvent("vibeforge:link-project")); break;
+    case "unlink-project":   window.dispatchEvent(new CustomEvent("vibeforge:unlink-project")); break;
     case "install-packages": store.togglePackages(); break;
     case "settings":         store.toggleSettings(); break;
 
     // ── Edit ──────────────────────────────────────────────────────────────
-    case "format":       window.dispatchEvent(new CustomEvent("vibelab:format")); break;
-    case "clear-editor": window.dispatchEvent(new CustomEvent("vibelab:clear-editor")); break;
-    case "copy-code":    window.dispatchEvent(new CustomEvent("vibelab:copy-code")); break;
-    case "find-console": window.dispatchEvent(new CustomEvent("vibelab:find-console")); break;
+    case "format":       window.dispatchEvent(new CustomEvent("vibeforge:format")); break;
+    case "clear-editor": window.dispatchEvent(new CustomEvent("vibeforge:clear-editor")); break;
+    case "copy-code":    window.dispatchEvent(new CustomEvent("vibeforge:copy-code")); break;
+    case "find-console": window.dispatchEvent(new CustomEvent("vibeforge:find-console")); break;
 
     // ── View ──────────────────────────────────────────────────────────────
     case "toggle-sidebar":        store.toggleSidebar(); break;
@@ -120,8 +120,8 @@ async function handleAction(
     case "releases":     await openUrl(RELEASES); break;
     case "uninstall": {
       const ok = await confirm(
-        "This will permanently delete VibeLab, your snippets, settings, and the npm workspace. This cannot be undone.",
-        { title: "Uninstall VibeLab?", kind: "warning" }
+        "This will permanently delete VibeForge, your snippets, settings, and the npm workspace. This cannot be undone.",
+        { title: "Uninstall VibeForge?", kind: "warning" }
       );
       if (ok) await tauriClient.uninstallApp();
       break;

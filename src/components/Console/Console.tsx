@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useStore } from "../../store";
+import { useT } from "../../lib/i18n";
+import { IconArrowDown, IconArrowUp, IconSearch, IconX } from "../icons";
 import type { ExecutionLine } from "../../types";
 
 function escapeRegex(s: string) {
@@ -80,7 +82,7 @@ function renderSegments(segments: Segment[], query: string): React.ReactNode {
 }
 
 function Line({ line, searchQuery, fontSize }: { line: ExecutionLine; searchQuery: string; fontSize: number }) {
-  const wrapperColors = { stdout: "text-gray-200", stderr: "text-red-400", info: "text-brand-400", separator: "" };
+  const wrapperColors = { stdout: "text-gray-200", stderr: "text-red-400", info: "text-brand-300", separator: "" };
   const prefix = { stdout: "", stderr: "✖ ", info: "ℹ ", separator: "" };
 
   let content: React.ReactNode;
@@ -129,6 +131,7 @@ function RunHeader({
 }: {
   run: Run; idx: number; collapsed: boolean; onToggle: (idx: number) => void; isActive: boolean;
 }) {
+  const t = useT();
   const lang = LANG_LABEL[run.separator.content] ?? run.separator.content.toUpperCase();
   const time = new Date(run.separator.timestamp).toLocaleTimeString([], {
     hour: "2-digit", minute: "2-digit", second: "2-digit",
@@ -138,15 +141,15 @@ function RunHeader({
   return (
     <button
       onClick={() => onToggle(idx)}
-      className="w-full flex items-center gap-2 px-3 py-1 text-xs hover:bg-white/5 border-b border-surface-700/60 transition-colors group"
+      className="w-full flex items-center gap-2 px-3 h-7 text-xs hover:bg-surface-700 border-b border-surface-700 transition-colors group"
     >
-      <span className="text-gray-600 group-hover:text-gray-400 w-3 text-center shrink-0 font-mono">
+      <span className="text-gray-600 group-hover:text-gray-400 w-3 text-center shrink-0 text-[9px]">
         {collapsed ? "▶" : "▼"}
       </span>
-      <span className={`font-mono font-semibold ${isActive ? "text-brand-400" : "text-gray-500"}`}>{lang}</span>
-      <span className="text-gray-600">{time}</span>
-      {isActive && <span className="text-brand-400 animate-pulse text-[10px]">●</span>}
-      <span className="ml-auto text-gray-600 tabular-nums">{count} {count === 1 ? "line" : "lines"}</span>
+      <span className={`font-mono font-semibold ${isActive ? "text-brand-300" : "text-gray-500"}`}>{lang}</span>
+      <span className="text-gray-600 tabular-nums">{time}</span>
+      {isActive && <span className="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse" />}
+      <span className="ml-auto text-gray-600 tabular-nums">{t.plural("console.lines", count)}</span>
     </button>
   );
 }
@@ -155,6 +158,7 @@ function RunHeader({
 
 export function Console() {
   const { outputLines, isRunning, clearOutput, settings } = useStore();
+  const t = useT();
   const bottomRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
@@ -260,8 +264,8 @@ export function Console() {
 
   useEffect(() => {
     const handler = () => setShowSearch((v) => !v);
-    window.addEventListener("vibelab:find-console", handler);
-    return () => window.removeEventListener("vibelab:find-console", handler);
+    window.addEventListener("vibeforge:find-console", handler);
+    return () => window.removeEventListener("vibeforge:find-console", handler);
   }, []);
 
   const matchCount = search.trim()
@@ -281,92 +285,75 @@ export function Console() {
     <div className="relative flex flex-col h-full bg-surface-900">
       {/* Floating find bar */}
       {showSearch && (
-        <div className="absolute top-9 right-3 z-20 flex items-center gap-2 bg-[#2d2d2d] border border-surface-500 rounded shadow-xl px-3 py-1.5">
-          <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" className="text-gray-400 shrink-0">
-            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398l3.85 3.85a1 1 0 0 0 1.415-1.415l-3.868-3.833zm-5.242 1.156a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/>
-          </svg>
+        <div className="popover absolute top-11 right-3 z-20 flex items-center gap-2 pl-2.5 pr-1.5 h-8">
+          <span className="text-gray-500 shrink-0"><IconSearch /></span>
           <input
             ref={searchRef}
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={(e) => e.key === "Escape" && setShowSearch(false)}
-            placeholder="Find"
-            className="w-44 bg-transparent text-sm text-gray-200 placeholder-gray-500 outline-none"
+            placeholder={t("console.findPlaceholder")}
+            className="w-40 bg-transparent text-[13px] text-gray-200 placeholder-gray-500 outline-none"
           />
-          <span className="text-xs text-gray-500 min-w-[2.5rem] text-right tabular-nums">
-            {search.trim() ? `${matchCount} match${matchCount !== 1 ? "es" : ""}` : "0/0"}
+          <span className="hint min-w-[3.5rem] text-right tabular-nums">
+            {search.trim() ? t.plural("console.matches", matchCount) : t("console.noResults")}
           </span>
-          <button
-            onClick={() => setShowSearch(false)}
-            className="text-gray-500 hover:text-gray-300 ml-1"
-          >
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-            </svg>
+          <button onClick={() => setShowSearch(false)} className="btn btn-invisible btn-sm btn-icon" title={t("console.close")}>
+            <IconX />
           </button>
         </div>
       )}
 
-      <div className="flex items-center justify-between px-4 py-2 border-b border-surface-600 shrink-0">
+      <div className="bar">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Output</span>
-          {isRunning && <span className="text-xs text-brand-400 animate-pulse">● Running</span>}
+          <span className="bar-title">{t("console.title")}</span>
+          {isRunning && (
+            <span className="badge bg-brand-900 border-brand-500/30 text-brand-300 gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse" />
+              {t("console.running")}
+            </span>
+          )}
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-0.5">
           <button
             onClick={handleCopy}
             disabled={!allContentLines.length}
-            className="text-xs text-gray-500 hover:text-gray-300 disabled:opacity-30"
-            title="Copy all output"
+            className="btn btn-invisible btn-sm"
+            title={t("console.copyTitle")}
           >
-            {copied ? "Copied!" : "Copy"}
+            {copied ? t("console.copied") : t("console.copy")}
           </button>
           <button
             onClick={() => setShowSearch((v) => !v)}
-            className={`text-xs transition-colors ${showSearch ? "text-amber-400" : "text-gray-500 hover:text-gray-300"}`}
+            aria-pressed={showSearch}
+            className={`btn btn-sm ${showSearch ? "btn-default text-brand-300" : "btn-invisible"}`}
           >
-            Find
+            {t("console.find")}
           </button>
-          <button onClick={clearOutput} className="text-xs text-gray-500 hover:text-gray-300">Clear</button>
+          <button onClick={clearOutput} className="btn btn-invisible btn-sm">{t("console.clear")}</button>
         </div>
       </div>
 
       <div className="absolute bottom-3 right-3 z-10 flex flex-col gap-1">
         {showScrollTopBtn && (
-          <button
-            onClick={scrollToTop}
-            className="flex items-center justify-center w-7 h-7 rounded-full bg-surface-700 border border-surface-500 text-gray-400 hover:text-gray-200 hover:bg-surface-600 shadow-lg transition-colors"
-            title="Scroll to top"
-          >
-            <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M8 4L14 11H2L8 4z"/>
-            </svg>
+          <button onClick={scrollToTop} className="btn btn-default btn-icon rounded-full shadow-lg" title={t("editor.scrollTop")}>
+            <IconArrowUp />
           </button>
         )}
         {showScrollBtn && (
-          <button
-            onClick={scrollToBottom}
-            className="flex items-center justify-center w-7 h-7 rounded-full bg-surface-700 border border-surface-500 text-gray-400 hover:text-gray-200 hover:bg-surface-600 shadow-lg transition-colors"
-            title="Scroll to bottom"
-          >
-            <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M8 12L2 5h12L8 12z"/>
-            </svg>
+          <button onClick={scrollToBottom} className="btn btn-default btn-icon rounded-full shadow-lg" title={t("editor.scrollBottom")}>
+            <IconArrowDown />
           </button>
         )}
       </div>
 
       <div ref={scrollRef} onScroll={checkAtBottom} className="flex-1 overflow-y-auto py-2">
         {isEmpty ? (
-          <div className="text-gray-600 text-sm font-mono px-4 py-3 italic">
-            Run some code to see output…
-          </div>
+          <div className="hint px-4 py-3">{t("console.empty")}</div>
         ) : search.trim() ? (
           filteredLines.length === 0 ? (
-            <div className="text-gray-600 text-sm font-mono px-4 py-3 italic">
-              No output matches "{search}"
-            </div>
+            <div className="hint px-4 py-3">{t("console.noMatch", { q: search })}</div>
           ) : (
             filteredLines.map((line, i) => (
               <Line key={`search-${line.timestamp}-${i}`} line={line} searchQuery={search} fontSize={settings.fontSize} />

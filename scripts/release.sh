@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # -----------------------------------------------------------------------
-# VibeLab release script
+# VibeForge release script
 # Usage: npm run release <version>   e.g.  npm run release 0.2.0
 #
 # What it does:
@@ -41,7 +41,7 @@ if [[ "$BRANCH" != "main" ]]; then
   exit 1
 fi
 
-echo "Releasing VibeLab $TAG on $(uname -s)..."
+echo "Releasing VibeForge $TAG on $(uname -s)..."
 
 # --- Bump version in three files ----------------------------------------
 # macOS sed requires '' after -i; GNU sed does not — handle both
@@ -99,9 +99,9 @@ ARCH="$(uname -m)"
 
 if [[ "$OS" == "Darwin" ]]; then
   if [[ "$ARCH" == "arm64" ]]; then
-    DMG="$BUNDLE/dmg/VibeLab_${VERSION}_aarch64.dmg"
+    DMG="$BUNDLE/dmg/VibeForge_${VERSION}_aarch64.dmg"
   else
-    DMG="$BUNDLE/dmg/VibeLab_${VERSION}_x64.dmg"
+    DMG="$BUNDLE/dmg/VibeForge_${VERSION}_x64.dmg"
   fi
   [[ -f "$DMG" ]] && ARTIFACTS+=("$DMG")
 
@@ -139,4 +139,4 @@ fi
 
 echo ""
 echo "Done! View the release at:"
-echo "  https://github.com/CybertronianKelvin/vibelab/releases/tag/$TAG"
+echo "  https://github.com/danilakalinin/vibeforge/releases/tag/$TAG"

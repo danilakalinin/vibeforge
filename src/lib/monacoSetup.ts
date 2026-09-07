@@ -19,7 +19,7 @@ self.MonacoEnvironment = {
 loader.config({ monaco });
 
 // Monaco's built-in PHP grammar wraps PHP in an HTML context: its root state
-// only activates PHP highlighting after it sees "<?php". VibeLab writes PHP
+// only activates PHP highlighting after it sees "<?php". VibeForge writes PHP
 // without that tag (script-only mode), so nothing ever gets colored.
 // Fix: override the root state to fall through directly to phpRoot, while
 // still supporting <?php for files that do include the opening tag.

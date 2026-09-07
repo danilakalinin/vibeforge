@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useSnippets } from "../../hooks/useSnippets";
 import { useStore } from "../../store";
+import { useT } from "../../lib/i18n";
+import { IconX } from "../icons";
 
 export function SnippetModal() {
   const { code, language, project, setCode, setActiveSnippetId, toggleSnippetModal } = useStore();
   const { saveSnippet } = useSnippets();
+  const t = useT();
   const [name, setName] = useState("");
   const [saving, setSaving] = useState(false);
 
@@ -24,46 +27,34 @@ export function SnippetModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-      <div className="w-80 bg-surface-800 rounded-xl shadow-2xl border border-surface-600">
-        <div className="flex items-center justify-between px-5 py-4 border-b border-surface-600">
-          <h2 className="text-sm font-semibold text-gray-200">Save Snippet</h2>
-          <button
-            onClick={toggleSnippetModal}
-            className="text-gray-400 hover:text-gray-200 text-lg leading-none"
-          >
-            ×
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+      <div className="panel w-[360px]">
+        <div className="panel-head">
+          <h2 className="panel-title">{t("snippet.title")}</h2>
+          <button onClick={toggleSnippetModal} className="btn btn-invisible btn-sm btn-icon" title={t("settings.close")}>
+            <IconX />
           </button>
         </div>
 
-        <div className="p-5">
-          <label className="text-xs text-gray-400 block mb-1.5">Snippet name</label>
+        <div className="px-4 py-4">
+          <label className="block text-[13px] font-medium text-gray-300 mb-1.5">{t("snippet.name")}</label>
           <input
             autoFocus
-            className="w-full bg-surface-700 border border-surface-500 rounded px-3 py-2 text-sm text-gray-200 placeholder-gray-500 outline-none focus:border-brand-500"
-            placeholder="My snippet…"
+            className="input input-lg"
+            placeholder={t("snippet.placeholder")}
             value={name}
             onChange={(e) => setName(e.target.value)}
             onKeyDown={handleKeyDown}
           />
-          <p className="mt-2 text-xs text-gray-600 font-mono truncate">
+          <p className="mt-2 hint font-mono truncate">
             {language.toUpperCase()} · {code.trim().split("\n")[0]?.slice(0, 50) ?? ""}
           </p>
         </div>
 
-        <div className="flex justify-end gap-2 px-5 py-4 border-t border-surface-600">
-          <button
-            onClick={toggleSnippetModal}
-            className="px-4 py-2 text-sm text-gray-400 hover:text-gray-200 rounded hover:bg-surface-700"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleSave}
-            disabled={!name.trim() || saving}
-            className="px-5 py-2 text-sm font-semibold bg-brand-500 hover:bg-brand-400 disabled:opacity-50 text-white rounded"
-          >
-            {saving ? "Saving…" : "Save"}
+        <div className="panel-foot">
+          <button onClick={toggleSnippetModal} className="btn btn-default">{t("snippet.cancel")}</button>
+          <button onClick={handleSave} disabled={!name.trim() || saving} className="btn btn-primary">
+            {saving ? t("snippet.saving") : t("snippet.save")}
           </button>
         </div>
       </div>

@@ -113,12 +113,19 @@ async fn call_openai_compat(
         all.push(serde_json::json!({ "role": m.role, "content": m.content }));
     }
 
-    let resp = Client::new()
+    let mut req = Client::new()
         .post(endpoint)
         .bearer_auth(&api_key)
-        .header("content-type", "application/json")
-        .header("HTTP-Referer", "https://vibelab.app")
-        .header("X-Title", "VibeLab")
+        .header("content-type", "application/json");
+
+    // OpenRouter uses these for app-attribution rankings; other providers ignore them.
+    if endpoint.contains("openrouter") {
+        req = req
+            .header("HTTP-Referer", "https://danilakalinin.github.io/vibeforge/")
+            .header("X-Title", "VibeForge");
+    }
+
+    let resp = req
         .json(&serde_json::json!({ "model": model, "stream": true, "messages": all }))
         .send()
         .await
@@ -149,7 +156,7 @@ fn build_system(language: &str, project_type: Option<&str>, code_context: Option
         None => String::new(),
     };
     format!(
-        "You are an AI coding assistant inside VibeLab, a {lang} scratchpad tool.{proj}{code_ctx}\n\n\
+        "You are an AI coding assistant inside VibeForge, a {lang} scratchpad tool.{proj}{code_ctx}\n\n\
          Rules:\n\
          - Asked to WRITE CODE → respond with ONLY raw code, no markdown fences, no prose.\n\
          - Asked a QUESTION or for EXPLANATION → respond naturally; wrap code in ```{language} fences.\n\
@@ -175,6 +182,7 @@ pub async fn ai_complete(
         "claude" => call_claude(&app, messages, api_key, model, system).await,
         "openai" => call_openai_compat(&app, messages, api_key, model, system, "https://api.openai.com/v1/chat/completions").await,
         "groq" => call_openai_compat(&app, messages, api_key, model, system, "https://api.groq.com/openai/v1/chat/completions").await,
+        "deepseek" => call_openai_compat(&app, messages, api_key, model, system, "https://api.deepseek.com/v1/chat/completions").await,
         "openrouter" => call_openai_compat(&app, messages, api_key, model, system, "https://openrouter.ai/api/v1/chat/completions").await,
         p => Err(format!("Unknown provider: {}", p)),
     };

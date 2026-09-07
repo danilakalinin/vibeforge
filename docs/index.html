@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>VibeLab — Local Code Scratchpad with AI</title>
+<link rel="icon" type="image/png" href="favicon.png" />
+<title>VibeForge — Local Code Scratchpad with AI</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root { --bg: #07080f; --bg2: #0d0f1a; --border: rgba(255,255,255,.07); --text: #e2e8f0; --muted: #64748b; --brand: #bc6900; --brand-light: #e8a040; }
+  :root { --bg: #07080f; --bg2: #0d0f1a; --border: rgba(255,255,255,.07); --text: #e2e8f0; --muted: #64748b; --brand: #2f81f7; --brand-light: #79c0ff; }
   body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, sans-serif; font-size: 15px; line-height: 1.6; }
 
   nav { display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 56px; border-bottom: 1px solid var(--border); background: var(--bg2); position: sticky; top: 0; z-index: 10; }
@@ -15,15 +16,15 @@
   .nav-links a { color: #94a3b8; text-decoration: none; font-size: 13px; transition: color .15s; }
   .nav-links a:hover { color: var(--text); }
 
-  .hero { padding: 80px 48px 60px; text-align: center; background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(188,105,0,.14), transparent); border-bottom: 1px solid var(--border); }
-  .badge { display: inline-block; background: rgba(188,105,0,.12); color: var(--brand-light); font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(188,105,0,.22); margin-bottom: 20px; }
+  .hero { padding: 80px 48px 60px; text-align: center; background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(47,129,247,.14), transparent); border-bottom: 1px solid var(--border); }
+  .badge { display: inline-block; background: rgba(47,129,247,.12); color: var(--brand-light); font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(47,129,247,.22); margin-bottom: 20px; }
   h1 { font-size: clamp(28px, 5vw, 48px); font-weight: 800; line-height: 1.15; margin-bottom: 16px; letter-spacing: -.5px; }
   h1 span { color: var(--brand-light); }
   .tagline { color: #94a3b8; font-size: 16px; max-width: 520px; margin: 0 auto 32px; line-height: 1.75; }
   .cta-group { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
   .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all .15s; }
   .btn-primary { background: var(--brand); color: #fff; }
-  .btn-primary:hover { background: #d47a0a; }
+  .btn-primary:hover { background: #4a92f8; }
   .btn-ghost { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border); }
   .btn-ghost:hover { background: rgba(255,255,255,.1); }
 
@@ -49,9 +50,9 @@
   .platform-btn .name { font-size: 13px; font-weight: 600; }
   .platform-btn .ext { font-size: 11px; color: var(--muted); font-family: monospace; }
 
-  .install-note { max-width: 680px; margin: 28px auto 0; background: rgba(188,105,0,.06); border: 1px solid rgba(188,105,0,.2); border-radius: 10px; padding: 14px 18px; text-align: left; font-size: 12.5px; color: #94a3b8; }
+  .install-note { max-width: 680px; margin: 28px auto 0; background: rgba(47,129,247,.06); border: 1px solid rgba(47,129,247,.2); border-radius: 10px; padding: 14px 18px; text-align: left; font-size: 12.5px; color: #94a3b8; }
   .install-note strong { color: var(--brand-light); }
-  code { font-family: monospace; background: rgba(255,255,255,.07); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; font-size: 11.5px; color: #fde68a; }
+  code { font-family: monospace; background: rgba(255,255,255,.07); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; font-size: 11.5px; color: #a5d6ff; }
 
   footer { text-align: center; padding: 28px 48px; font-size: 12.5px; color: var(--muted); }
   footer a { color: #94a3b8; text-decoration: none; }
@@ -65,25 +66,25 @@
 <body>
 
 <nav>
-  <div class="nav-brand">VibeLab</div>
+  <div class="nav-brand">VibeForge</div>
   <div class="nav-links">
     <a href="#features">Features</a>
     <a href="#download">Download</a>
-    <a href="https://github.com/CybertronianKelvin/vibelab">GitHub</a>
-    <a href="https://github.com/CybertronianKelvin/vibelab/releases">Releases</a>
+    <a href="https://github.com/danilakalinin/vibeforge">GitHub</a>
+    <a href="https://github.com/danilakalinin/vibeforge/releases">Releases</a>
   </div>
 </nav>
 
 <section class="hero">
   <div class="badge">Free &amp; Open Source</div>
   <h1>Code faster with<br><span>AI by your side</span></h1>
-  <p class="tagline">VibeLab is a local scratchpad for JavaScript, TypeScript, and PHP — with a built-in AI assistant that sees your code and your project's dependencies.</p>
+  <p class="tagline">VibeForge is a local scratchpad for JavaScript, TypeScript, and PHP — with a built-in AI assistant that sees your code and your project's dependencies.</p>
   <div class="cta-group">
     <a href="#download" class="btn btn-primary">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 12l-4-4h2.5V2h3v6H12L8 12zm-6 2h12v1.5H2V14z"/></svg>
       Download
     </a>
-    <a href="https://github.com/CybertronianKelvin/vibelab" class="btn btn-ghost">
+    <a href="https://github.com/danilakalinin/vibeforge" class="btn btn-ghost">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.49-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.69 7.69 0 018 4.07c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.19c0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
       View on GitHub
     </a>
@@ -92,7 +93,7 @@
 
 <div class="video-wrap">
   <div class="video-ratio">
-    <iframe src="https://www.youtube.com/embed/_ZzA_AptzkE" title="VibeLab demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/_ZzA_AptzkE" title="VibeForge demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
   </div>
 </div>
 
@@ -107,7 +108,7 @@
     <div class="card">
       <div class="card-icon">🤖</div>
       <h3>AI chat with context</h3>
-      <p>Ask Claude, GPT-4o, Groq, or OpenRouter about your code. The AI sees your editor content and your project's installed packages automatically.</p>
+      <p>Ask Claude, GPT-4o, Groq, DeepSeek, or OpenRouter about your code. The AI sees your editor content and your project's installed packages automatically.</p>
     </div>
     <div class="card">
       <div class="card-icon">🎨</div>
@@ -133,10 +134,10 @@
 </section>
 
 <section class="download" id="download">
-  <h2>Download VibeLab</h2>
-  <p>Builds are published to the <a href="https://github.com/CybertronianKelvin/vibelab/releases" style="color:#e8a040">GitHub Releases page</a>.</p>
+  <h2>Download VibeForge</h2>
+  <p>Builds are published to the <a href="https://github.com/danilakalinin/vibeforge/releases" style="color:#79c0ff">GitHub Releases page</a>.</p>
   <div class="platform-grid">
-    <a href="https://github.com/CybertronianKelvin/vibelab/releases/latest" class="platform-btn">
+    <a href="https://github.com/danilakalinin/vibeforge/releases/latest" class="platform-btn">
       <div class="os">🍎</div>
       <div class="name">macOS</div>
       <div class="ext">Apple Silicon · Intel</div>
@@ -155,13 +156,13 @@
   <div class="install-note">
     <strong>macOS only for now.</strong> Windows and Linux builds require building on each platform. They'll be added to the same release when available.<br><br>
     <strong>macOS note:</strong> The app is currently unsigned. After dragging to /Applications, run once in Terminal:<br>
-    <code>xattr -cr /Applications/VibeLab.app</code><br><br>
-    <strong>To uninstall:</strong> open VibeLab and pick <strong>Help → Uninstall VibeLab…</strong> — the app will close and remove all its data automatically.
+    <code>xattr -cr /Applications/VibeForge.app</code><br><br>
+    <strong>To uninstall:</strong> open VibeForge and pick <strong>Help → Uninstall VibeForge…</strong> — the app will close and remove all its data automatically.
   </div>
 </section>
 
 <footer>
-  <p>Open source under the <a href="https://github.com/CybertronianKelvin/vibelab/blob/main/LICENSE">MIT license</a> · Built with Tauri v2, Rust, React &amp; TypeScript · <a href="https://github.com/CybertronianKelvin/vibelab">GitHub</a></p>
+  <p>Open source under the <a href="https://github.com/danilakalinin/vibeforge/blob/main/LICENSE">MIT license</a> · Built with Tauri v2, Rust, React &amp; TypeScript · <a href="https://github.com/danilakalinin/vibeforge">GitHub</a></p>
 </footer>
 
 </body>

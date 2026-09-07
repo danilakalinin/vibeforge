@@ -4,9 +4,9 @@ use tauri::menu::{Menu, MenuBuilder, MenuItem, PredefinedMenuItem, SubmenuBuilde
 pub fn build<R: Runtime>(app: &AppHandle<R>) -> tauri::Result<Menu<R>> {
     let sep = || PredefinedMenuItem::separator(app);
 
-    // ── VibeLab app menu (macOS only) ─────────────────────────────────────
+    // ── VibeForge app menu (macOS only) ─────────────────────────────────────
     #[cfg(target_os = "macos")]
-    let app_menu = SubmenuBuilder::new(app, "VibeLab")
+    let app_menu = SubmenuBuilder::new(app, "VibeForge")
         .about(None)
         .separator()
         .services()
@@ -26,7 +26,7 @@ pub fn build<R: Runtime>(app: &AppHandle<R>) -> tauri::Result<Menu<R>> {
         let unlink      = MenuItem::with_id(app, "unlink-project",   "Unlink Project",          true, None::<&str>)?;
         let packages    = MenuItem::with_id(app, "install-packages", "Install npm Package\u{2026}", true, Some("CmdOrCtrl+Shift+P"))?;
         let settings    = MenuItem::with_id(app, "settings",         "Settings\u{2026}",        true, Some("CmdOrCtrl+,"))?;
-        let quit        = PredefinedMenuItem::quit(app, Some("Quit VibeLab"))?;
+        let quit        = PredefinedMenuItem::quit(app, Some("Quit VibeForge"))?;
 
         SubmenuBuilder::new(app, "File")
             .item(&new_scratch)
@@ -123,11 +123,11 @@ pub fn build<R: Runtime>(app: &AppHandle<R>) -> tauri::Result<Menu<R>> {
 
     // ── Help ──────────────────────────────────────────────────────────────
     let help_menu = {
-        let website   = MenuItem::with_id(app, "website",      "VibeLab Website",   true, None::<&str>)?;
+        let website   = MenuItem::with_id(app, "website",      "VibeForge Website",   true, None::<&str>)?;
         let github    = MenuItem::with_id(app, "github",       "GitHub Repository", true, None::<&str>)?;
         let report    = MenuItem::with_id(app, "report-issue", "Report an Issue",   true, None::<&str>)?;
         let releases  = MenuItem::with_id(app, "releases",     "View Releases",     true, None::<&str>)?;
-        let uninstall = MenuItem::with_id(app, "uninstall",    "Uninstall VibeLab\u{2026}", true, None::<&str>)?;
+        let uninstall = MenuItem::with_id(app, "uninstall",    "Uninstall VibeForge\u{2026}", true, None::<&str>)?;
 
         SubmenuBuilder::new(app, "Help")
             .item(&website)

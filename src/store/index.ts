@@ -1,10 +1,11 @@
 import { create } from "zustand";
 import type { AiMessage, ExecutionLine, HistoryEntry, Language, Package, ProjectContext, Settings, Snippet } from "../types";
 
-const DEFAULT_CODE = '// Welcome to VibeLab\nconsole.log("Hello, World!");\n';
+const DEFAULT_CODE = '// Welcome to VibeForge\nconsole.log("Hello, World!");\n';
 
 const DEFAULT_SETTINGS: Settings = {
-  theme: "dark",
+  locale: "en",
+  theme: "glass-dark",
   fontSize: 14,
   autoRun: true,
   autoRunDelay: 500,

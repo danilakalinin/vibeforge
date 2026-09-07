@@ -3,7 +3,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useExecution } from "../../hooks/useExecution";
 import { useSnippets } from "../../hooks/useSnippets";
 import { tauriClient } from "../../lib/tauri";
+import { getTheme, registerMonacoThemes } from "../../lib/themes";
 import { useStore } from "../../store";
+import { useT } from "../../lib/i18n";
+import { IconArrowDown, IconArrowUp } from "../icons";
 import type { Language } from "../../types";
 
 let phpProvidersRegistered = false;
@@ -182,25 +185,36 @@ function registerPhpProviders(monaco: Parameters<OnMount>[1]) {
 }
 
 function defineThemes(monaco: Parameters<OnMount>[1]) {
-  monaco.editor.defineTheme("vibelab-dark", {
+  // Glass themes: fully transparent editor surfaces so the native window
+  // vibrancy (tauri.conf.json) shows through behind the code.
+  monaco.editor.defineTheme("glass-dark", {
     base: "vs-dark",
     inherit: true,
     rules: [],
     colors: {
-      "editor.background": "#0d0d0d",
-      "editor.lineHighlightBackground": "#1a1710",
-      "editorCursor.foreground": "#f59e0b",
-      "editor.selectionBackground": "#f59e0b30",
+      "editor.background": "#00000000",
+      "editorGutter.background": "#00000000",
+      "minimap.background": "#00000000",
+      "editor.lineHighlightBackground": "#ffffff0d",
+      "editorLineNumber.foreground": "#ffffff40",
+      "editorLineNumber.activeForeground": "#ffffffb0",
+      "editorCursor.foreground": "#58a6ff",
+      "editor.selectionBackground": "#58a6ff33",
     },
   });
-  monaco.editor.defineTheme("vibelab-light", {
+  monaco.editor.defineTheme("glass-light", {
     base: "vs",
     inherit: true,
     rules: [],
     colors: {
-      "editor.background": "#fafaf8",
-      "editorCursor.foreground": "#d97706",
-      "editor.selectionBackground": "#f59e0b25",
+      "editor.background": "#00000000",
+      "editorGutter.background": "#00000000",
+      "minimap.background": "#00000000",
+      "editor.lineHighlightBackground": "#0000000a",
+      "editorLineNumber.foreground": "#00000040",
+      "editorLineNumber.activeForeground": "#000000b0",
+      "editorCursor.foreground": "#0969da",
+      "editor.selectionBackground": "#0969da22",
     },
   });
 }
@@ -215,6 +229,7 @@ export function Editor({ onRun }: Props) {
   const { code, language, setCode, setActiveSnippetId, clearOutput, settings, activeSnippetId, snippets, toggleSnippetModal } = useStore();
   const { scheduleAutoRun, cancelAutoRun } = useExecution();
   const { saveSnippet } = useSnippets();
+  const t = useT();
   const editorRef = useRef<Parameters<OnMount>[0] | null>(null);
   const [formatting, setFormatting] = useState(false);
   const [formatError, setFormatError] = useState<string | null>(null);
@@ -223,11 +238,12 @@ export function Editor({ onRun }: Props) {
   const [editorAtBottom, setEditorAtBottom] = useState(true);
   const [editorAtTop, setEditorAtTop] = useState(true);
 
-  const theme = settings.theme === "dark" ? "vibelab-dark" : "vibelab-light";
+  const theme = getTheme(settings.theme).monacoId;
 
   const handleMount: OnMount = (editor, monaco) => {
     editorRef.current = editor;
     defineThemes(monaco);
+    registerMonacoThemes(monaco);
     registerPhpProviders(monaco);
     monaco.editor.setTheme(theme);
     editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () =>
@@ -248,7 +264,7 @@ export function Editor({ onRun }: Props) {
     });
     // Toggle find: addAction overrides Monaco's built-in Cmd+F keybinding
     editor.addAction({
-      id: "vibelab.toggleFind",
+      id: "vibeforge.toggleFind",
       label: "Toggle Find",
       keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyF],
       run: () => {
@@ -363,67 +379,68 @@ export function Editor({ onRun }: Props) {
     const onClear  = () => { handleClear(); };
     const onCopy   = () => { handleCopy().catch(() => {}); };
     const onNew    = () => { handleNew(); };
-    window.addEventListener("vibelab:format",       onFormat);
-    window.addEventListener("vibelab:clear-editor", onClear);
-    window.addEventListener("vibelab:copy-code",    onCopy);
-    window.addEventListener("vibelab:new-scratch",  onNew);
+    window.addEventListener("vibeforge:format",       onFormat);
+    window.addEventListener("vibeforge:clear-editor", onClear);
+    window.addEventListener("vibeforge:copy-code",    onCopy);
+    window.addEventListener("vibeforge:new-scratch",  onNew);
     return () => {
-      window.removeEventListener("vibelab:format",       onFormat);
-      window.removeEventListener("vibelab:clear-editor", onClear);
-      window.removeEventListener("vibelab:copy-code",    onCopy);
-      window.removeEventListener("vibelab:new-scratch",  onNew);
+      window.removeEventListener("vibeforge:format",       onFormat);
+      window.removeEventListener("vibeforge:clear-editor", onClear);
+      window.removeEventListener("vibeforge:copy-code",    onCopy);
+      window.removeEventListener("vibeforge:new-scratch",  onNew);
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex items-center justify-between px-4 py-2 border-b border-surface-600 bg-surface-900 shrink-0">
-        <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">
-          {LANG_LABEL[language]}
-        </span>
-        <div className="flex items-center gap-3">
+    <div className="flex flex-col h-full bg-surface-900">
+      <div className="bar">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="bar-title">{LANG_LABEL[language]}</span>
+          {activeSnippetId && (
+            <span className="badge bg-surface-700 border-surface-600 text-gray-400 max-w-[160px] truncate">
+              {snippets.find((s) => s.id === activeSnippetId)?.name ?? "snippet"}
+            </span>
+          )}
           {formatError && (
-            <span className="text-xs text-red-400 max-w-[240px] truncate" title={formatError}>
+            <span className="text-xs text-red-400 max-w-[220px] truncate" title={formatError}>
               {formatError}
             </span>
           )}
-          <button
-            onClick={handleNew}
-            className="text-xs text-gray-500 hover:text-gray-300"
-            title="New scratch pad (Cmd+N)"
-          >
-            New
-          </button>
-          <button
-            onClick={() => handleSave().catch(() => {})}
-            disabled={!code.trim()}
-            className="text-xs font-semibold text-brand-400 hover:text-brand-300 disabled:opacity-30"
-            title={activeSnippetId ? "Update snippet (Cmd+S)" : "Save as snippet (Cmd+S)"}
-          >
-            {saved ? "Saved ✓" : "Save"}
+        </div>
+        <div className="flex items-center gap-0.5">
+          <button onClick={handleNew} className="btn btn-invisible btn-sm" title={t("editor.newTitle")}>
+            {t("editor.new")}
           </button>
           <button
             onClick={handleCopy}
             disabled={!code.trim()}
-            className="text-xs text-gray-500 hover:text-gray-300 disabled:opacity-30"
-            title="Copy all code"
+            className="btn btn-invisible btn-sm"
+            title={t("editor.copyTitle")}
           >
-            {copied ? "Copied!" : "Copy"}
+            {copied ? t("editor.copied") : t("editor.copy")}
           </button>
           <button
             onClick={handleFormat}
             disabled={!code.trim() || formatting}
-            className="text-xs text-gray-500 hover:text-gray-300 disabled:opacity-30"
-            title="Format (Cmd+Shift+F)"
+            className="btn btn-invisible btn-sm"
+            title={t("editor.formatTitle")}
           >
-            {formatting ? "Formatting…" : "Format"}
+            {formatting ? t("editor.formatting") : t("editor.format")}
           </button>
           <button
             onClick={handleClear}
             disabled={!code.trim()}
-            className="text-xs text-gray-500 hover:text-gray-300 disabled:opacity-30"
+            className="btn btn-invisible btn-sm"
           >
-            Clear
+            {t("editor.clear")}
+          </button>
+          <button
+            onClick={() => handleSave().catch(() => {})}
+            disabled={!code.trim()}
+            className="btn btn-default btn-sm ml-1"
+            title={activeSnippetId ? t("editor.updateTitle") : t("editor.saveTitle")}
+          >
+            {saved ? t("editor.saved") : activeSnippetId ? t("editor.update") : t("editor.save")}
           </button>
         </div>
       </div>
@@ -456,12 +473,10 @@ export function Editor({ onRun }: Props) {
           {!editorAtTop && (
             <button
               onClick={() => { editorRef.current?.setScrollTop(0); setEditorAtTop(true); }}
-              className="flex items-center justify-center w-7 h-7 rounded-full bg-surface-700 border border-surface-500 text-gray-400 hover:text-gray-200 hover:bg-surface-600 shadow-lg transition-colors"
-              title="Scroll to top"
+              className="btn btn-default btn-icon rounded-full shadow-lg"
+              title={t("editor.scrollTop")}
             >
-              <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
-                <path d="M8 4L14 11H2L8 4z"/>
-              </svg>
+              <IconArrowUp />
             </button>
           )}
           {!editorAtBottom && (
@@ -472,12 +487,10 @@ export function Editor({ onRun }: Props) {
                 if (editor && model) editor.revealLine(model.getLineCount(), 0);
                 setEditorAtBottom(true);
               }}
-              className="flex items-center justify-center w-7 h-7 rounded-full bg-surface-700 border border-surface-500 text-gray-400 hover:text-gray-200 hover:bg-surface-600 shadow-lg transition-colors"
-              title="Scroll to bottom"
+              className="btn btn-default btn-icon rounded-full shadow-lg"
+              title={t("editor.scrollBottom")}
             >
-              <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
-                <path d="M8 12L2 5h12L8 12z"/>
-              </svg>
+              <IconArrowDown />
             </button>
           )}
         </div>

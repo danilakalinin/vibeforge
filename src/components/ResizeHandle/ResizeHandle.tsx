@@ -33,16 +33,11 @@ export function ResizeHandle({ direction, onResize }: Props) {
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
-      className={`shrink-0 flex items-center justify-center group transition-colors z-10
-        ${isH
-          ? "w-1.5 cursor-col-resize hover:bg-brand-500/30 dark:bg-surface-600 bg-gray-200"
-          : "h-1.5 cursor-row-resize hover:bg-brand-500/30 dark:bg-surface-600 bg-gray-200"
-        }`}
+      className={`relative shrink-0 flex items-center justify-center group bg-surface-600 hover:bg-brand-500 transition-colors z-10
+        ${isH ? "w-px cursor-col-resize" : "h-px cursor-row-resize"}`}
     >
-      <div
-        className={`rounded-full bg-gray-500 group-hover:bg-brand-400 transition-colors
-          ${isH ? "w-0.5 h-6" : "h-0.5 w-6"}`}
-      />
+      {/* Invisible wider hit area so a 1px seam is still easy to grab. */}
+      <div className={isH ? "absolute w-2 h-full cursor-col-resize" : "absolute h-2 w-full cursor-row-resize"} />
     </div>
   );
 }

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useHistory } from "../../hooks/useHistory";
 import { useSnippets } from "../../hooks/useSnippets";
 import { useStore } from "../../store";
+import { useT } from "../../lib/i18n";
+import { IconCheck, IconPlay, IconPlus, IconX } from "../icons";
 import type { HistoryEntry, Language, ProjectType, Snippet } from "../../types";
 
 interface Props {
@@ -42,6 +44,7 @@ export function Sidebar({ onRun }: Props) {
   } = useStore();
   const { saveSnippet, deleteSnippet } = useSnippets();
   const { clearHistory } = useHistory();
+  const t = useT();
 
   const [tab, setTab] = useState<Tab>("snippets");
   const [savingHistoryId, setSavingHistoryId] = useState<string | null>(null);
@@ -113,82 +116,69 @@ export function Sidebar({ onRun }: Props) {
   };
 
   return (
-    <aside className="w-56 flex flex-col border-r border-surface-600 bg-surface-800 shrink-0">
+    <aside className="w-60 flex flex-col border-r border-surface-600 bg-surface-800 shrink-0">
       {/* Search */}
-      <div className="px-2 pt-2 pb-1">
+      <div className="px-2.5 pt-2.5 pb-2">
         <input
-          className="w-full bg-surface-700 border border-surface-500 rounded px-2 py-1 text-xs text-gray-200 placeholder-gray-500 outline-none focus:border-brand-500"
-          placeholder="Search…"
+          className="input"
+          placeholder={t("sidebar.search")}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
 
-      {/* Tabs */}
-      <div className="flex border-b border-surface-600 text-xs">
-        <button
-          onClick={() => setTab("snippets")}
-          className={`flex-1 py-1.5 font-medium transition-colors ${
-            tab === "snippets"
-              ? "text-brand-400 border-b-2 border-brand-400"
-              : "text-gray-500 hover:text-gray-300"
-          }`}
-        >
-          Snippets
-        </button>
-        <button
-          onClick={() => setTab("history")}
-          className={`flex-1 py-1.5 font-medium transition-colors ${
-            tab === "history"
-              ? "text-brand-400 border-b-2 border-brand-400"
-              : "text-gray-500 hover:text-gray-300"
-          }`}
-        >
-          History
-        </button>
+      {/* Tabs — GitHub underline nav */}
+      <div className="flex gap-1 px-2.5 border-b border-surface-600">
+        {(["snippets", "history"] as Tab[]).map((id) => (
+          <button
+            key={id}
+            onClick={() => setTab(id)}
+            className={`relative px-2.5 pb-2 pt-1 text-[13px] transition-colors after:absolute after:inset-x-1 after:-bottom-px after:h-0.5 after:rounded-full ${
+              tab === id
+                ? "font-semibold text-gray-100 after:bg-brand-400"
+                : "text-gray-500 hover:text-gray-200 after:bg-transparent"
+            }`}
+          >
+            {id === "snippets" ? t("sidebar.snippets") : t("sidebar.history")}
+          </button>
+        ))}
       </div>
 
       {/* Snippets tab */}
       {tab === "snippets" && (
         <div className="flex-1 overflow-y-auto">
           {filteredSnippets.length === 0 ? (
-            <p className="text-xs text-gray-500 px-3 py-4 italic">
-              {q ? "No matches." : "No snippets yet — use + Snippet to save."}
+            <p className="hint px-3 py-4">
+              {q ? t("sidebar.noMatches") : t("sidebar.noSnippets")}
             </p>
           ) : (
-            filteredSnippets.map((s) => (
-              <div
-                key={s.id}
-                onClick={() => handleLoad(s)}
-                className={`group flex items-center justify-between px-3 py-2 cursor-pointer hover:bg-surface-600 ${
-                  activeSnippetId === s.id ? "bg-surface-700 border-l-2 border-brand-500" : ""
-                }`}
-                title="Click to load"
-              >
-                <div className="flex items-center gap-2 min-w-0">
-                  <span className="text-xs font-mono text-brand-400 shrink-0">
+            <div className="p-1.5">
+              {filteredSnippets.map((s) => (
+                <div
+                  key={s.id}
+                  onClick={() => handleLoad(s)}
+                  className={`group flex items-center gap-2 h-8 pl-2 pr-1 rounded-md cursor-pointer transition-colors ${
+                    activeSnippetId === s.id
+                      ? "bg-brand-900 text-gray-100"
+                      : "hover:bg-surface-700"
+                  }`}
+                  title={t("sidebar.loadTitle")}
+                >
+                  <span className={`shrink-0 text-[10px] font-mono font-semibold w-6 ${activeSnippetId === s.id ? "text-brand-300" : "text-gray-500"}`}>
                     {s.language.toUpperCase()}
                   </span>
-                  <span className="text-xs text-gray-300 truncate">{s.name}</span>
+                  <span className="flex-1 text-[13px] text-gray-200 truncate">{s.name}</span>
+                  <span className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button onClick={(e) => handleRunSnippet(e, s)} className="btn btn-invisible btn-sm btn-icon" title={t("sidebar.run")}>
+                      <IconPlay />
+                    </button>
+                    <button onClick={(e) => handleDelete(e, s)} className="btn btn-danger btn-sm btn-icon" title={t("sidebar.delete")}>
+                      <IconX />
+                    </button>
+                  </span>
                 </div>
-                <div className="flex items-center gap-1 shrink-0">
-                  <button
-                    onClick={(e) => handleRunSnippet(e, s)}
-                    className="opacity-0 group-hover:opacity-100 text-brand-400 hover:text-brand-300 text-xs transition-opacity"
-                    title="Run"
-                  >
-                    ▶
-                  </button>
-                  <button
-                    onClick={(e) => handleDelete(e, s)}
-                    className="opacity-0 group-hover:opacity-100 text-gray-500 hover:text-red-400 text-xs transition-opacity"
-                    title="Delete"
-                  >
-                    ×
-                  </button>
-                </div>
-              </div>
-            ))
+              ))}
+            </div>
           )}
         </div>
       )}
@@ -197,77 +187,73 @@ export function Sidebar({ onRun }: Props) {
       {tab === "history" && (
         <div className="flex-1 overflow-y-auto">
           {filteredHistory.length === 0 ? (
-            <p className="text-xs text-gray-500 px-3 py-4 italic">
-              {q ? "No matches." : "No history yet — click ▶ Run to start."}
+            <p className="hint px-3 py-4">
+              {q ? t("sidebar.noMatches") : t("sidebar.noHistory")}
             </p>
           ) : (
             <>
-              {filteredHistory.map((h) => (
-                <div key={h.id} className="group border-b border-surface-700">
-                  {savingHistoryId === h.id ? (
-                    <div className="flex items-center gap-1 px-2 py-1.5">
-                      <input
-                        autoFocus
-                        className="flex-1 bg-surface-700 border border-surface-500 rounded px-2 py-0.5 text-xs text-gray-200 placeholder-gray-500 outline-none focus:border-brand-500"
-                        placeholder="Snippet name…"
-                        value={historySnippetName}
-                        onChange={(e) => setHistorySnippetName(e.target.value)}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") handleConfirmSaveHistory(h);
-                          if (e.key === "Escape") setSavingHistoryId(null);
-                        }}
-                      />
-                      <button
-                        onClick={() => handleConfirmSaveHistory(h)}
-                        disabled={!historySnippetName.trim()}
-                        className="text-brand-400 hover:text-brand-300 disabled:opacity-40 text-xs"
-                        title="Save as snippet"
-                      >
-                        ✓
-                      </button>
-                      <button
-                        onClick={() => setSavingHistoryId(null)}
-                        className="text-gray-500 hover:text-gray-300 text-xs"
-                      >
-                        ×
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-1.5 px-2 py-1.5">
-                      <span className="text-xs font-mono text-brand-400 shrink-0">
-                        {h.language.toUpperCase()}
-                      </span>
-                      <span className="flex-1 text-xs text-gray-400 truncate font-mono">
-                        {codePreview(h.code)}
-                      </span>
-                      <span className="text-xs text-gray-600 shrink-0">
-                        {formatTime(h.ranAt)}
-                      </span>
-                      <button
-                        onClick={(e) => handleRunHistory(e, h)}
-                        className="opacity-0 group-hover:opacity-100 text-brand-400 hover:text-brand-300 text-xs transition-opacity"
-                        title="Run"
-                      >
-                        ▶
-                      </button>
-                      <button
-                        onClick={(e) => handleStartSaveHistory(e, h)}
-                        className="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-gray-200 text-xs transition-opacity"
-                        title="Save as snippet"
-                      >
-                        +
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ))}
+              <div className="p-1.5">
+                {filteredHistory.map((h) => (
+                  <div key={h.id} className="group rounded-md hover:bg-surface-700 transition-colors">
+                    {savingHistoryId === h.id ? (
+                      <div className="flex items-center gap-1 p-1">
+                        <input
+                          autoFocus
+                          className="input h-6 text-xs"
+                          placeholder={t("sidebar.snippetName")}
+                          value={historySnippetName}
+                          onChange={(e) => setHistorySnippetName(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") handleConfirmSaveHistory(h);
+                            if (e.key === "Escape") setSavingHistoryId(null);
+                          }}
+                        />
+                        <button
+                          onClick={() => handleConfirmSaveHistory(h)}
+                          disabled={!historySnippetName.trim()}
+                          className="btn btn-primary btn-sm btn-icon"
+                          title={t("sidebar.saveAsSnippet")}
+                        >
+                          <IconCheck />
+                        </button>
+                        <button
+                          onClick={() => setSavingHistoryId(null)}
+                          className="btn btn-invisible btn-sm btn-icon"
+                          title={t("sidebar.cancel")}
+                        >
+                          <IconX />
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-1.5 h-8 pl-2 pr-1">
+                        <span className="shrink-0 text-[10px] font-mono font-semibold text-gray-500 w-6">
+                          {h.language.toUpperCase()}
+                        </span>
+                        <span className="flex-1 text-xs text-gray-400 truncate font-mono">
+                          {codePreview(h.code)}
+                        </span>
+                        <span className="hint shrink-0 tabular-nums group-hover:hidden">
+                          {formatTime(h.ranAt)}
+                        </span>
+                        <span className="hidden group-hover:flex items-center">
+                          <button onClick={(e) => handleRunHistory(e, h)} className="btn btn-invisible btn-sm btn-icon" title={t("sidebar.run")}>
+                            <IconPlay />
+                          </button>
+                          <button onClick={(e) => handleStartSaveHistory(e, h)} className="btn btn-invisible btn-sm btn-icon" title={t("sidebar.saveAsSnippet")}>
+                            <IconPlus />
+                          </button>
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
 
-              <button
-                onClick={clearHistory}
-                className="w-full py-1.5 text-xs text-gray-600 hover:text-red-400 transition-colors"
-              >
-                Clear history
-              </button>
+              <div className="px-2.5 pb-2.5">
+                <button onClick={clearHistory} className="btn btn-danger btn-sm w-full">
+                  {t("sidebar.clearHistory")}
+                </button>
+              </div>
             </>
           )}
         </div>

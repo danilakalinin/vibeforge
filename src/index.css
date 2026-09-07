@@ -2,6 +2,288 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Theme tokens ───────────────────────────────────────────────────────────
+   --surface-* / --brand-* / --tx-* are "r g b" channel triples (Tailwind adds
+   the alpha — see tailwind.config.js). --surface-a is the surface opacity:
+   1 for solid themes, < 1 for the glass themes (which pair with the native
+   macOS window vibrancy set in tauri.conf.json). Theme ids: src/lib/themes.ts. */
+
+:root {
+  --surface-900: 13 13 13;
+  --surface-800: 20 20 20;
+  --surface-700: 26 26 26;
+  --surface-600: 34 34 34;
+  --surface-500: 42 42 42;
+  --surface-a: 1;
+  --brand-300: 121 192 255;
+  --brand-400: 88 166 255;
+  --brand-500: 47 129 247;
+  --brand-900: 12 36 71;
+  --tx-100: 243 244 246;
+  --tx-200: 229 231 235;
+  --tx-300: 209 213 219;
+  --tx-400: 156 163 175;
+  --tx-500: 107 114 128;
+  --tx-600: 75 85 99;
+  --tx-900: 17 24 39;
+}
+
+/* ── Glass (translucent, over native vibrancy) ───────────────────────────── */
+
+:root[data-theme="glass-dark"] {
+  --surface-900: 16 18 24;
+  --surface-800: 24 26 34;
+  --surface-700: 33 36 46;
+  --surface-600: 46 50 62;
+  --surface-500: 66 70 84;
+  --surface-a: 0.55;
+  --panel-a: 0.94;
+  --brand-300: 138 200 255;
+  --brand-400: 96 173 255;
+  --brand-500: 47 129 247;
+  --brand-900: 13 38 72;
+  --tx-100: 246 248 251;
+  --tx-200: 227 233 241;
+  --tx-300: 201 209 221;
+  --tx-400: 151 161 179;
+  --tx-500: 121 131 149;
+  --tx-600: 93 101 119;
+  --tx-900: 17 24 39;
+}
+
+:root[data-theme="glass-light"] {
+  --surface-900: 248 249 252;
+  --surface-800: 242 244 249;
+  --surface-700: 235 238 245;
+  --surface-600: 225 229 239;
+  --surface-500: 200 207 221;
+  --surface-a: 0.78;
+  --panel-a: 0.96;
+  --brand-300: 9 105 218;
+  --brand-400: 8 96 202;
+  --brand-500: 9 105 218;
+  --brand-900: 214 240 255;
+  /* Darker than the solid light themes: translucent light surfaces lose contrast. */
+  --tx-100: 13 17 23;
+  --tx-200: 26 32 40;
+  --tx-300: 45 53 63;
+  --tx-400: 72 82 95;
+  --tx-500: 95 105 118;
+  --tx-600: 122 132 145;
+  --tx-900: 13 17 23;
+}
+
+/* ── Solid themes ───────────────────────────────────────────────────────── */
+
+:root[data-theme="dracula"] {
+  --surface-900: 40 42 54;
+  --surface-800: 49 51 62;
+  --surface-700: 57 59 70;
+  --surface-600: 70 72 82;
+  --surface-500: 87 89 98;
+  --brand-300: 189 147 249;
+  --brand-400: 169 123 240;
+  --brand-500: 139 92 246;
+  --brand-900: 44 37 64;
+  --tx-100: 255 255 255;
+  --tx-200: 248 248 242;
+  --tx-300: 219 220 222;
+  --tx-400: 189 191 199;
+  --tx-500: 138 149 182;
+  --tx-600: 98 114 164;
+  --tx-900: 250 250 246;
+}
+
+:root[data-theme="nord"] {
+  --surface-900: 46 52 64;
+  --surface-800: 54 60 72;
+  --surface-700: 63 68 79;
+  --surface-600: 75 80 91;
+  --surface-500: 92 97 106;
+  --brand-300: 136 192 208;
+  --brand-400: 143 188 187;
+  --brand-500: 94 129 172;
+  --brand-900: 43 51 63;
+  --tx-100: 255 255 255;
+  --tx-200: 236 239 244;
+  --tx-300: 216 222 233;
+  --tx-400: 180 190 208;
+  --tx-500: 132 145 168;
+  --tx-600: 97 110 136;
+  --tx-900: 242 244 247;
+}
+
+:root[data-theme="night-owl"] {
+  --surface-900: 1 22 39;
+  --surface-800: 11 31 48;
+  --surface-700: 21 41 56;
+  --surface-600: 37 55 69;
+  --surface-500: 57 73 87;
+  --brand-300: 127 219 202;
+  --brand-400: 95 201 182;
+  --brand-500: 199 146 234;
+  --brand-900: 2 42 58;
+  --tx-100: 255 255 255;
+  --tx-200: 214 222 235;
+  --tx-300: 187 199 215;
+  --tx-400: 150 168 186;
+  --tx-500: 118 138 145;
+  --tx-600: 99 119 119;
+  --tx-900: 226 232 241;
+}
+
+:root[data-theme="monokai"] {
+  --surface-900: 39 40 34;
+  --surface-800: 48 49 43;
+  --surface-700: 56 57 52;
+  --surface-600: 69 70 65;
+  --surface-500: 87 87 83;
+  --brand-300: 166 226 46;
+  --brand-400: 143 201 31;
+  --brand-500: 249 38 114;
+  --brand-900: 46 47 38;
+  --tx-100: 255 255 255;
+  --tx-200: 248 248 242;
+  --tx-300: 223 224 213;
+  --tx-400: 190 189 172;
+  --tx-500: 150 146 122;
+  --tx-600: 117 113 94;
+  --tx-900: 250 250 246;
+}
+
+:root[data-theme="tomorrow-night"] {
+  --surface-900: 29 31 33;
+  --surface-800: 38 40 42;
+  --surface-700: 47 49 51;
+  --surface-600: 61 62 64;
+  --surface-500: 79 80 82;
+  --brand-300: 129 162 190;
+  --brand-400: 138 190 183;
+  --brand-500: 178 148 187;
+  --brand-900: 37 40 43;
+  --tx-100: 255 255 255;
+  --tx-200: 197 200 198;
+  --tx-300: 176 179 178;
+  --tx-400: 150 152 150;
+  --tx-500: 130 132 130;
+  --tx-600: 110 112 110;
+  --tx-900: 214 217 215;
+}
+
+:root[data-theme="github-dark"] {
+  --surface-900: 36 41 46;
+  --surface-800: 45 50 54;
+  --surface-700: 54 58 63;
+  --surface-600: 67 71 75;
+  --surface-500: 84 88 92;
+  --brand-300: 88 166 255;
+  --brand-400: 73 147 230;
+  --brand-500: 56 139 253;
+  --brand-900: 38 49 65;
+  --tx-100: 255 255 255;
+  --tx-200: 246 248 250;
+  --tx-300: 224 227 231;
+  --tx-400: 187 192 198;
+  --tx-500: 149 157 165;
+  --tx-600: 118 125 133;
+  --tx-900: 249 250 252;
+}
+
+:root[data-theme="solarized-dark"] {
+  --surface-900: 0 43 54;
+  --surface-800: 7 54 66;
+  --surface-700: 15 63 74;
+  --surface-600: 30 76 86;
+  --surface-500: 52 95 104;
+  --brand-300: 38 139 210;
+  --brand-400: 42 161 152;
+  --brand-500: 108 113 196;
+  --brand-900: 4 49 59;
+  --tx-100: 253 246 227;
+  --tx-200: 199 209 209;
+  --tx-300: 147 161 161;
+  --tx-400: 131 148 150;
+  --tx-500: 101 123 130;
+  --tx-600: 88 110 117;
+  --tx-900: 179 189 189;
+}
+
+:root[data-theme="oceanic-next"] {
+  --surface-900: 27 43 52;
+  --surface-800: 36 51 60;
+  --surface-700: 45 60 68;
+  --surface-600: 59 73 80;
+  --surface-500: 77 90 97;
+  --brand-300: 102 153 204;
+  --brand-400: 95 179 179;
+  --brand-500: 197 148 197;
+  --brand-900: 34 50 60;
+  --tx-100: 255 255 255;
+  --tx-200: 205 211 222;
+  --tx-300: 182 188 200;
+  --tx-400: 149 161 173;
+  --tx-500: 116 129 141;
+  --tx-600: 101 115 126;
+  --tx-900: 220 224 232;
+}
+
+:root[data-theme="cobalt2"] {
+  --surface-900: 25 53 73;
+  --surface-800: 33 62 82;
+  --surface-700: 41 70 91;
+  --surface-600: 55 84 104;
+  --surface-500: 74 101 120;
+  --brand-300: 255 198 0;
+  --brand-400: 230 180 0;
+  --brand-500: 255 157 0;
+  --brand-900: 28 63 87;
+  --tx-100: 255 255 255;
+  --tx-200: 255 255 255;
+  --tx-300: 214 224 232;
+  --tx-400: 168 186 200;
+  --tx-500: 122 148 168;
+  --tx-600: 92 127 150;
+  --tx-900: 255 255 255;
+}
+
+:root[data-theme="github-light"] {
+  --surface-900: 255 255 255;
+  --surface-800: 246 248 250;
+  --surface-700: 238 241 244;
+  --surface-600: 228 232 236;
+  --surface-500: 208 215 222;
+  --brand-300: 9 105 218;
+  --brand-400: 33 139 255;
+  --brand-500: 10 92 194;
+  --brand-900: 221 244 255;
+  --tx-100: 31 35 40;
+  --tx-200: 31 35 40;
+  --tx-300: 57 63 70;
+  --tx-400: 87 96 106;
+  --tx-500: 110 119 129;
+  --tx-600: 140 149 159;
+  --tx-900: 17 24 39;
+}
+
+:root[data-theme="solarized-light"] {
+  --surface-900: 253 246 227;
+  --surface-800: 245 238 213;
+  --surface-700: 238 232 213;
+  --surface-600: 228 222 202;
+  --surface-500: 213 207 187;
+  --brand-300: 38 139 210;
+  --brand-400: 42 161 152;
+  --brand-500: 108 113 196;
+  --brand-900: 231 223 198;
+  --tx-100: 40 54 61;
+  --tx-200: 88 110 117;
+  --tx-300: 96 118 125;
+  --tx-400: 111 133 138;
+  --tx-500: 131 148 148;
+  --tx-600: 147 161 161;
+  --tx-900: 17 24 39;
+}
+
 * { box-sizing: border-box; }
 
 html, body, #root {
@@ -9,11 +291,99 @@ html, body, #root {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #0d0d0d;
-  color: #e5e7eb;
+  background-color: rgb(var(--surface-900) / var(--surface-a, 1));
+  color: rgb(var(--tx-200));
+}
+
+/* font-size lives on body, never on html — Tailwind's rem-based sizing scale is
+   relative to the root, so changing html's size shrinks every spacing utility. */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── UI kit ─────────────────────────────────────────────────────────────────
+   A small GitHub-flavoured component layer: 1px borders instead of shadows,
+   6px radii, medium (not bold) label weight, one visible focus ring. */
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 h-7 px-3 rounded-md
+           text-[13px] font-medium leading-none whitespace-nowrap select-none border
+           transition-colors outline-none
+           focus-visible:ring-2 focus-visible:ring-brand-400/50
+           disabled:opacity-40 disabled:pointer-events-none;
+  }
+  .btn-primary  { @apply bg-brand-500 border-brand-500 text-white hover:bg-brand-400 hover:border-brand-400; }
+  .btn-default  { @apply bg-surface-700 border-surface-600 text-gray-200 hover:bg-surface-600 hover:border-surface-500; }
+  .btn-invisible{ @apply bg-transparent border-transparent text-gray-400 hover:bg-surface-700 hover:text-gray-100; }
+  .btn-danger   { @apply bg-transparent border-transparent text-gray-500 hover:bg-red-500/10 hover:text-red-400; }
+  .btn-sm       { @apply h-6 px-2 text-xs gap-1 rounded; }
+  .btn-icon     { @apply w-7 px-0; }
+  .btn-icon.btn-sm { @apply w-6; }
+
+  .input {
+    @apply w-full h-7 px-2.5 rounded-md bg-surface-900 border border-surface-600
+           text-[13px] text-gray-200 placeholder-gray-500 outline-none transition-colors
+           focus:border-brand-400 focus:ring-2 focus:ring-brand-400/30;
+  }
+  .input-lg { @apply h-8 px-3; }
+
+  /* Segmented control — selected item lifts instead of filling with accent */
+  .seg      { @apply inline-flex items-center gap-0.5 p-0.5 rounded-md bg-surface-700 border border-surface-600; }
+  .seg-item { @apply inline-flex items-center h-5 px-2 rounded text-[11px] font-semibold tracking-wide
+                     border border-transparent text-gray-400 transition-colors hover:text-gray-100; }
+  .seg-item-on { @apply bg-surface-900 border-surface-500 text-gray-100 shadow-sm; }
+
+  /* Dialogs — deliberately close to opaque (--panel-a) even under a glass
+     theme, so form text stays legible over a busy desktop. */
+  .panel {
+    @apply border border-surface-600 rounded-xl shadow-2xl;
+    background-color: rgb(var(--surface-800) / var(--panel-a, 1));
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+  }
+  /* Popovers float above real app content, so here backdrop-filter has
+     something to sample and genuinely frosts what it covers. */
+  .popover {
+    @apply border border-surface-600 rounded-md shadow-2xl;
+    background-color: rgb(var(--surface-800) / var(--panel-a, 1));
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+  }
+  .panel-head  { @apply flex items-center justify-between px-4 h-12 border-b border-surface-600; }
+  .panel-foot  { @apply flex items-center justify-end gap-2 px-4 h-14 border-t border-surface-600; }
+  .panel-title { @apply text-sm font-semibold text-gray-100; }
+
+  /* Panel chrome shared by the editor / output / chat headers */
+  .bar        { @apply flex items-center justify-between px-3 h-9 border-b border-surface-600 shrink-0; }
+  .bar-title  { @apply text-xs font-semibold text-gray-300; }
+
+  .badge { @apply inline-flex items-center h-[18px] px-1.5 rounded-full text-[11px] font-medium border; }
+  .hint  { @apply text-xs text-gray-500; }
+}
+
+/* Glass themes: let the OS vibrancy through and add an in-app blur + faint
+   top sheen so panels read as frosted glass rather than flat translucency. */
+/* Glass themes: the window itself must stay completely see-through so the native
+   NSVisualEffectView behind the webview is what you look at. Every fill here is
+   dropped, and each panel then contributes exactly ONE translucent tint — stack
+   two and the frost turns to mud.
+
+   Note: no backdrop-filter on these. Inside a transparent window there is no web
+   content behind the page to sample, and WebKit composites such a region
+   opaquely — which flattens the vibrancy instead of blurring it. The OS supplies
+   the blur; backdrop-filter is reserved for surfaces that sit above real app
+   content (dialogs, popovers, the sticky find bar). */
+:root[data-theme^="glass"],
+:root[data-theme^="glass"] body,
+:root[data-theme^="glass"] #root,
+:root[data-theme^="glass"] #root > div {
+  background-color: transparent;
 }
 
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+::-webkit-scrollbar-thumb { background: rgb(var(--surface-500) / 0.8); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgb(var(--tx-600)); }

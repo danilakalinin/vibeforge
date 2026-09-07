@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { tauriClient } from "../../lib/tauri";
 import { useStore } from "../../store";
+import { useT } from "../../lib/i18n";
+import { IconX } from "../icons";
 
 interface NpmResult {
   name: string;
@@ -12,6 +14,7 @@ const NPM_SEARCH = "https://registry.npmjs.org/-/v1/search";
 
 export function PackageManager() {
   const { packages, setPackages, togglePackages } = useStore();
+  const t = useT();
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<NpmResult[]>([]);
   const [searching, setSearching] = useState(false);
@@ -76,15 +79,15 @@ export function PackageManager() {
     if (!name) return;
     setLoading(true);
     setShowSuggestions(false);
-    setStatus(`Installing ${name}…`);
+    setStatus(t("pkg.installing", { name }));
     try {
       await tauriClient.installPackage(name);
       await refresh();
-      setStatus(`Installed ${name}`);
+      setStatus(t("pkg.installed", { name }));
       setQuery("");
       setSuggestions([]);
     } catch (err) {
-      setStatus(`Error: ${String(err)}`);
+      setStatus(t("pkg.error", { msg: String(err) }));
     } finally {
       setLoading(false);
     }
@@ -92,33 +95,35 @@ export function PackageManager() {
 
   const handleRemove = async (name: string) => {
     setLoading(true);
-    setStatus(`Removing ${name}…`);
+    setStatus(t("pkg.removing", { name }));
     try {
       await tauriClient.removePackage(name);
       await refresh();
-      setStatus(`Removed ${name}`);
+      setStatus(t("pkg.removed", { name }));
     } catch (err) {
-      setStatus(`Error: ${String(err)}`);
+      setStatus(t("pkg.error", { msg: String(err) }));
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-      <div className="w-[500px] bg-surface-800 rounded-xl shadow-2xl border border-surface-600">
-        <div className="flex items-center justify-between px-5 py-4 border-b border-surface-600">
-          <h2 className="text-sm font-semibold text-gray-200">npm Packages</h2>
-          <button onClick={togglePackages} className="text-gray-400 hover:text-gray-200 text-lg leading-none">×</button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+      <div className="panel w-[520px]">
+        <div className="panel-head">
+          <h2 className="panel-title">{t("pkg.title")}</h2>
+          <button onClick={togglePackages} className="btn btn-invisible btn-sm btn-icon" title={t("settings.close")}>
+            <IconX />
+          </button>
         </div>
 
-        <div className="p-5">
+        <div className="px-4 py-4">
           <div ref={wrapperRef} className="relative mb-3">
             <div className="flex gap-2">
               <div className="relative flex-1">
                 <input
-                  className="w-full bg-surface-700 border border-surface-500 rounded px-3 py-2 text-sm text-gray-200 placeholder-gray-500 outline-none focus:border-brand-500"
-                  placeholder="Search npm (e.g. lodash, axios, dayjs)"
+                  className="input input-lg"
+                  placeholder={t("pkg.search")}
                   value={query}
                   onChange={(e) => handleQueryChange(e.target.value)}
                   onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
@@ -129,39 +134,39 @@ export function PackageManager() {
                   autoFocus
                 />
                 {searching && (
-                  <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-gray-500 animate-pulse">
-                    searching…
+                  <span className="absolute right-2.5 top-1/2 -translate-y-1/2 hint animate-pulse">
+                    {t("pkg.searching")}
                   </span>
                 )}
               </div>
               <button
                 onClick={() => handleInstall()}
                 disabled={loading || !query.trim()}
-                className="px-4 py-2 bg-brand-500 hover:bg-brand-400 disabled:opacity-40 text-white text-sm font-semibold rounded whitespace-nowrap"
+                className="btn btn-primary h-8"
               >
-                Install
+                {t("pkg.install")}
               </button>
             </div>
 
             {showSuggestions && suggestions.length > 0 && (
-              <div className="absolute top-full left-0 right-0 z-10 mt-1 bg-surface-700 border border-surface-500 rounded-lg shadow-xl overflow-hidden"
+              <div className="popover absolute top-full left-0 right-0 z-10 mt-1 overflow-hidden"
                 style={{ maxHeight: "260px", overflowY: "auto" }}>
                 {suggestions.map((pkg) => (
                   <button
                     key={pkg.name}
-                    className="w-full text-left px-3 py-2.5 hover:bg-surface-600 flex items-start gap-3 border-b border-surface-600 last:border-0"
+                    className="group w-full text-left px-3 py-2 hover:bg-surface-700 flex items-start gap-3 border-b border-surface-700 last:border-0 transition-colors"
                     onMouseDown={(e) => { e.preventDefault(); selectSuggestion(pkg.name); }}
                   >
                     <div className="flex-1 min-w-0">
                       <div className="flex items-baseline gap-2">
-                        <span className="text-sm font-medium text-gray-200">{pkg.name}</span>
-                        <span className="text-xs text-gray-500 shrink-0">{pkg.version}</span>
+                        <span className="text-[13px] font-medium text-brand-300">{pkg.name}</span>
+                        <span className="hint shrink-0 font-mono">{pkg.version}</span>
                       </div>
                       {pkg.description && (
-                        <p className="text-xs text-gray-500 truncate mt-0.5">{pkg.description}</p>
+                        <p className="hint truncate mt-0.5">{pkg.description}</p>
                       )}
                     </div>
-                    <span className="text-xs text-brand-400 shrink-0 mt-0.5">install ↵</span>
+                    <span className="hint shrink-0 mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity">↵</span>
                   </button>
                 ))}
               </div>
@@ -169,28 +174,28 @@ export function PackageManager() {
           </div>
 
           {status && (
-            <p className="text-xs font-mono px-1 mb-3 text-gray-400">{status}</p>
+            <p className="hint font-mono mb-3">{status}</p>
           )}
 
-          <div className="max-h-52 overflow-y-auto">
+          <div className="max-h-56 overflow-y-auto -mx-1 px-1">
             {packages.length === 0 ? (
-              <p className="text-xs text-gray-500 italic text-center py-4">No packages installed.</p>
+              <p className="hint text-center py-6">{t("pkg.empty")}</p>
             ) : (
               packages.map((pkg) => (
                 <div
                   key={pkg.name}
-                  className="flex items-center justify-between py-2.5 border-b border-surface-600 last:border-0"
+                  className="group flex items-center justify-between h-9 px-2 -mx-2 rounded-md hover:bg-surface-700 transition-colors"
                 >
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-sm text-gray-200">{pkg.name}</span>
-                    <span className="text-xs text-gray-500">{pkg.version}</span>
+                  <div className="flex items-baseline gap-2 min-w-0">
+                    <span className="text-[13px] text-gray-200 truncate">{pkg.name}</span>
+                    <span className="hint font-mono shrink-0">{pkg.version}</span>
                   </div>
                   <button
                     onClick={() => handleRemove(pkg.name)}
                     disabled={loading}
-                    className="text-xs text-gray-500 hover:text-red-400 disabled:opacity-40"
+                    className="btn btn-danger btn-sm opacity-0 group-hover:opacity-100 transition-opacity"
                   >
-                    Remove
+                    {t("pkg.remove")}
                   </button>
                 </div>
               ))

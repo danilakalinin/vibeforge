@@ -1,9 +1,10 @@
 {
   "identifier": "default",
-  "description": "Default capabilities for VibeLab",
+  "description": "Default capabilities for VibeForge",
   "windows": ["main"],
   "permissions": [
     "core:default",
+    "core:window:allow-set-effects",
     "shell:default",
     "shell:allow-execute",
     "shell:allow-spawn",

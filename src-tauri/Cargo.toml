@@ -1,17 +1,17 @@
 [package]
-name = "vibelab"
+name = "vibeforge"
 version = "0.2.0"
 edition = "2021"
 
 [lib]
-name = "vibelab_lib"
+name = "vibeforge_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
 
 [dependencies]
-tauri = { version = "2", features = [] }
+tauri = { version = "2", features = ["macos-private-api"] }
 tauri-plugin-dialog = "2"
 tauri-plugin-fs = "2"
 tauri-plugin-shell = "2"

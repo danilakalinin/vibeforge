@@ -1,7 +1,7 @@
 {
-  "productName": "VibeLab",
+  "productName": "VibeForge",
   "version": "0.2.0",
-  "identifier": "dev.vibelab.app",
+  "identifier": "dev.vibeforge.app",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:1420",
@@ -10,15 +10,21 @@
   },
   "app": {
     "withGlobalTauri": false,
+    "macOSPrivateApi": true,
     "windows": [
       {
-        "title": "VibeLab",
+        "title": "VibeForge",
         "width": 1400,
         "height": 900,
         "minWidth": 900,
         "minHeight": 600,
         "resizable": true,
-        "backgroundColor": "#0d0d0d"
+        "transparent": true,
+        "windowEffects": {
+          "effects": ["underWindowBackground"],
+          "state": "active",
+          "radius": 10
+        }
       }
     ],
     "security": { "csp": null }

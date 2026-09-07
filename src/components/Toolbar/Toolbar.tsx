@@ -4,6 +4,8 @@ import { tauriClient } from "../../lib/tauri";
 import { setEditorProjectClasses } from "../Editor/Editor";
 import { useExecution } from "../../hooks/useExecution";
 import { useSettings } from "../../hooks/useSettings";
+import { useT } from "../../lib/i18n";
+import { IconPlay, IconX } from "../icons";
 import type { Language, ProjectType } from "../../types";
 
 interface Props { onRun: (code?: string, lang?: Language) => void }
@@ -29,11 +31,12 @@ const PROJECT_TYPE_LABEL: Record<ProjectType, string> = {
   unknown: "Project",
 };
 
+/** GitHub-style label: tinted 10% fill, matching 30% border, saturated text. */
 function projectBadge(type: ProjectType) {
-  if (type === "laravel") return "bg-red-900/50 text-red-300";
-  if (type === "node") return "bg-green-900/50 text-green-300";
-  if (type === "php") return "bg-blue-900/50 text-blue-300";
-  return "bg-surface-600 text-gray-400";
+  if (type === "laravel") return "bg-red-500/10 border-red-500/30 text-red-400";
+  if (type === "node") return "bg-green-500/10 border-green-500/30 text-green-400";
+  if (type === "php") return "bg-indigo-500/10 border-indigo-500/30 text-indigo-400";
+  return "bg-surface-600 border-surface-500 text-gray-400";
 }
 
 export function Toolbar({ onRun }: Props) {
@@ -45,6 +48,7 @@ export function Toolbar({ onRun }: Props) {
   } = useStore();
   const { updateSettings } = useSettings();
   const { cancelAutoRun } = useExecution();
+  const t = useT();
 
   useEffect(() => {
     const onLink = () => { handleLinkProject().catch(() => {}); };
@@ -53,11 +57,11 @@ export function Toolbar({ onRun }: Props) {
       updateSettings({ projectPath: null, projectType: null });
       setEditorProjectClasses([]);
     };
-    window.addEventListener("vibelab:link-project", onLink);
-    window.addEventListener("vibelab:unlink-project", onUnlink);
+    window.addEventListener("vibeforge:link-project", onLink);
+    window.addEventListener("vibeforge:unlink-project", onUnlink);
     return () => {
-      window.removeEventListener("vibelab:link-project", onLink);
-      window.removeEventListener("vibelab:unlink-project", onUnlink);
+      window.removeEventListener("vibeforge:link-project", onLink);
+      window.removeEventListener("vibeforge:unlink-project", onUnlink);
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -95,71 +99,73 @@ export function Toolbar({ onRun }: Props) {
   const projectName = project ? project.path.split("/").pop() ?? project.path : null;
 
   return (
-    <header className="flex items-center gap-2 px-4 py-2 border-b border-surface-600 bg-surface-800 shrink-0">
-      <span className="text-base font-bold text-brand-500 mr-1 select-none">VibeLab</span>
+    <header className="flex items-center gap-2 px-3 h-11 border-b border-surface-600 bg-surface-800 shrink-0">
+      <span className="text-[13px] font-semibold text-gray-100 tracking-tight mr-1 select-none">
+        VibeForge
+      </span>
+
+      <span className="w-px h-4 bg-surface-600 mx-0.5" />
 
       <button
         onClick={toggleSidebar}
-        className="p-1.5 rounded text-gray-400 hover:text-gray-200 hover:bg-surface-600 transition-colors"
-        title="Library (Snippets & History)"
+        className="btn btn-invisible btn-icon"
+        title={t("toolbar.library")}
       >
         <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.5">
-          <rect x="1" y="1" width="13" height="13" rx="1.5" />
-          <line x1="5" y1="1" x2="5" y2="14" />
+          <rect x="1" y="1" width="13" height="13" rx="2.5" />
+          <line x1="5.5" y1="1" x2="5.5" y2="14" />
         </svg>
       </button>
 
       <button
         onClick={toggleSnippetModal}
         disabled={!code.trim()}
-        className="px-2 py-1 rounded text-xs text-gray-400 hover:text-gray-200 hover:bg-surface-600 disabled:opacity-40"
-        title="Save current code as snippet"
+        className="btn btn-invisible"
+        title={t("toolbar.newSnippetTitle")}
       >
-        + Snippet
+        {t("toolbar.newSnippet")}
       </button>
 
-      <div className="flex rounded overflow-hidden border border-surface-600 text-xs">
+      <div className="seg" role="tablist" aria-label={t("toolbar.codeLanguage")}>
         {(["js", "ts", "php"] as Language[]).map((lang) => (
           <button
             key={lang}
+            role="tab"
+            aria-selected={language === lang}
             onClick={() => handleLanguageSwitch(lang)}
-            className={`px-3 py-1 font-mono font-semibold transition-colors ${
-              language === lang
-                ? "bg-brand-500 text-white"
-                : "text-gray-400 hover:text-gray-200 hover:bg-surface-600"
-            }`}
+            className={`seg-item ${language === lang ? "seg-item-on" : ""}`}
           >
             {lang.toUpperCase()}
           </button>
         ))}
       </div>
 
-      <span className="text-xs text-gray-600">{settings.autoRun ? "auto" : "manual"}</span>
+      <span className="hint">{settings.autoRun ? t("toolbar.autoRun") : t("toolbar.manual")}</span>
 
       {/* Project linker */}
       {project ? (
         <div className="flex items-center gap-1.5">
-          <span className={`text-xs px-2 py-0.5 rounded font-mono ${projectBadge(project.type)}`}>
+          <span className={`badge ${projectBadge(project.type)}`}>
             {PROJECT_TYPE_LABEL[project.type]}
           </span>
-          <span className="text-xs text-gray-300 max-w-[120px] truncate" title={project.path}>
+          <span className="text-xs text-gray-300 max-w-[130px] truncate" title={project.path}>
             {projectName}
           </span>
           <button
             onClick={handleUnlinkProject}
-            className="text-gray-500 hover:text-red-400 text-xs"
-            title="Unlink project"
+            className="btn btn-danger btn-sm btn-icon"
+            title={t("toolbar.unlinkProject")}
           >
-            ×
+            <IconX />
           </button>
         </div>
       ) : (
         <button
           onClick={handleLinkProject}
-          className="px-2 py-1 rounded text-xs text-gray-400 hover:text-gray-200 hover:bg-surface-600"
-          title="Link a project folder (Node, Laravel, PHP)"
+          className="btn btn-invisible"
+          title={t("toolbar.linkProjectTitle")}
         >
-          Link Project
+          {t("toolbar.linkProject")}
         </button>
       )}
 
@@ -167,12 +173,9 @@ export function Toolbar({ onRun }: Props) {
 
       <button
         onClick={toggleAiChat}
-        className={`p-1.5 rounded transition-colors ${
-          aiChatOpen
-            ? "text-brand-500 bg-brand-900/30 hover:bg-brand-900/50"
-            : "text-gray-400 hover:text-gray-200 hover:bg-surface-600"
-        }`}
-        title="Toggle AI Chat"
+        aria-pressed={aiChatOpen}
+        className={`btn btn-icon ${aiChatOpen ? "btn-default text-brand-300 border-brand-500/40 bg-brand-900" : "btn-invisible"}`}
+        title={t("toolbar.aiChat")}
       >
         <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path d="M13 2H2a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h3l2 2 2-2h4a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z" />
@@ -181,37 +184,41 @@ export function Toolbar({ onRun }: Props) {
 
       <button
         onClick={toggleConsoleLayout}
-        className="p-1.5 rounded text-gray-400 hover:text-gray-200 hover:bg-surface-600 transition-colors"
-        title={consoleLayout === "side" ? "Move output below editor" : "Move output to right side"}
+        className="btn btn-invisible btn-icon"
+        title={consoleLayout === "side" ? t("toolbar.layoutBelow") : t("toolbar.layoutSide")}
       >
         {consoleLayout === "side" ? <IconLayoutBelow /> : <IconLayoutSide />}
       </button>
 
       <button
-        onClick={() => onRun()}
-        disabled={isRunning}
-        className="flex items-center gap-1.5 px-4 py-1.5 rounded bg-brand-500 hover:bg-brand-400 disabled:opacity-50 text-white text-sm font-semibold transition-colors"
-        title="Run (Cmd+R or Cmd+Enter)"
+        onClick={togglePackages}
+        className="btn btn-invisible"
+        title={t("toolbar.packages")}
       >
-        {isRunning ? "Running…" : "▶ Run"}
+        {t("toolbar.packages")}
       </button>
 
       <button
-        onClick={togglePackages}
-        className="px-2 py-1.5 rounded text-gray-400 hover:text-gray-200 hover:bg-surface-600 text-sm"
-        title="npm packages"
-      >
-        Packages
-      </button>
-      <button
         onClick={toggleSettings}
-        className="p-1.5 rounded text-gray-400 hover:text-gray-200 hover:bg-surface-600"
-        title="Settings"
+        className="btn btn-invisible btn-icon"
+        title={t("toolbar.settings")}
       >
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
           <circle cx="12" cy="12" r="3" />
           <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
         </svg>
+      </button>
+
+      <span className="w-px h-4 bg-surface-600 mx-0.5" />
+
+      <button
+        onClick={() => onRun()}
+        disabled={isRunning}
+        className="btn btn-primary"
+        title={t("toolbar.runTitle")}
+      >
+        <IconPlay />
+        {isRunning ? t("toolbar.running") : t("toolbar.run")}
       </button>
     </header>
   );

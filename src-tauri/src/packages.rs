@@ -9,7 +9,7 @@ pub struct Package {
 
 fn workspace() -> Result<PathBuf, String> {
     let home = std::env::var("HOME").map_err(|e| e.to_string())?;
-    Ok(PathBuf::from(home).join(".vibelab").join("workspace"))
+    Ok(PathBuf::from(home).join(".vibeforge").join("workspace"))
 }
 
 fn npm_path() -> Result<String, String> {

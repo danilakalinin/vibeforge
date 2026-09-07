@@ -4,11 +4,12 @@ dist/
 src-tauri/target/
 src-tauri/gen/
 
-# OS / IDE noise
+# OS / IDE / local tooling noise
 .DS_Store
 *.log
 .idea/
 .vscode/
+.claude/
 
 # Internal planning docs
 docs/superpowers/

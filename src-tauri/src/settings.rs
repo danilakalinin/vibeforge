@@ -6,8 +6,14 @@ fn default_history_limit() -> u32 {
     100
 }
 
+fn default_locale() -> String {
+    "en".to_string()
+}
+
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Settings {
+    #[serde(default = "default_locale")]
+    pub locale: String,
     pub theme: String,
     #[serde(rename = "fontSize")]
     pub font_size: u32,
@@ -38,7 +44,8 @@ pub struct Settings {
 impl Default for Settings {
     fn default() -> Self {
         Self {
-            theme: "dark".to_string(),
+            locale: default_locale(),
+            theme: "glass-dark".to_string(),
             font_size: 14,
             auto_run: true,
             auto_run_delay: 500,
@@ -57,7 +64,7 @@ impl Default for Settings {
 
 fn settings_path() -> Result<PathBuf, String> {
     let home = std::env::var("HOME").map_err(|e| e.to_string())?;
-    let dir = PathBuf::from(home).join(".vibelab");
+    let dir = PathBuf::from(home).join(".vibeforge");
     std::fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
     Ok(dir.join("settings.json"))
 }
@@ -86,7 +93,7 @@ mod tests {
     #[test]
     fn default_settings_values() {
         let s = Settings::default();
-        assert_eq!(s.theme, "dark");
+        assert_eq!(s.theme, "glass-dark");
         assert_eq!(s.font_size, 14);
         assert!(s.auto_run);
         assert_eq!(s.auto_run_delay, 500);
@@ -110,6 +117,7 @@ mod tests {
     #[test]
     fn settings_round_trip() {
         let original = Settings {
+            locale: "ru".to_string(),
             theme: "light".to_string(),
             font_size: 18,
             auto_run: false,
@@ -127,6 +135,7 @@ mod tests {
         let json = serde_json::to_string(&original).unwrap();
         let restored: Settings = serde_json::from_str(&json).unwrap();
         assert_eq!(restored.theme, "light");
+        assert_eq!(restored.locale, "ru");
         assert_eq!(restored.font_size, 18);
         assert!(!restored.auto_run);
         assert_eq!(restored.auto_run_delay, 1000);

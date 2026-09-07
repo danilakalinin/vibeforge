@@ -13,6 +13,7 @@ import { useExecutionListeners } from "./hooks/useExecutionListeners";
 import { useHistory } from "./hooks/useHistory";
 import { useMenuListener } from "./hooks/useMenuListener";
 import { useSettings } from "./hooks/useSettings";
+import { applyDomTheme, syncWindowVibrancy } from "./lib/themes";
 import { useSnippets } from "./hooks/useSnippets";
 import { useStore } from "./store";
 import type { Language } from "./types";
@@ -45,7 +46,8 @@ export default function App() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", settings.theme === "dark");
+    applyDomTheme(settings.theme);
+    void syncWindowVibrancy(settings.theme);
   }, [settings.theme]);
 
   useEffect(() => {
@@ -103,7 +105,7 @@ export default function App() {
   const editorPct = 100 - consolePct;
 
   return (
-    <div className="flex flex-col h-screen dark:bg-surface-900 bg-gray-50 dark:text-gray-100 text-gray-900">
+    <div className="flex flex-col h-screen bg-surface-900 text-gray-200">
       <Toolbar onRun={handleRun} />
 
       <div className="flex flex-1 overflow-hidden min-h-0">

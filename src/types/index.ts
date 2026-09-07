@@ -36,7 +36,10 @@ export interface HistoryEntry {
 }
 
 export interface Settings {
-  theme: "dark" | "light";
+  /** Locale id from src/lib/i18n.ts ("en", "ru"). */
+  locale: string;
+  /** Theme id from src/lib/themes.ts. Legacy values "dark"/"light" still resolve. */
+  theme: string;
   fontSize: number;
   autoRun: boolean;
   autoRunDelay: number;
@@ -58,7 +61,7 @@ export interface ProjectContext {
   type: ProjectType;
 }
 
-export type AiProvider = "claude" | "openai" | "openrouter" | "groq";
+export type AiProvider = "claude" | "openai" | "openrouter" | "groq" | "deepseek";
 
 export interface AiMessage {
   id: string;

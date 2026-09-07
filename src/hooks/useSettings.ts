@@ -1,14 +1,16 @@
 import { useCallback } from "react";
 import { setEditorProjectClasses } from "../components/Editor/Editor";
 import { tauriClient } from "../lib/tauri";
+import { applyDomTheme, syncWindowVibrancy } from "../lib/themes";
 import { useStore } from "../store";
 import type { ProjectType, Settings } from "../types";
 
 export function useSettings() {
   const { settings, setSettings, setProject } = useStore();
 
-  const applyTheme = (theme: string) => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
+  const applyTheme = (id: string) => {
+    applyDomTheme(id);
+    void syncWindowVibrancy(id);
   };
 
   const loadSettings = useCallback(async () => {

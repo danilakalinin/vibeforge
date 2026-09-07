@@ -33,7 +33,7 @@ pub struct HistoryEntry {
 
 fn db_path() -> Result<PathBuf, String> {
     let home = std::env::var("HOME").map_err(|e| e.to_string())?;
-    let dir = PathBuf::from(home).join(".vibelab");
+    let dir = PathBuf::from(home).join(".vibeforge");
     std::fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
     Ok(dir.join("snippets.db"))
 }
@@ -201,6 +201,8 @@ mod tests {
             language: "js".to_string(),
             created_at: "2026-01-01T00:00:00Z".to_string(),
             updated_at: "2026-01-01T00:00:00Z".to_string(),
+            project_path: None,
+            project_type: None,
         }
     }
 

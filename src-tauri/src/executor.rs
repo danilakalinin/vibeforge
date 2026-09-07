@@ -225,13 +225,13 @@ fn tinker_wrap_node(code: &str) -> String {
 
 fn workspace_dir() -> Result<PathBuf, String> {
     let home = std::env::var("HOME").map_err(|e| e.to_string())?;
-    let ws = PathBuf::from(home).join(".vibelab").join("workspace");
+    let ws = PathBuf::from(home).join(".vibeforge").join("workspace");
     std::fs::create_dir_all(&ws).map_err(|e| e.to_string())?;
     let pkg = ws.join("package.json");
     if !pkg.exists() {
         std::fs::write(
             &pkg,
-            r#"{"name":"vibelab-workspace","version":"1.0.0","private":true,"dependencies":{}}"#,
+            r#"{"name":"vibeforge-workspace","version":"1.0.0","private":true,"dependencies":{}}"#,
         )
         .map_err(|e| e.to_string())?;
     }

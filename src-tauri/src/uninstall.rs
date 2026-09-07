@@ -16,7 +16,7 @@ async fn uninstall_macos(app: AppHandle) -> Result<(), String> {
     use std::os::unix::process::CommandExt;
 
     let pid = std::process::id();
-    let script_path = std::env::temp_dir().join("vibelab-uninstall.sh");
+    let script_path = std::env::temp_dir().join("vibeforge-uninstall.sh");
 
     let script = format!(
         r#"#!/bin/sh
@@ -28,15 +28,15 @@ while kill -0 "$PARENT_PID" 2>/dev/null && [ $i -lt 60 ]; do
 done
 sleep 1
 rm -rf -- \
-  "$HOME/.vibelab" \
-  "$HOME/Library/WebKit/dev.vibelab.app" \
-  "$HOME/Library/Caches/dev.vibelab.app" \
-  "$HOME/Library/Application Support/dev.vibelab.app" \
-  "$HOME/Library/Preferences/dev.vibelab.app.plist" \
-  "$HOME/Library/Saved Application State/dev.vibelab.app.savedState" \
-  "$HOME/Library/HTTPStorages/dev.vibelab.app" \
-  "$HOME/Library/HTTPStorages/dev.vibelab.app.binarycookies" \
-  "/Applications/VibeLab.app"
+  "$HOME/.vibeforge" \
+  "$HOME/Library/WebKit/dev.vibeforge.app" \
+  "$HOME/Library/Caches/dev.vibeforge.app" \
+  "$HOME/Library/Application Support/dev.vibeforge.app" \
+  "$HOME/Library/Preferences/dev.vibeforge.app.plist" \
+  "$HOME/Library/Saved Application State/dev.vibeforge.app.savedState" \
+  "$HOME/Library/HTTPStorages/dev.vibeforge.app" \
+  "$HOME/Library/HTTPStorages/dev.vibeforge.app.binarycookies" \
+  "/Applications/VibeForge.app"
 rm -- "$0"
 "#
     );
