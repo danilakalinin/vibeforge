@@ -1,6 +1,15 @@
 # Changelog
 
-## [Unreleased]
+## [0.3.1] - 2026-09-08
+
+### Added
+- **The AI chat dock can be resized.** It was pinned to 280px; it now has a drag handle and remembers its height for the session, between 140px and the viewport minus 220px.
+
+### Fixed
+- **macOS window tiling now works** — Fill, Center and the Move & Resize group (`fn+Ctrl+F`, `fn+Ctrl+C`, `fn+Ctrl+arrows`) were missing from the Window menu, and the shortcuts silently did nothing. macOS delivers these as commands on the standard Window menu, which AppKit populates only for the submenu registered as `NSApp.windowsMenu`; that registration was happening while the menu was being built, so Tauri replaced the tagged submenu when it installed the app menu. It now runs from the setup hook, after the menu is in place.
+- **Glyphs no longer smear when scrolling under a glass theme.** A fully transparent Monaco background let WebKit skip clearing between paints inside the vibrant window. The editor now paints the panel's single translucent tint itself.
+
+## [0.3.0] - 2026-09-07
 
 ### Added
 - **DeepSeek AI provider** — Select "DeepSeek" in Settings → AI Assistant and paste a DeepSeek API key to chat with `deepseek-chat`. Uses DeepSeek's native OpenAI-compatible endpoint directly (no OpenRouter markup).

@@ -41,6 +41,15 @@ if [[ "$BRANCH" != "main" ]]; then
   exit 1
 fi
 
+# --- Validate the changelog ---------------------------------------------
+# Easy to forget, and a release with no entry is invisible to everyone but the
+# person who cut it. v0.3.0 shipped this way; hence the guard.
+if ! grep -q "^## \[$VERSION\]" CHANGELOG.md; then
+  echo "Error: CHANGELOG.md has no '## [$VERSION]' section."
+  echo "       Describe what is in this release before tagging it."
+  exit 1
+fi
+
 echo "Releasing VibeForge $TAG on $(uname -s)..."
 
 # --- Bump version in three files ----------------------------------------
