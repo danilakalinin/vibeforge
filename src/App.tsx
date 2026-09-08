@@ -21,6 +21,7 @@ import type { Language } from "./types";
 const CONSOLE_MIN_PCT = 15;
 const CONSOLE_MAX_PCT = 75;
 const EDITOR_MIN_PCT = 25;
+const AI_CHAT_MIN_PX = 140;
 
 export default function App() {
   const {
@@ -38,6 +39,8 @@ export default function App() {
 
   // console width % (side layout) / console height % (below layout)
   const [consolePct, setConsolePct] = useState(42);
+  // AI chat dock height in px (bottom panel)
+  const [aiChatPx, setAiChatPx] = useState(280);
 
   useEffect(() => {
     loadSettings();
@@ -102,6 +105,14 @@ export default function App() {
     });
   }, []);
 
+  const handleAiChatResize = useCallback((delta: number) => {
+    setAiChatPx((prev) => {
+      const max = Math.max(AI_CHAT_MIN_PX, window.innerHeight - 220);
+      // Dragging the handle down (positive delta) shrinks the chat dock.
+      return Math.min(max, Math.max(AI_CHAT_MIN_PX, prev - delta));
+    });
+  }, []);
+
   const editorPct = 100 - consolePct;
 
   return (
@@ -139,9 +150,12 @@ export default function App() {
       </div>
 
       {aiChatOpen && (
-        <div className="shrink-0 border-t border-surface-600" style={{ height: "280px" }}>
-          <AiChat onInsertCode={setCode} />
-        </div>
+        <>
+          <ResizeHandle direction="vertical" onResize={handleAiChatResize} />
+          <div className="shrink-0 overflow-hidden" style={{ height: `${aiChatPx}px` }}>
+            <AiChat onInsertCode={setCode} />
+          </div>
+        </>
       )}
 
       {packagesOpen && <PackageManager />}

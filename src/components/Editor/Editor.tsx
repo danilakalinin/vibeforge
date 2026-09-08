@@ -185,15 +185,18 @@ function registerPhpProviders(monaco: Parameters<OnMount>[1]) {
 }
 
 function defineThemes(monaco: Parameters<OnMount>[1]) {
-  // Glass themes: fully transparent editor surfaces so the native window
-  // vibrancy (tauri.conf.json) shows through behind the code.
+  // Glass themes: the editor carries the panel's single translucent tint
+  // itself (matching --surface-900 / --surface-a in index.css) rather than
+  // letting a fully transparent Monaco surface sit over a tinted container.
+  // A 0-alpha editor background makes WebKit skip clearing between paints in
+  // the vibrant Tauri window, which smears glyphs and line numbers on scroll.
   monaco.editor.defineTheme("glass-dark", {
     base: "vs-dark",
     inherit: true,
     rules: [],
     colors: {
-      "editor.background": "#00000000",
-      "editorGutter.background": "#00000000",
+      "editor.background": "#1012188c",
+      "editorGutter.background": "#1012188c",
       "minimap.background": "#00000000",
       "editor.lineHighlightBackground": "#ffffff0d",
       "editorLineNumber.foreground": "#ffffff40",
@@ -207,8 +210,8 @@ function defineThemes(monaco: Parameters<OnMount>[1]) {
     inherit: true,
     rules: [],
     colors: {
-      "editor.background": "#00000000",
-      "editorGutter.background": "#00000000",
+      "editor.background": "#f8f9fcc7",
+      "editorGutter.background": "#f8f9fcc7",
       "minimap.background": "#00000000",
       "editor.lineHighlightBackground": "#0000000a",
       "editorLineNumber.foreground": "#00000040",
@@ -392,8 +395,8 @@ export function Editor({ onRun }: Props) {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="flex flex-col h-full bg-surface-900">
-      <div className="bar">
+    <div className="flex flex-col h-full">
+      <div className="bar bg-surface-900">
         <div className="flex items-center gap-2 min-w-0">
           <span className="bar-title">{LANG_LABEL[language]}</span>
           {activeSnippetId && (

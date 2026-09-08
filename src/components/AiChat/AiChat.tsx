@@ -135,7 +135,7 @@ export function AiChat({ onInsertCode }: AiChatProps) {
   };
 
   return (
-    <div className="flex flex-col h-full border-t border-surface-600 bg-surface-800">
+    <div className="flex flex-col h-full bg-surface-800">
       <div className="bar">
         <div className="flex items-center gap-2">
           <span className="bar-title">{t("ai.title")}</span>
