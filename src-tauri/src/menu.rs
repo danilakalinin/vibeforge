@@ -1,6 +1,9 @@
 use tauri::{AppHandle, Emitter, Runtime};
 use tauri::menu::{Menu, MenuBuilder, MenuItem, PredefinedMenuItem, SubmenuBuilder};
 
+pub const WINDOW_MENU_ID: &str = "window-menu";
+pub const HELP_MENU_ID: &str = "help-menu";
+
 pub fn build<R: Runtime>(app: &AppHandle<R>) -> tauri::Result<Menu<R>> {
     let sep = || PredefinedMenuItem::separator(app);
 
@@ -112,14 +115,23 @@ pub fn build<R: Runtime>(app: &AppHandle<R>) -> tauri::Result<Menu<R>> {
 
     // ── Window ────────────────────────────────────────────────────────────
     let window_menu = {
-        let minimize = PredefinedMenuItem::minimize(app, None)?;
-        let zoom     = PredefinedMenuItem::maximize(app, None)?;
+        let minimize   = PredefinedMenuItem::minimize(app, None)?;
+        let zoom       = PredefinedMenuItem::maximize(app, None)?;
+        let fullscreen = PredefinedMenuItem::fullscreen(app, None)?;
+        let front      = PredefinedMenuItem::bring_all_to_front(app, None)?;
 
-        SubmenuBuilder::new(app, "Window")
+        SubmenuBuilder::with_id(app, WINDOW_MENU_ID, "Window")
             .item(&minimize)
             .item(&zoom)
+            .item(&fullscreen)
+            .item(&sep()?)
+            .item(&front)
             .build()?
     };
+
+    // NOTE: the Window/Help submenus are registered with AppKit in
+    // register_macos_roles(), which must run *after* Tauri installs this menu as
+    // the application menu — doing it here has no effect (see that function).
 
     // ── Help ──────────────────────────────────────────────────────────────
     let help_menu = {
@@ -129,7 +141,7 @@ pub fn build<R: Runtime>(app: &AppHandle<R>) -> tauri::Result<Menu<R>> {
         let releases  = MenuItem::with_id(app, "releases",     "View Releases",     true, None::<&str>)?;
         let uninstall = MenuItem::with_id(app, "uninstall",    "Uninstall VibeForge\u{2026}", true, None::<&str>)?;
 
-        SubmenuBuilder::new(app, "Help")
+        SubmenuBuilder::with_id(app, HELP_MENU_ID, "Help")
             .item(&website)
             .item(&github)
             .item(&report)
@@ -139,6 +151,7 @@ pub fn build<R: Runtime>(app: &AppHandle<R>) -> tauri::Result<Menu<R>> {
             .item(&uninstall)
             .build()?
     };
+
 
     // ── Assemble ──────────────────────────────────────────────────────────
     let mut builder = MenuBuilder::new(app);
@@ -154,6 +167,29 @@ pub fn build<R: Runtime>(app: &AppHandle<R>) -> tauri::Result<Menu<R>> {
         .item(&window_menu)
         .item(&help_menu)
         .build()
+}
+
+/// Hands the Window and Help submenus to AppKit so it can manage them.
+///
+/// This is what makes macOS add its standard "Move & Resize" group (Fill,
+/// Center, halves — fn+Ctrl+F / fn+Ctrl+C / fn+Ctrl+arrows) and the live window
+/// list. Those shortcuts are dispatched *as menu commands*: with no registered
+/// Window menu there is nothing for them to invoke, and they silently do nothing.
+///
+/// Must run AFTER Tauri has installed the menu as the application menu —
+/// calling it while building only tags a submenu that is about to be replaced.
+#[cfg(target_os = "macos")]
+pub fn register_macos_roles<R: Runtime>(app: &AppHandle<R>) {
+    let Some(menu) = app.menu() else { return };
+    for (id, is_window) in [(WINDOW_MENU_ID, true), (HELP_MENU_ID, false)] {
+        let Some(kind) = menu.get(id) else { continue };
+        let Some(submenu) = kind.as_submenu() else { continue };
+        let _ = if is_window {
+            submenu.set_as_windows_menu_for_nsapp()
+        } else {
+            submenu.set_as_help_menu_for_nsapp()
+        };
+    }
 }
 
 pub fn handle<R: Runtime>(app: &AppHandle<R>, event: tauri::menu::MenuEvent) {
