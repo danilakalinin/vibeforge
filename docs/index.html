@@ -1,274 +1,1974 @@
 <!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="icon" type="image/png" href="favicon.png" />
+<html lang="ru"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="assets/react.js"></script>
+<script src="assets/react-dom.js"></script>
+<script src="assets/dc-runtime.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
 <title>VibeForge — локальный блокнот для кода с AI</title>
-<meta name="description" content="Локальный блокнот для JavaScript, TypeScript и PHP со встроенным AI-ассистентом. Без браузера, без облака." />
+<link rel="icon" type="image/png" href="favicon.png">
+
+<style>/* cyrillic-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/ibm-plex-mono-400-cyrillic-ext.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/ibm-plex-mono-400-cyrillic.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/ibm-plex-mono-400-vietnamese.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/ibm-plex-mono-400-latin-ext.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/ibm-plex-mono-400-latin.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("fonts/ibm-plex-mono-500-cyrillic-ext.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("fonts/ibm-plex-mono-500-cyrillic.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("fonts/ibm-plex-mono-500-vietnamese.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("fonts/ibm-plex-mono-500-latin-ext.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("fonts/ibm-plex-mono-500-latin.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-cyrillic-ext.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-cyrillic.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-greek.woff2") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-vietnamese.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-latin-ext.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-latin.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-cyrillic-ext.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-cyrillic.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-greek.woff2") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-vietnamese.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-latin-ext.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-latin.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-cyrillic-ext.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-cyrillic.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-greek.woff2") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-vietnamese.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-latin-ext.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-latin.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-cyrillic-ext.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-cyrillic.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-greek.woff2") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-vietnamese.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-latin-ext.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("fonts/ibm-plex-sans-700-latin.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'IBM Plex Serif';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/ibm-plex-serif-400-italic-cyrillic-ext.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'IBM Plex Serif';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/ibm-plex-serif-400-italic-cyrillic.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'IBM Plex Serif';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/ibm-plex-serif-400-italic-vietnamese.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'IBM Plex Serif';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/ibm-plex-serif-400-italic-latin-ext.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'IBM Plex Serif';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/ibm-plex-serif-400-italic-latin.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  /* Палитра темы Glass Light из самого приложения */
-  :root {
-    --bg:       #f8f9fc;
-    --panel:    #ffffff;
-    --subtle:   #f2f4f9;
-    --border:   #e1e5ef;
-    --text:     #1a2028;
-    --text-2:   #2d353f;
-    --muted:    #5f6976;
-    --faint:    #7a8491;
-    --accent:   #0969da;
-    --accent-h: #0860ca;
-    --accent-bg:#ddf4ff;
-    --radius:   6px;
-  }
-
   html { scroll-behavior: smooth; }
   body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, "Helvetica Neue", Arial, sans-serif;
-    font-size: 15px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    background-color: #f7f8fb;
+    background-image: radial-gradient(circle at 1px 1px, rgba(18,32,58,.13) 1px, transparent 0);
+    background-size: 22px 22px;
+    background-position: 0 0;
+    background-attachment: fixed;
   }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px; }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-
-  /* ── Шапка: матовое стекло, как панели в приложении ── */
-  nav {
-    position: sticky; top: 0; z-index: 10;
-    height: 52px;
-    border-bottom: 1px solid var(--border);
-    background: rgb(255 255 255 / .72);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-  }
-  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 100%; }
-  .brand { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; color: var(--text); letter-spacing: -.2px; }
-  .nav-links { display: flex; align-items: center; gap: 20px; }
-  .nav-links a { color: var(--muted); font-size: 13px; }
-  .nav-links a:hover { color: var(--text); text-decoration: none; }
-
-  /* ── Кнопки: тот же UI-kit, что в программе ── */
-  .btn {
-    display: inline-flex; align-items: center; gap: 7px;
-    height: 34px; padding: 0 16px;
-    border: 1px solid transparent; border-radius: var(--radius);
-    font-size: 14px; font-weight: 500; line-height: 1;
-    transition: background-color .15s, border-color .15s;
-  }
-  .btn:hover { text-decoration: none; }
-  .btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .btn-primary:hover { background: var(--accent-h); border-color: var(--accent-h); }
-  .btn-default { background: var(--panel); border-color: var(--border); color: var(--text); }
-  .btn-default:hover { background: var(--subtle); }
-
-  /* ── Первый экран ── */
-  header.hero { padding: 72px 0 40px; text-align: center; }
-  .tag {
-    display: inline-block; margin-bottom: 18px;
-    padding: 3px 10px; border: 1px solid var(--border); border-radius: 999px;
-    background: var(--accent-bg); color: var(--accent);
-    font-size: 12px; font-weight: 500;
-  }
-  h1 { font-size: clamp(30px, 5vw, 44px); font-weight: 650; line-height: 1.15; letter-spacing: -.9px; margin-bottom: 14px; }
-  .lede { max-width: 560px; margin: 0 auto 28px; color: var(--muted); font-size: 16px; }
-  .cta { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-  .note { margin-top: 14px; font-size: 12.5px; color: var(--faint); }
-
-  /* ── Скриншоты ── */
-  figure { margin: 0; }
-  .shot {
-    width: 100%; display: block;
-    border-radius: 12px;
-  }
-  figcaption { margin-top: 10px; font-size: 13px; color: var(--faint); text-align: center; }
-
-  /* ── Секции ── */
-  section { padding: 56px 0; }
-  section + section { border-top: 1px solid var(--border); }
-  h2 { font-size: 20px; font-weight: 600; letter-spacing: -.3px; margin-bottom: 6px; }
-  .sub { color: var(--muted); font-size: 14.5px; margin-bottom: 28px; }
-
-  /* 6 ячеек: ровно 3x2, иначе auto-fit оставляет пустые клетки */
-  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
-  @media (max-width: 860px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
-  .cell { background: var(--panel); padding: 18px 20px; }
-  .cell h3 { font-size: 14px; font-weight: 600; margin-bottom: 5px; }
-  .cell p { font-size: 13px; color: var(--muted); line-height: 1.6; }
-
-  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; width: calc(100% + 64px); margin-left: -32px; }
-  @media (max-width: 1040px) { .pair { width: auto; margin-left: 0; } }
-  @media (max-width: 760px) { .pair { grid-template-columns: 1fr; } }
-
-  /* ── Скачивание ── */
-  .dl { text-align: center; }
-  .dl-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 22px; }
-  .soon { display: inline-flex; align-items: center; height: 34px; padding: 0 16px; border: 1px dashed var(--border); border-radius: var(--radius); color: var(--faint); font-size: 14px; }
-  .gate { max-width: 620px; margin: 0 auto; text-align: left; background: var(--subtle); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; font-size: 13px; color: var(--muted); }
-  .gate strong { color: var(--text-2); font-weight: 600; }
-  code { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace; font-size: 12.5px; background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; color: var(--text-2); }
-  pre { margin: 10px 0; background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 12px; overflow-x: auto; }
-  pre code { border: none; background: none; padding: 0; }
-
-
-  /* ── Эмодзи: лёгкое покачивание, ускоряется при наведении ── */
-  .ico {
-    display: inline-block; font-size: 21px; line-height: 1; margin-bottom: 9px;
-    animation: bob 3.4s ease-in-out infinite; animation-delay: var(--d, 0s);
-  }
-  .cell { transition: background-color .15s; }
-  .cell:hover { background: var(--subtle); }
-  .cell:hover .ico { animation-duration: .7s; }
-  @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-
-  .h2ico { display: inline-block; margin-right: 8px; animation: bob 3.4s ease-in-out infinite; }
-
-  .spark { display: inline-block; animation: twinkle 2.6s ease-in-out infinite; }
-  @keyframes twinkle {
-    0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
-    50%      { opacity: .55; transform: scale(1.18) rotate(12deg); }
-  }
-
-  .btn .em { display: inline-block; font-size: 14px; }
-  .btn-primary .em { animation: nudge 3s ease-in-out infinite; }
-  @keyframes nudge { 0%, 86%, 100% { transform: translateY(0); } 93% { transform: translateY(2px); } }
-
-  /* Уважаем системную настройку «уменьшить движение» */
+  body { background-repeat: repeat; color: #12161c; font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-x: hidden; }
+  a { color: #0969da; text-decoration: none; }
+  a:hover { color: #0860ca; }
+  ::selection { background: #ddf4ff; color: #12161c; }
+  @keyframes vfDrift { 0% { transform: translate3d(-4%, 0, 0) scale(1); } 50% { transform: translate3d(5%, -3%, 0) scale(1.09); } 100% { transform: translate3d(-4%, 0, 0) scale(1); } }
+  @keyframes vfRise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes vfBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  @keyframes vfPulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+  @keyframes vfType { from { clip-path: inset(0 100% -.2em 0); } to { clip-path: inset(0 -.12em -.2em 0); } }
+  @keyframes vfCaret { 0% { opacity: 0; } 2% { opacity: 1; } 50% { opacity: 1; } 52% { opacity: 0; } 100% { opacity: 0; } }
+  @keyframes vfCaretOut { to { opacity: 0; } }
+  @keyframes vfUnderline { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  [data-hl] { position: relative; display: inline-block; }
+  [data-hl] > svg { position: absolute; left: -.14em; top: -.06em; width: calc(100% + .28em); height: calc(100% + .12em); overflow: visible; pointer-events: none; z-index: -1; }
+  [data-hl] > svg path { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+  [data-hl].vf-on > svg path { animation: vfStroke .95s cubic-bezier(.35,.9,.25,1) both; }
+  [data-hl].vf-on > svg path:nth-child(2) { animation-delay: .16s; animation-duration: .8s; }
+  @keyframes vfStroke { to { stroke-dashoffset: 0; } }
+  @keyframes vfBlurFade { from { opacity: 0; filter: blur(12px); transform: translateY(14px) scale(.985); } to { opacity: 1; filter: blur(0); transform: none; } }
+  @keyframes vfBeamY { 0% { transform: translateY(115%); opacity: 0; } 12% { opacity: 1; } 82% { opacity: 1; } 100% { transform: translateY(-115%); opacity: 0; } }
+  @keyframes vfBeamX { 0% { transform: translateX(115%); opacity: 0; } 12% { opacity: 1; } 82% { opacity: 1; } 100% { transform: translateX(-115%); opacity: 0; } }
+  body.vf-cursor, body.vf-cursor *, body.vf-cursor *::before, body.vf-cursor *::after { cursor: none !important; }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
     html { scroll-behavior: auto; }
+    [data-hero-head], [data-hero-head] *:not([data-caret]), [data-reveal], [data-hero-shot] { opacity: 1 !important; transform: none !important; }
   }
-
-  footer { border-top: 1px solid var(--border); padding: 28px 0 40px; text-align: center; font-size: 13px; color: var(--faint); }
-  footer a { color: var(--muted); }
+  @media (max-width: 1080px) {
+    [data-split] { grid-template-columns: minmax(0, 1fr) !important; gap: 40px !important; }
+  }
+  @media (max-width: 1080px) {
+    [data-herogrid] { grid-template-columns: minmax(0, 1fr) !important; gap: 56px !important; }
+    [data-herospec] { max-width: 420px; margin: 0 auto; }
+    [data-tabs] { grid-template-columns: minmax(0, 1fr) !important; }
+    [data-tablist] { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)) !important; }
+  }
+  @media (max-width: 860px) {
+    [data-navlinks] > [data-navlink] { display: none !important; }
+    [data-hero-head] { padding-top: 130px !important; }
+    [data-cardsplit] { grid-template-columns: minmax(0, 1fr) !important; gap: 22px !important; }
+    [data-providers] { grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)) !important; }
+    [data-glasscopy] { padding: 88px 24px 96px !important; }
+    [data-pad] { padding-left: 22px !important; padding-right: 22px !important; }
+    [data-section] { padding-top: 88px !important; }
+  }
+  @media (max-width: 700px) {
+    [data-type-line] { white-space: normal !important; max-width: 100% !important; }
+    [data-hero-term] h1 { padding: 22px 18px 26px !important; }
+  }
+  @media (max-width: 760px) {
+    [data-hero-shot] { transform: none !important; }
+    [data-shotstage] { height: 300px !important; padding: 12px !important; }
+  }
+  @media (max-width: 560px) {
+    [data-herocap] { display: none !important; }
+  }
 </style>
-</head>
-<body>
+</helmet>
 
-<nav>
-  <div class="wrap">
-    <span class="brand">VibeForge</span>
-    <span class="nav-links">
-      <a href="#features">Возможности</a>
-      <a href="#download">Скачать</a>
-      <a href="https://github.com/danilakalinin/vibeforge">GitHub</a>
-      <a href="en.html">EN</a>
-    </span>
+<nav data-nav="" style="position: fixed; top: 0; left: 0; right: 0; zIndex: 50; height: 68px; borderBottom: 1px solid transparent; transition: height .45s cubic-bezier(.16,1,.3,1), background-color .35s ease, border-color .35s ease, backdrop-filter .35s ease">
+  <div style="maxWidth: 1240px; height: 100%; margin: 0 auto; padding: 0 32px; display: flex; alignItems: center; justifyContent: space-between; gap: 24px">
+    <a href="#top" style="display: flex; alignItems: center; gap: 10px; color: #12161c; textDecoration: none">
+      <span style="width: 22px; height: 22px; borderRadius: 6px; background: #0969da; boxShadow: 0 2px 8px rgba(9,105,218,.35); display: block"></span>
+      <span style="fontWeight: 600; fontSize: 16px; letterSpacing: -.3px">VibeForge</span>
+    </a>
+    <div data-navlinks="" style="display: flex; alignItems: center; gap: 4px">
+      <a href="#features" data-navlink="" style="padding: 8px 12px; borderRadius: 8px; color: #5f6976; fontSize: 14px; fontWeight: 500; transition: color .2s, background-color .2s" style-hover="color: #12161c; background: rgba(18,22,28,.045)">Возможности</a>
+      <a href="#glass" data-navlink="" style="padding: 8px 12px; borderRadius: 8px; color: #5f6976; fontSize: 14px; fontWeight: 500; transition: color .2s, background-color .2s" style-hover="color: #12161c; background: rgba(18,22,28,.045)">Дизайн</a>
+      <a href="#download" data-navlink="" style="padding: 8px 12px; borderRadius: 8px; color: #5f6976; fontSize: 14px; fontWeight: 500; transition: color .2s, background-color .2s" style-hover="color: #12161c; background: rgba(18,22,28,.045)">Скачать</a>
+      <a href="https://github.com/danilakalinin/vibeforge" data-navlink="" style="padding: 8px 12px; borderRadius: 8px; color: #5f6976; fontSize: 14px; fontWeight: 500; transition: color .2s, background-color .2s" style-hover="color: #12161c; background: rgba(18,22,28,.045)">GitHub</a>
+      <span style="width: 1px; height: 20px; background: #e4e7ef; margin: 0 10px"></span>
+      <a href="en.html" style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 12px; letterSpacing: .06em; color: #7a8491; padding: 7px 10px; border: 1px solid #e4e7ef; borderRadius: 8px; transition: color .2s, border-color .2s" style-hover="color: #12161c; borderColor: #c9d0e0">EN</a>
+      <a href="https://github.com/danilakalinin/vibeforge/releases/latest" style="marginLeft: 8px; display: inline-flex; alignItems: center; gap: 8px; height: 38px; padding: 0 16px; borderRadius: 9px; background: #12161c; color: #fff; fontSize: 14px; fontWeight: 500; transition: transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s ease, background-color .2s" style-hover="background: #0969da; transform: translateY(-1px); boxShadow: 0 8px 22px rgba(9,105,218,.28)" style-active="transform: translateY(0)">Скачать</a>
+    </div>
   </div>
 </nav>
 
-<div class="wrap">
+<main id="top" style="position: relative; overflow: hidden">
 
-  <header class="hero">
-    <span class="tag"><span class="spark">✨</span> Открытый исходный код · MIT</span>
-    <h1>Блокнот для кода,<br>который отвечает сразу</h1>
-    <p class="lede">Бесплатная open-source альтернатива платным блокнотам вроде RunJS: JavaScript, TypeScript и PHP со встроенным AI-ассистентом. Всё выполняется у вас на машине — без браузера и без облака.</p>
-    <div class="cta">
-      <a href="#download" class="btn btn-primary">
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 12l-4-4h2.5V2h3v6H12L8 12zm-6 2h12v1.5H2V14z"/></svg>
-        <span class="em">🍎</span> Скачать для macOS
+  <header data-hero-head="" data-pad="" style="position: relative; zIndex: 1; maxWidth: 1240px; margin: 0 auto; padding: 104px 32px 0; textAlign: center">
+    <div style="display: inline-flex; alignItems: center; gap: 10px; padding: 9px 20px 9px 15px; border: 1px solid #dfe4ef; borderRadius: 999px; background: rgba(255,255,255,.7); backdropFilter: blur(10px); fontFamily: 'IBM Plex Mono', monospace; fontSize: 16px; letterSpacing: .1em; textTransform: uppercase; color: #5f6976; animation: vfRise .9s cubic-bezier(.16,1,.3,1) .05s both">
+      <span style="width: 8px; height: 8px; borderRadius: 999px; background: #0969da; animation: vfPulse 3s ease-in-out infinite; display: block"></span>
+      Open source
+      <span style="width: 1px; height: 12px; background: #dfe4ef; display: block; flexShrink: 0"></span>
+      <span data-morph="" data-morph-list="Блокнот для кода|JS · TS · PHP|AI внутри|Локально · без облака|Нативно на macOS|Бесплатно" style="position: relative; display: block; flexShrink: 0; textAlign: left; lineHeight: 1.6; whiteSpace: nowrap; transition: width .42s cubic-bezier(.16,1,.3,1)">
+        <span data-morph-sizer="" aria-hidden="true" style="display: inline-block; width: max-content; visibility: hidden; whiteSpace: nowrap; lineHeight: 1.6">Локально · без облака</span>
+        <span data-morph-slot="" style="position: absolute; inset: 0; display: flex; alignItems: center; whiteSpace: nowrap; color: #12161c; transition: opacity .42s cubic-bezier(.16,1,.3,1), transform .42s cubic-bezier(.16,1,.3,1), filter .42s ease">Блокнот для кода</span>
+        <span data-morph-slot="" style="position: absolute; inset: 0; display: flex; alignItems: center; whiteSpace: nowrap; color: #12161c; opacity: 0; transition: opacity .42s cubic-bezier(.16,1,.3,1), transform .42s cubic-bezier(.16,1,.3,1), filter .42s ease"></span>
+      </span>
+    </div>
+    <div data-hero-term="" style="maxWidth: 860px; margin: 26px auto 0; textAlign: left; borderRadius: 16px; overflow: hidden; background: #0d1319; border: 1px solid rgba(255,255,255,.1); boxShadow: 0 34px 80px rgba(13,25,45,.28), 0 4px 14px rgba(13,25,45,.14); animation: vfRise 1s cubic-bezier(.16,1,.3,1) .12s both">
+      <div style="display: flex; alignItems: center; gap: 12px; padding: 12px 16px; borderBottom: 1px solid rgba(255,255,255,.08)">
+        <span style="display: flex; gap: 7px">
+          <span style="width: 9px; height: 9px; borderRadius: 999px; background: #ff5f57; display: block"></span>
+          <span style="width: 9px; height: 9px; borderRadius: 999px; background: #febc2e; display: block"></span>
+          <span style="width: 9px; height: 9px; borderRadius: 999px; background: #28c840; display: block"></span>
+        </span>
+        <span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 11.5px; letterSpacing: .07em; color: #7f8b99">vibeforge — scratchpad</span>
+      </div>
+      <h1 style="margin: 0; padding: 30px 26px 34px; fontFamily: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace; fontSize: clamp(15px, 2.7vw, 33px); lineHeight: 1.42; fontWeight: 500; letterSpacing: -.03em; color: #e8eef7">
+        <span data-type-line="" style="display: block; whiteSpace: nowrap"><span style="color: #4796e6">$ </span><em style="fontStyle: normal; backgroundImage: linear-gradient(96deg, #6fb2f2 0%, #4796e6 46%, #2f8be3 100%); WebkitBackgroundClip: text; backgroundClip: text; WebkitTextFillColor: transparent; color: #4796e6">Forge</em> your ideas<span data-caret="" style="display: inline-block; width: .55ch; height: .95em; marginLeft: .12em; verticalAlign: -.14em; background: #4796e6; opacity: 0"></span></span>
+        <span data-type-line="" style="display: block; whiteSpace: nowrap"><span style="color: #3fb950">→ </span>Придумал, проверил — <em style="fontStyle: normal; backgroundImage: linear-gradient(96deg, #6fb2f2 0%, #4796e6 46%, #2f8be3 100%); WebkitBackgroundClip: text; backgroundClip: text; WebkitTextFillColor: transparent; color: #4796e6">воплотил</em><span data-caret="" style="display: inline-block; width: .55ch; height: .95em; marginLeft: .12em; verticalAlign: -.14em; background: #4796e6; opacity: 0"></span></span>
+      </h1>
+    </div>
+    <p style="maxWidth: 660px; margin: 26px auto 0; color: #4f5967; fontSize: 18px; lineHeight: 1.62; textWrap: pretty; animation: vfRise 1s cubic-bezier(.16,1,.3,1) .34s both">
+      <span data-hl="" data-hl-color="#0969da" data-hl-mode="highlight" style="position: relative; display: inline-block">Бесплатная open-source альтернатива</span> платным блокнотам вроде RunJS: JavaScript, TypeScript и PHP со встроенным AI-ассистентом. <span data-hl="" data-hl-color="#1f7a6d" data-hl-mode="underline" style="position: relative; display: inline-block">Всё выполняется у вас на машине</span> — без браузера и без облака.
+    </p>
+    <div style="display: flex; gap: 12px; justifyContent: center; flexWrap: wrap; marginTop: 34px; animation: vfRise 1s cubic-bezier(.16,1,.3,1) .44s both">
+      <a href="#download" style="display: inline-flex; alignItems: center; gap: 9px; height: 50px; padding: 0 24px; borderRadius: 11px; background: #0969da; color: #fff; fontSize: 15.5px; fontWeight: 500; boxShadow: 0 10px 30px rgba(9,105,218,.3), inset 0 1px 0 rgba(255,255,255,.22); transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s ease, background-color .2s" style-hover="background: #0860ca; transform: translateY(-2px); boxShadow: 0 16px 40px rgba(9,105,218,.36), inset 0 1px 0 rgba(255,255,255,.22)" style-active="transform: translateY(0); boxShadow: 0 6px 18px rgba(9,105,218,.3)">
+        <span style="fontSize: 15px; display: inline-block; animation: vfBob 4s ease-in-out infinite">🍎</span>
+        Скачать для macOS
       </a>
-      <a href="https://github.com/danilakalinin/vibeforge" class="btn btn-default">
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.49-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.69 7.69 0 018 4.07c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.19c0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      <a href="https://github.com/danilakalinin/vibeforge" style="display: inline-flex; alignItems: center; gap: 9px; height: 50px; padding: 0 22px; borderRadius: 11px; background: #fff; border: 1px solid #dfe4ef; color: #12161c; fontSize: 15.5px; fontWeight: 500; transition: transform .3s cubic-bezier(.16,1,.3,1), border-color .2s, box-shadow .3s" style-hover="borderColor: #c3ccdd; transform: translateY(-2px); boxShadow: 0 12px 30px rgba(18,22,28,.08)" style-active="transform: translateY(0)">
+        <svg width="16" height="16" sc-camel-view-box="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.49-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.69 7.69 0 018 4.07c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.19c0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
         Исходный код
       </a>
     </div>
-    <p class="note">Apple Silicon · ~7 МБ · бесплатно</p>
+    <p style="marginTop: 18px; fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; letterSpacing: .04em; color: #5f6976; animation: vfRise 1s cubic-bezier(.16,1,.3,1) .54s both">Apple Silicon · ~7 МБ · бесплатно</p>
   </header>
 
-  <figure>
-    <img class="shot" src="shots/editor.png" alt="Окно VibeForge: редактор слева, цветной вывод справа" />
-  </figure>
+  <div data-pad="" style="position: relative; zIndex: 1; maxWidth: 1180px; margin: 0 auto; padding: 64px 32px 0">
+    <div data-herogrid="" style="display: grid; gridTemplateColumns: minmax(0, 1fr) 268px; gap: 40px; alignItems: center">
+      <div style="position: relative">
+        <div role="tablist" aria-label="Экраны VibeForge" style="display: flex; gap: 4px; padding: 4px; marginBottom: 16px; background: rgba(240,242,247,.9); border: 1px solid #e4e7ef; borderRadius: 12px">
+            <button type="button" data-shottab="0" role="tab" aria-selected="true" style="flex: 1; minWidth: 0; padding: 9px 12px; border: 0; borderRadius: 8px; background: #fff; boxShadow: 0 2px 6px rgba(18,32,58,.1); color: #12161c; fontFamily: inherit; fontSize: 13.5px; fontWeight: 600; whiteSpace: nowrap; overflow: hidden; textOverflow: ellipsis; cursor: pointer; transition: background-color .28s cubic-bezier(.16,1,.3,1), color .2s, box-shadow .28s" style-hover="color: #12161c">Светлая тема</button>
+            <button type="button" data-shottab="1" role="tab" aria-selected="false" style="flex: 1; minWidth: 0; padding: 9px 12px; border: 0; borderRadius: 8px; background: transparent; boxShadow: none; color: #5f6976; fontFamily: inherit; fontSize: 13.5px; fontWeight: 500; whiteSpace: nowrap; overflow: hidden; textOverflow: ellipsis; cursor: pointer; transition: background-color .28s cubic-bezier(.16,1,.3,1), color .2s, box-shadow .28s" style-hover="color: #12161c">Тёмная тема</button>
+            <button type="button" data-shottab="2" role="tab" aria-selected="false" style="flex: 1; minWidth: 0; padding: 9px 12px; border: 0; borderRadius: 8px; background: transparent; boxShadow: none; color: #5f6976; fontFamily: inherit; fontSize: 13.5px; fontWeight: 500; whiteSpace: nowrap; overflow: hidden; textOverflow: ellipsis; cursor: pointer; transition: background-color .28s cubic-bezier(.16,1,.3,1), color .2s, box-shadow .28s" style-hover="color: #12161c">13 тем</button>
+            <button type="button" data-shottab="3" role="tab" aria-selected="false" style="flex: 1; minWidth: 0; padding: 9px 12px; border: 0; borderRadius: 8px; background: transparent; boxShadow: none; color: #5f6976; fontFamily: inherit; fontSize: 13.5px; fontWeight: 500; whiteSpace: nowrap; overflow: hidden; textOverflow: ellipsis; cursor: pointer; transition: background-color .28s cubic-bezier(.16,1,.3,1), color .2s, box-shadow .28s" style-hover="color: #12161c">AI-провайдеры</button>
+        </div>
+        <div data-shotstage="" data-hero-shot="" style="position: relative; transformOrigin: 50% 50%; willChange: transform; height: 420px; padding: 18px; borderRadius: 16px; border: 1px solid #e4e7ef; background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(246,248,252,.92))">
+            <img data-shotpane="0" src="shots/editor.png" alt="Окно VibeForge со светлой темой" style="position: absolute; inset: 0; margin: auto; maxWidth: 100%; maxHeight: 100%; width: auto; height: auto; display: block; opacity: 1; transition: opacity .4s cubic-bezier(.16,1,.3,1); filter: drop-shadow(0 22px 44px rgba(18,32,58,.18))">
+            <img data-shotpane="1" src="shots/editor-dark.png" alt="Окно VibeForge в стеклянной тёмной теме" style="position: absolute; inset: 0; margin: auto; maxWidth: 100%; maxHeight: 100%; width: auto; height: auto; display: block; opacity: 0; transition: opacity .4s cubic-bezier(.16,1,.3,1); filter: drop-shadow(0 22px 44px rgba(18,32,58,.18))">
+            <img data-shotpane="2" src="shots/themes.png" alt="Выбор темы в настройках VibeForge" style="position: absolute; inset: 0; margin: auto; maxWidth: 100%; maxHeight: 100%; width: auto; height: auto; display: block; opacity: 0; transition: opacity .4s cubic-bezier(.16,1,.3,1); filter: drop-shadow(0 22px 44px rgba(18,32,58,.18))">
+            <img data-shotpane="3" src="shots/ai-providers.png" alt="Выбор AI-провайдера в настройках VibeForge" style="position: absolute; inset: 0; margin: auto; maxWidth: 100%; maxHeight: 100%; width: auto; height: auto; display: block; opacity: 0; transition: opacity .4s cubic-bezier(.16,1,.3,1); filter: drop-shadow(0 22px 44px rgba(18,32,58,.18))">
+        </div>
+        <div style="marginTop: 16px">
+            <p data-shotcap="0" style="margin: 0; display: block; fontSize: 14.5px; color: #5f6976; lineHeight: 1.5">Редактор Monaco слева, вывод справа — одно окно вместо редактора и терминала.</p>
+            <p data-shotcap="1" style="margin: 0; display: none; fontSize: 14.5px; color: #5f6976; lineHeight: 1.5">Окно по-настоящему прозрачное: рабочий стол за ним размывает сама macOS.</p>
+            <p data-shotcap="2" style="margin: 0; display: none; fontSize: 14.5px; color: #5f6976; lineHeight: 1.5">Тема переключается сразу — без «Сохранить» и перезапуска.</p>
+            <p data-shotcap="3" style="margin: 0; display: none; fontSize: 14.5px; color: #5f6976; lineHeight: 1.5">Claude, OpenAI, Groq, DeepSeek и OpenRouter — на выбор.</p>
+        </div>
+      </div>
 
-  <section id="features">
-    <h2><span class="h2ico">🧩</span>Что внутри</h2>
-    <p class="sub">Одно окно вместо связки «редактор + терминал + вкладка с чатом».</p>
-    <div class="grid">
-      <div class="cell">
-        <span class="ico" style="--d:0s">📝</span>
-        <h3>Редактор Monaco</h3>
-        <p>Тот же движок, что в VS Code: подсветка, свёртка, автодополнение.</p>
-      </div>
-      <div class="cell">
-        <span class="ico" style="--d:.25s">⚡</span>
-        <h3>Запуск на лету</h3>
-        <p>Вывод стримится построчно через ваши Node.js и PHP. Опционально — автозапуск при вводе.</p>
-      </div>
-      <div class="cell">
-        <span class="ico" style="--d:.5s">🤖</span>
-        <h3>AI видит ваш код</h3>
-        <p>Claude, OpenAI, Groq, DeepSeek, OpenRouter. Содержимое редактора и зависимости проекта уходят в контекст сами.</p>
-      </div>
-      <div class="cell">
-        <span class="ico" style="--d:.75s">🔗</span>
-        <h3>Привязка проекта</h3>
-        <p>Укажите папку — ассистент прочитает <code>package.json</code> или <code>composer.json</code>. Для Laravel добавляется автодополнение фасадов и классов.</p>
-      </div>
-      <div class="cell">
-        <span class="ico" style="--d:1s">🎨</span>
-        <h3>13 тем</h3>
-        <p>Включая две на нативном материале окна macOS. Применяются мгновенно.</p>
-      </div>
-      <div class="cell">
-        <span class="ico" style="--d:1.25s">📚</span>
-        <h3>Сниппеты и история</h3>
-        <p>Локальная база SQLite. История запусков помнит, к какому проекту относилась.</p>
+      <div data-herospec="" data-reveal="" data-reveal-delay="140" style="">
+        <p style="margin: 0 0 10px; fontFamily: 'IBM Plex Mono', monospace; fontSize: 11px; letterSpacing: .12em; textTransform: uppercase; color: #5f6976">Открытый исходный код</p>
+        <div style="display: flex; gap: 6px; flexWrap: wrap; marginBottom: 12px">
+          <button type="button" data-srctab="0" style="padding: 6px 11px; border: 1px solid #a9c8ee; borderRadius: 999px; background: #ddf4ff; color: #0a4f9e; fontFamily: 'IBM Plex Mono', monospace; fontSize: 10.5px; letterSpacing: .08em; textTransform: uppercase; cursor: pointer; transition: background-color .2s, border-color .2s, color .2s" style-hover="borderColor: #a9c8ee; color: #0a4f9e">Интерфейс</button>
+          <button type="button" data-srctab="1" style="padding: 6px 11px; border: 1px solid #e4e7ef; borderRadius: 999px; background: rgba(255,255,255,.7); color: #5f6976; fontFamily: 'IBM Plex Mono', monospace; fontSize: 10.5px; letterSpacing: .08em; textTransform: uppercase; cursor: pointer; transition: background-color .2s, border-color .2s, color .2s" style-hover="borderColor: #a9c8ee; color: #0a4f9e">Ядро</button>
+          <button type="button" data-srctab="2" style="padding: 6px 11px; border: 1px solid #e4e7ef; borderRadius: 999px; background: rgba(255,255,255,.7); color: #5f6976; fontFamily: 'IBM Plex Mono', monospace; fontSize: 10.5px; letterSpacing: .08em; textTransform: uppercase; cursor: pointer; transition: background-color .2s, border-color .2s, color .2s" style-hover="borderColor: #a9c8ee; color: #0a4f9e">Темы</button>
+        </div>
+        <div data-tree="" style="border: 1px solid #e4e7ef; borderRadius: 12px; background: rgba(255,255,255,.86); backdropFilter: blur(8px); padding: 8px; fontFamily: 'IBM Plex Mono', monospace; fontSize: 12px; userSelect: none">
+          <div data-srcpane="0">
+                <button type="button" data-tree-folder="" data-tree-open="" style="display: flex; alignItems: center; gap: 7px; width: 100%; padding: 5px 8px; border: 0; background: transparent; borderRadius: 7px; color: #12161c; fontFamily: inherit; fontSize: inherit; textAlign: left; cursor: pointer; transition: background-color .18s" style-hover="background: #eef1f7">
+                  <svg data-tree-chevron="" width="11" height="11" sc-camel-view-box="0 0 24 24" fill="none" stroke="#7a8491" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; transform: rotate(90deg); transition: transform .2s ease"><path d="m9 18 6-6-6-6"></path></svg>
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#4796e6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0"><path d="M4 20a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4l2 3h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2z"></path></svg>
+                  src
+                </button>
+                <div data-tree-children="" style="paddingLeft: 13px; borderLeft: 1px solid #e4e7ef; marginLeft: 13px;">
+                <button type="button" data-tree-folder="" data-tree-open="" style="display: flex; alignItems: center; gap: 7px; width: 100%; padding: 5px 8px; border: 0; background: transparent; borderRadius: 7px; color: #12161c; fontFamily: inherit; fontSize: inherit; textAlign: left; cursor: pointer; transition: background-color .18s" style-hover="background: #eef1f7">
+                  <svg data-tree-chevron="" width="11" height="11" sc-camel-view-box="0 0 24 24" fill="none" stroke="#7a8491" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; transform: rotate(90deg); transition: transform .2s ease"><path d="m9 18 6-6-6-6"></path></svg>
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#4796e6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0"><path d="M4 20a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4l2 3h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2z"></path></svg>
+                  components
+                </button>
+                <div data-tree-children="" style="paddingLeft: 13px; borderLeft: 1px solid #e4e7ef; marginLeft: 13px;">
+                <div data-tree-file="" style="display: flex; alignItems: center; gap: 7px; padding: 5px 8px; borderRadius: 7px; color: #5f6976">
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#9aa3b0" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; marginLeft: 19px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v6h6"></path></svg>
+                  Editor/
+                </div>
+                <div data-tree-file="" style="display: flex; alignItems: center; gap: 7px; padding: 5px 8px; borderRadius: 7px; color: #5f6976">
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#9aa3b0" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; marginLeft: 19px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v6h6"></path></svg>
+                  AiChat/
+                </div>
+                <div data-tree-file="" style="display: flex; alignItems: center; gap: 7px; padding: 5px 8px; borderRadius: 7px; color: #5f6976">
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#9aa3b0" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; marginLeft: 19px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v6h6"></path></svg>
+                  Console/
+                </div>
+                <div data-tree-file="" style="display: flex; alignItems: center; gap: 7px; padding: 5px 8px; borderRadius: 7px; color: #5f6976">
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#9aa3b0" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; marginLeft: 19px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v6h6"></path></svg>
+                  Settings/
+                </div>
+                </div>
+                <div data-tree-file="" style="display: flex; alignItems: center; gap: 7px; padding: 5px 8px; borderRadius: 7px; background: #ddf4ff; color: #0a4f9e">
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#0969da" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; marginLeft: 19px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v6h6"></path></svg>
+                  App.tsx<span style="marginLeft: auto; fontFamily: 'IBM Plex Mono', monospace; fontSize: 10px; letterSpacing: .06em; color: #0969da">REACT</span>
+                </div>
+                <div data-tree-file="" style="display: flex; alignItems: center; gap: 7px; padding: 5px 8px; borderRadius: 7px; color: #5f6976">
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#9aa3b0" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; marginLeft: 19px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v6h6"></path></svg>
+                  store/index.ts
+                </div>
+                </div>
+          </div>
+          <div data-srcpane="1" style="display: none">
+                <button type="button" data-tree-folder="" data-tree-open="" style="display: flex; alignItems: center; gap: 7px; width: 100%; padding: 5px 8px; border: 0; background: transparent; borderRadius: 7px; color: #12161c; fontFamily: inherit; fontSize: inherit; textAlign: left; cursor: pointer; transition: background-color .18s" style-hover="background: #eef1f7">
+                  <svg data-tree-chevron="" width="11" height="11" sc-camel-view-box="0 0 24 24" fill="none" stroke="#7a8491" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; transform: rotate(90deg); transition: transform .2s ease"><path d="m9 18 6-6-6-6"></path></svg>
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#4796e6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0"><path d="M4 20a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4l2 3h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2z"></path></svg>
+                  src-tauri/src
+                </button>
+                <div data-tree-children="" style="paddingLeft: 13px; borderLeft: 1px solid #e4e7ef; marginLeft: 13px;">
+                <div data-tree-file="" style="display: flex; alignItems: center; gap: 7px; padding: 5px 8px; borderRadius: 7px; background: #ddf4ff; color: #0a4f9e">
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#0969da" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; marginLeft: 19px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v6h6"></path></svg>
+                  executor.rs<span style="marginLeft: auto; fontFamily: 'IBM Plex Mono', monospace; fontSize: 10px; letterSpacing: .06em; color: #0969da">ЗАПУСК</span>
+                </div>
+                <div data-tree-file="" style="display: flex; alignItems: center; gap: 7px; padding: 5px 8px; borderRadius: 7px; color: #5f6976">
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#9aa3b0" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; marginLeft: 19px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v6h6"></path></svg>
+                  ai.rs
+                </div>
+                <div data-tree-file="" style="display: flex; alignItems: center; gap: 7px; padding: 5px 8px; borderRadius: 7px; color: #5f6976">
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#9aa3b0" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; marginLeft: 19px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v6h6"></path></svg>
+                  snippets.rs<span style="marginLeft: auto; fontFamily: 'IBM Plex Mono', monospace; fontSize: 10px; letterSpacing: .06em; color: #7a8491">SQLITE</span>
+                </div>
+                <div data-tree-file="" style="display: flex; alignItems: center; gap: 7px; padding: 5px 8px; borderRadius: 7px; color: #5f6976">
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#9aa3b0" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; marginLeft: 19px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v6h6"></path></svg>
+                  project.rs
+                </div>
+                <div data-tree-file="" style="display: flex; alignItems: center; gap: 7px; padding: 5px 8px; borderRadius: 7px; color: #5f6976">
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#9aa3b0" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; marginLeft: 19px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v6h6"></path></svg>
+                  menu.rs
+                </div>
+                </div>
+          </div>
+          <div data-srcpane="2" style="display: none">
+                <button type="button" data-tree-folder="" data-tree-open="" style="display: flex; alignItems: center; gap: 7px; width: 100%; padding: 5px 8px; border: 0; background: transparent; borderRadius: 7px; color: #12161c; fontFamily: inherit; fontSize: inherit; textAlign: left; cursor: pointer; transition: background-color .18s" style-hover="background: #eef1f7">
+                  <svg data-tree-chevron="" width="11" height="11" sc-camel-view-box="0 0 24 24" fill="none" stroke="#7a8491" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; transform: rotate(90deg); transition: transform .2s ease"><path d="m9 18 6-6-6-6"></path></svg>
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#4796e6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0"><path d="M4 20a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4l2 3h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2z"></path></svg>
+                  src/themes
+                </button>
+                <div data-tree-children="" style="paddingLeft: 13px; borderLeft: 1px solid #e4e7ef; marginLeft: 13px;">
+                <div data-tree-file="" style="display: flex; alignItems: center; gap: 7px; padding: 5px 8px; borderRadius: 7px; background: #ddf4ff; color: #0a4f9e">
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#0969da" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; marginLeft: 19px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v6h6"></path></svg>
+                  GitHub Light.json
+                </div>
+                <div data-tree-file="" style="display: flex; alignItems: center; gap: 7px; padding: 5px 8px; borderRadius: 7px; color: #5f6976">
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#9aa3b0" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; marginLeft: 19px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v6h6"></path></svg>
+                  GitHub Dark.json
+                </div>
+                <div data-tree-file="" style="display: flex; alignItems: center; gap: 7px; padding: 5px 8px; borderRadius: 7px; color: #5f6976">
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#9aa3b0" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; marginLeft: 19px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v6h6"></path></svg>
+                  Dracula.json
+                </div>
+                <div data-tree-file="" style="display: flex; alignItems: center; gap: 7px; padding: 5px 8px; borderRadius: 7px; color: #5f6976">
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#9aa3b0" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; marginLeft: 19px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v6h6"></path></svg>
+                  Nord.json
+                </div>
+                <div data-tree-file="" style="display: flex; alignItems: center; gap: 7px; padding: 5px 8px; borderRadius: 7px; color: #5f6976">
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#9aa3b0" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; marginLeft: 19px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v6h6"></path></svg>
+                  Night Owl.json
+                </div>
+                <div data-tree-file="" style="display: flex; alignItems: center; gap: 7px; padding: 5px 8px; borderRadius: 7px; color: #5f6976">
+                  <svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#9aa3b0" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; marginLeft: 19px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v6h6"></path></svg>
+                  Cobalt2.json<span style="marginLeft: auto; fontFamily: 'IBM Plex Mono', monospace; fontSize: 10px; letterSpacing: .06em; color: #7a8491">+7</span>
+                </div>
+                </div>
+          </div>
+        </div>
+        <a href="https://github.com/danilakalinin/vibeforge" style="display: inline-flex; alignItems: center; gap: 8px; marginTop: 14px; fontSize: 14px; color: #2d353f" style-hover="color: #0969da">
+          <svg width="14" height="14" sc-camel-view-box="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.49-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.69 7.69 0 018 4.07c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.19c0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+          Смотреть на GitHub
+        </a>
       </div>
     </div>
-  </section>
-
-  <section>
-    <h2><span class="h2ico">🎛️</span>Темы и настройки</h2>
-    <p class="sub">Тема и язык интерфейса переключаются сразу — без сохранения и перезапуска.</p>
-    <div class="pair">
-      <figure>
-        <img class="shot" src="shots/themes.png" alt="Выбор темы в настройках VibeForge" />
-        <figcaption>13 тем, две из них стеклянные</figcaption>
-      </figure>
-      <figure>
-        <img class="shot" src="shots/ai-providers.png" alt="Выбор AI-провайдера в настройках VibeForge" />
-        <figcaption>Пять AI-провайдеров на выбор</figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <section>
-    <h2><span class="h2ico">🪟</span>Стекло по-настоящему</h2>
-    <p class="sub">Темы Glass используют нативную вибрантность macOS: окно прозрачное, и система размывает за ним рабочий стол. Это системный материал, а не CSS-имитация.</p>
-    <figure>
-      <img class="shot" src="shots/snippet.png" alt="Окно VibeForge с нативной прозрачностью и вибрантностью macOS" />
-    </figure>
-  </section>
-
-  <section id="download" class="dl">
-    <h2><span class="h2ico">⬇️</span>Скачать</h2>
-    <p class="sub">Свежая версия — на <a href="https://github.com/danilakalinin/vibeforge/releases/latest">странице релизов</a>.</p>
-    <div class="dl-row">
-      <a href="https://github.com/danilakalinin/vibeforge/releases/latest" class="btn btn-primary"><span class="em">🍎</span> macOS · Apple Silicon</a>
-      <span class="soon">🖥️ Intel · скоро</span>
-      <span class="soon">🪟 Windows · скоро</span>
-      <span class="soon">🐧 Linux · скоро</span>
-    </div>
-    <div class="gate">
-      <strong>Первый запуск.</strong> Приложение не подписано сертификатом Apple, поэтому Gatekeeper его заблокирует. Выполните один раз:
-      <pre><code>xattr -cr /Applications/VibeForge.app</code></pre>
-      Дальше открывается как обычно. <strong>Удаление:</strong> Help → Uninstall VibeForge… — приложение само снесёт все свои данные.
-    </div>
-  </section>
-
-</div>
-
-<footer>
-  <div class="wrap">
-    MIT · форк <a href="https://github.com/CybertronianKelvin/vibelab">VibeLab</a> · Tauri v2, Rust, React, TypeScript · <a href="https://github.com/danilakalinin/vibeforge">GitHub</a>
   </div>
-</footer>
 
-</body>
-</html>
+  <section style="position: relative; zIndex: 1; maxWidth: 1240px; margin: 0 auto; padding: 120px 32px 0" data-section="" data-pad="">
+    <div data-split="" style="display: grid; gridTemplateColumns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 64px; alignItems: start; borderTop: 1px solid #e4e7ef; paddingTop: 56px">
+      <div data-reveal="" style="">
+        <p style="margin: 0 0 20px; fontFamily: 'IBM Plex Mono', monospace; fontSize: 11.5px; letterSpacing: .12em; textTransform: uppercase; color: #5f6976">Границы продукта</p>
+        <h2 style="margin: 0; fontSize: clamp(28px, 3.4vw, 44px); lineHeight: 1.1; fontWeight: 600; letterSpacing: -.028em; textWrap: balance" data-words="">Это не IDE — и не пытается ей быть</h2>
+        <p style="margin: 22px 0 0; maxWidth: 46ch; color: #4f5967; fontSize: 17px; lineHeight: 1.6; textWrap: pretty">VibeForge — блокнот для кода, который пишут не чтобы выкатить, а <span data-hl="" data-hl-color="#3f6ad0" data-hl-mode="highlight" style="position: relative; display: inline-block">чтобы получить ответ</span>: сработает ли этот код, что вернёт этот API, как перебрать этот массив.</p>
+      </div>
+      <div data-reveal="" data-reveal-delay="120" style="display: grid; gap: 1px; background: #e4e7ef; border: 1px solid #e4e7ef; borderRadius: 14px; overflow: hidden">
+        <div style="display: flex; alignItems: baseline; gap: 14px; padding: 20px 22px; background: #fff">
+          <span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 11.5px; color: #7a8491">01</span>
+          <div>
+            <p style="margin: 0; fontSize: 15.5px; fontWeight: 600">Нужен отладчик, дерево файлов или сборка?</p>
+            <p style="margin: 4px 0 0; fontSize: 14.5px; color: #5f6976">Берите полноценную IDE — этим VibeForge сознательно не занимается.</p>
+          </div>
+        </div>
+        <div style="display: flex; alignItems: baseline; gap: 14px; padding: 20px 22px; background: #fff">
+          <span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 11.5px; color: #7a8491">02</span>
+          <div>
+            <p style="margin: 0; fontSize: 15.5px; fontWeight: 600">Держите под рукой файл scratch.js?</p>
+            <p style="margin: 4px 0 0; fontSize: 14.5px; color: #5f6976">Цикл «правка → node scratch.js в терминале» заменяется одним окном.</p>
+          </div>
+        </div>
+        <div style="display: flex; alignItems: baseline; gap: 14px; padding: 20px 22px; background: #fff">
+          <span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 11.5px; color: #7a8491">03</span>
+          <div>
+            <p style="margin: 0; fontSize: 15.5px; fontWeight: 600">Не любите оставлять код в веб-сервисах?</p>
+            <p style="margin: 4px 0 0; fontSize: 14.5px; color: #5f6976">Всё локально: сниппеты в SQLite, ключи — в <code style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 13px; color: #2d353f; background: #f3f5fa; border: 1px solid #e4e7ef; borderRadius: 5px; padding: 1px 5px">~/.vibeforge/settings.json</code>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" style="position: relative; zIndex: 1; maxWidth: 1240px; margin: 0 auto; padding: 120px 32px 0" data-section="" data-pad="">
+    <div data-reveal="" style="display: flex; alignItems: end; justifyContent: space-between; gap: 40px; flexWrap: wrap; marginBottom: 44px">
+      <div>
+        <p style="margin: 0 0 18px; fontFamily: 'IBM Plex Mono', monospace; fontSize: 11.5px; letterSpacing: .12em; textTransform: uppercase; color: #5f6976">Что внутри</p>
+        <h2 style="margin: 0; fontSize: clamp(28px, 3.4vw, 44px); lineHeight: 1.1; fontWeight: 600; letterSpacing: -.028em" data-words="">Настоящий редактор, запуск и AI —<br><span data-hl="" data-hl-color="#0969da" data-hl-mode="highlight" style="position: relative; display: inline-block">в одном окне</span></h2>
+      </div>
+      <p style="margin: 0; maxWidth: 34ch; color: #5f6976; fontSize: 15.5px">Выберите пункт — покажу, как это выглядит в приложении. Код выполняется через ваши Node.js и PHP, сниппеты лежат в локальном SQLite.</p>
+    </div>
+
+    <div data-tabs="" data-reveal="" data-reveal-delay="60" style="display: grid; gridTemplateColumns: minmax(0, 320px) minmax(0, 1fr); gap: 22px; alignItems: start">
+      <div data-tablist="" role="tablist" style="display: grid; gap: 7px">
+        <button type="button" data-tab="0" style="display: flex; alignItems: center; gap: 12px; width: 100%; padding: 12px 15px; border: 1px solid #e4e7ef; borderRadius: 12px; background: #fff; boxShadow: 0 12px 30px rgba(18,32,58,.08); textAlign: left; cursor: pointer; fontFamily: inherit; transition: background-color .25s, border-color .25s, box-shadow .3s, transform .3s cubic-bezier(.16,1,.3,1)" style-hover="borderColor: #c3ccdd; transform: translateY(-1px)">
+          <span style="fontSize: 19px; display: inline-block; flexShrink: 0">📝</span>
+          <span style="flex: 1; fontSize: 15.5px; fontWeight: 600; letterSpacing: -.01em; color: #12161c">Редактор Monaco</span>
+          <span data-tab-num="" style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 11px; color: #0969da">01</span>
+        </button>
+        <button type="button" data-tab="1" style="display: flex; alignItems: center; gap: 12px; width: 100%; padding: 12px 15px; border: 1px solid #e4e7ef; borderRadius: 12px; background: rgba(255,255,255,.62); boxShadow: none; textAlign: left; cursor: pointer; fontFamily: inherit; transition: background-color .25s, border-color .25s, box-shadow .3s, transform .3s cubic-bezier(.16,1,.3,1)" style-hover="borderColor: #c3ccdd; transform: translateY(-1px)">
+          <span style="fontSize: 19px; display: inline-block; flexShrink: 0">⚡</span>
+          <span style="flex: 1; fontSize: 15.5px; fontWeight: 600; letterSpacing: -.01em; color: #12161c">Запуск на лету</span>
+          <span data-tab-num="" style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 11px; color: #7a8491">02</span>
+        </button>
+        <button type="button" data-tab="2" style="display: flex; alignItems: center; gap: 12px; width: 100%; padding: 12px 15px; border: 1px solid #e4e7ef; borderRadius: 12px; background: rgba(255,255,255,.62); boxShadow: none; textAlign: left; cursor: pointer; fontFamily: inherit; transition: background-color .25s, border-color .25s, box-shadow .3s, transform .3s cubic-bezier(.16,1,.3,1)" style-hover="borderColor: #c3ccdd; transform: translateY(-1px)">
+          <span style="fontSize: 19px; display: inline-block; flexShrink: 0">🤖</span>
+          <span style="flex: 1; fontSize: 15.5px; fontWeight: 600; letterSpacing: -.01em; color: #12161c">AI видит ваш код</span>
+          <span data-tab-num="" style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 11px; color: #7a8491">03</span>
+        </button>
+        <button type="button" data-tab="3" style="display: flex; alignItems: center; gap: 12px; width: 100%; padding: 12px 15px; border: 1px solid #e4e7ef; borderRadius: 12px; background: rgba(255,255,255,.62); boxShadow: none; textAlign: left; cursor: pointer; fontFamily: inherit; transition: background-color .25s, border-color .25s, box-shadow .3s, transform .3s cubic-bezier(.16,1,.3,1)" style-hover="borderColor: #c3ccdd; transform: translateY(-1px)">
+          <span style="fontSize: 19px; display: inline-block; flexShrink: 0">🔗</span>
+          <span style="flex: 1; fontSize: 15.5px; fontWeight: 600; letterSpacing: -.01em; color: #12161c">Привязка проекта</span>
+          <span data-tab-num="" style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 11px; color: #7a8491">04</span>
+        </button>
+        <button type="button" data-tab="4" style="display: flex; alignItems: center; gap: 12px; width: 100%; padding: 12px 15px; border: 1px solid #e4e7ef; borderRadius: 12px; background: rgba(255,255,255,.62); boxShadow: none; textAlign: left; cursor: pointer; fontFamily: inherit; transition: background-color .25s, border-color .25s, box-shadow .3s, transform .3s cubic-bezier(.16,1,.3,1)" style-hover="borderColor: #c3ccdd; transform: translateY(-1px)">
+          <span style="fontSize: 19px; display: inline-block; flexShrink: 0">🎨</span>
+          <span style="flex: 1; fontSize: 15.5px; fontWeight: 600; letterSpacing: -.01em; color: #12161c">Темы и настройки</span>
+          <span data-tab-num="" style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 11px; color: #7a8491">05</span>
+        </button>
+        <button type="button" data-tab="5" style="display: flex; alignItems: center; gap: 12px; width: 100%; padding: 12px 15px; border: 1px solid #e4e7ef; borderRadius: 12px; background: rgba(255,255,255,.62); boxShadow: none; textAlign: left; cursor: pointer; fontFamily: inherit; transition: background-color .25s, border-color .25s, box-shadow .3s, transform .3s cubic-bezier(.16,1,.3,1)" style-hover="borderColor: #c3ccdd; transform: translateY(-1px)">
+          <span style="fontSize: 19px; display: inline-block; flexShrink: 0">📚</span>
+          <span style="flex: 1; fontSize: 15.5px; fontWeight: 600; letterSpacing: -.01em; color: #12161c">Сниппеты и история</span>
+          <span data-tab-num="" style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 11px; color: #7a8491">06</span>
+        </button>
+      </div>
+
+      <div data-panebox="" style="position: relative; background: #fff; border: 1px solid #e4e7ef; borderRadius: 18px; padding: 22px; boxShadow: 0 18px 44px rgba(18,32,58,.07)">
+        <div data-pane="0">
+          <p style="margin: 0 0 5px; fontSize: 16px; fontWeight: 600; letterSpacing: -.015em">Редактор Monaco</p>
+          <p style="margin: 0 0 14px; color: #5f6976; fontSize: 14.5px; lineHeight: 1.5; maxWidth: 58ch"><span data-hl="" data-hl-color="#3f6ad0" data-hl-mode="underline" style="position: relative; display: inline-block">Тот же движок, что в VS Code</span>: подсветка, свёртка и автодополнение — без остального веса редактора.</p>
+          <div style="borderRadius: 12px; overflow: hidden; border: 1px solid #dde2ec; background: #0d1319; fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; lineHeight: 1.6; color: #e8eef7; padding: 13px 15px">
+            <div style="display: flex; gap: 14px"><span style="color: #55637a; width: 2ch; textAlign: right; flexShrink: 0">1</span><span><span style="color: #ff7b72">const</span> <span style="color: #79c0ff">users</span> = <span style="color: #ff7b72">await</span> <span style="color: #d2a8ff">fetch</span>(<span style="color: #a5d6ff">`/api/users`</span>)</span></div>
+            <div style="display: flex; gap: 14px"><span style="color: #55637a; width: 2ch; textAlign: right; flexShrink: 0">2</span><span>&nbsp;&nbsp;.<span style="color: #d2a8ff">then</span>(<span style="color: #79c0ff">r</span> =&gt; <span style="color: #79c0ff">r</span>.<span style="color: #d2a8ff">json</span>())</span></div>
+            <div style="display: flex; gap: 14px"><span style="color: #55637a; width: 2ch; textAlign: right; flexShrink: 0">3</span><span></span></div>
+            <div style="display: flex; gap: 14px"><span style="color: #55637a; width: 2ch; textAlign: right; flexShrink: 0">4</span><span><span style="color: #8b949e">// свёртка, подсветка, автодополнение</span></span></div>
+            <div style="display: flex; gap: 14px"><span style="color: #55637a; width: 2ch; textAlign: right; flexShrink: 0">5</span><span><span style="color: #79c0ff">users</span>.<span style="color: #d2a8ff">filter</span>(<span style="color: #79c0ff">u</span> =&gt; <span style="color: #79c0ff">u</span>.<span style="color: #79c0ff">active</span>)</span></div>
+          </div>
+          <div style="display: flex; gap: 7px; flexWrap: wrap; marginTop: 13px"><span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; color: #2d353f; padding: 7px 12px; border: 1px solid #e4e7ef; borderRadius: 8px; background: #fafbfd">JavaScript</span><span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; color: #2d353f; padding: 7px 12px; border: 1px solid #e4e7ef; borderRadius: 8px; background: #fafbfd">TypeScript</span><span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; color: #2d353f; padding: 7px 12px; border: 1px solid #e4e7ef; borderRadius: 8px; background: #fafbfd">PHP</span></div>
+        </div>
+
+        <div data-pane="1" style="display: none">
+          <p style="margin: 0 0 5px; fontSize: 16px; fontWeight: 600; letterSpacing: -.015em">Запуск на лету</p>
+          <p style="margin: 0 0 14px; color: #5f6976; fontSize: 14.5px; lineHeight: 1.5; maxWidth: 58ch">Вывод <span data-hl="" data-hl-color="#1f7a6d" data-hl-mode="highlight" style="position: relative; display: inline-block">стримится построчно</span> через ваши Node.js и PHP. Опционально — автозапуск при вводе.</p>
+          <div data-term="" style="borderRadius: 12px; overflow: hidden; background: #0d1319; border: 1px solid #dde2ec">
+            <div style="display: flex; alignItems: center; gap: 12px; padding: 10px 12px; borderBottom: 1px solid rgba(255,255,255,.08)">
+              <span style="display: flex; gap: 6px">
+                <span style="width: 8px; height: 8px; borderRadius: 999px; background: #ff5f57; display: block"></span>
+                <span style="width: 8px; height: 8px; borderRadius: 999px; background: #febc2e; display: block"></span>
+                <span style="width: 8px; height: 8px; borderRadius: 999px; background: #28c840; display: block"></span>
+              </span>
+              <span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 11px; letterSpacing: .06em; color: #7f8b99">output</span>
+            </div>
+            <div style="padding: 14px 14px 16px; display: grid; gap: 7px">
+              <div data-term-line="" data-term-text="node · scratch.js" style="display: flex; gap: 9px; fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; lineHeight: 1.5"><span style="color: #4796e6; flexShrink: 0">$</span><span style="color: #e8eef7"><span data-term-out=""></span><span data-term-caret="" style="display: inline-block; width: .5ch; height: 1.05em; verticalAlign: -.18em; background: #4796e6; opacity: 0"></span></span></div>
+              <div data-term-line="" data-term-text="строки появляются по мере выполнения" style="display: flex; gap: 9px; fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; lineHeight: 1.5"><span style="color: #8b949e; flexShrink: 0">›</span><span style="color: #8fa0b3"><span data-term-out=""></span><span data-term-caret="" style="display: inline-block; width: .5ch; height: 1.05em; verticalAlign: -.18em; background: #4796e6; opacity: 0"></span></span></div>
+              <div data-term-line="" data-term-text="готово" style="display: flex; gap: 9px; fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; lineHeight: 1.5"><span style="color: #3fb950; flexShrink: 0">✓</span><span style="color: #8fa0b3"><span data-term-out=""></span><span data-term-caret="" style="display: inline-block; width: .5ch; height: 1.05em; verticalAlign: -.18em; background: #4796e6; opacity: 0"></span></span></div>
+            </div>
+          </div>
+        </div>
+
+        <div data-pane="2" style="display: none">
+          <p style="margin: 0 0 5px; fontSize: 16px; fontWeight: 600; letterSpacing: -.015em">AI видит ваш код</p>
+          <p style="margin: 0 0 14px; color: #5f6976; fontSize: 14.5px; lineHeight: 1.5; maxWidth: 58ch">Содержимое редактора и зависимости проекта <span data-hl="" data-hl-color="#5b5fc7" data-hl-mode="underline" style="position: relative; display: inline-block">уходят в контекст сами</span> — копировать во вкладку с чатом не нужно.</p>
+          <div style="display: grid; gap: 8px; maxWidth: 320px"><span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; color: #2d353f; padding: 7px 12px; border: 1px solid #e4e7ef; borderRadius: 8px; background: #fafbfd">Claude</span><span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; color: #2d353f; padding: 7px 12px; border: 1px solid #e4e7ef; borderRadius: 8px; background: #fafbfd">OpenAI</span><span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; color: #2d353f; padding: 7px 12px; border: 1px solid #e4e7ef; borderRadius: 8px; background: #fafbfd">Groq</span><span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; color: #2d353f; padding: 7px 12px; border: 1px solid #e4e7ef; borderRadius: 8px; background: #fafbfd">DeepSeek</span><span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; color: #2d353f; padding: 7px 12px; border: 1px solid #e4e7ef; borderRadius: 8px; background: #fafbfd">OpenRouter</span></div>
+        </div>
+
+        <div data-pane="3" style="display: none">
+          <p style="margin: 0 0 5px; fontSize: 16px; fontWeight: 600; letterSpacing: -.015em">Привязка проекта</p>
+          <p style="margin: 0 0 14px; color: #5f6976; fontSize: 14.5px; lineHeight: 1.5; maxWidth: 58ch">Укажите папку — ассистент прочитает package.json или composer.json. Для Laravel добавляется автодополнение фасадов и классов.</p>
+          <div data-tree="" style="border: 1px solid #e4e7ef; borderRadius: 12px; background: #fafbfd; padding: 8px; fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; userSelect: none; maxWidth: 420px">
+            <button type="button" data-tree-folder="" data-tree-open="" style="display: flex; alignItems: center; gap: 7px; width: 100%; padding: 6px 8px; border: 0; background: transparent; borderRadius: 7px; color: #12161c; fontFamily: inherit; fontSize: inherit; textAlign: left; cursor: pointer; transition: background-color .18s" style-hover="background: #eef1f7">
+              <svg data-tree-chevron="" width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#7a8491" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; transform: rotate(90deg); transition: transform .2s ease"><path d="m9 18 6-6-6-6"></path></svg>
+              <svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="#4796e6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0"><path d="M4 20a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4l2 3h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2z"></path></svg>
+              my-app
+            </button>
+            <div data-tree-children="" style="paddingLeft: 15px; borderLeft: 1px solid #e4e7ef; marginLeft: 14px">
+              <button type="button" data-tree-folder="" style="display: flex; alignItems: center; gap: 7px; width: 100%; padding: 6px 8px; border: 0; background: transparent; borderRadius: 7px; color: #12161c; fontFamily: inherit; fontSize: inherit; textAlign: left; cursor: pointer; transition: background-color .18s" style-hover="background: #eef1f7">
+                <svg data-tree-chevron="" width="12" height="12" sc-camel-view-box="0 0 24 24" fill="none" stroke="#7a8491" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; transition: transform .2s ease"><path d="m9 18 6-6-6-6"></path></svg>
+                <svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="#4796e6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0"><path d="M4 20a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4l2 3h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2z"></path></svg>
+                app
+              </button>
+              <div data-tree-children="" style="paddingLeft: 15px; borderLeft: 1px solid #e4e7ef; marginLeft: 14px; display: none">
+                <div style="display: flex; alignItems: center; gap: 7px; padding: 6px 8px; color: #5f6976">
+                  <svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="#9aa3b0" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; marginLeft: 19px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v6h6"></path></svg>
+                  Models/
+                </div>
+              </div>
+              <div data-tree-file="" style="display: flex; alignItems: center; gap: 7px; padding: 6px 8px; marginTop: 2px; borderRadius: 7px; background: #ddf4ff; color: #0a4f9e">
+                <svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="#0969da" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; marginLeft: 19px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v6h6"></path></svg>
+                package.json
+                <span style="marginLeft: auto; fontSize: 10.5px; letterSpacing: .06em; color: #0969da">В КОНТЕКСТЕ</span>
+              </div>
+              <div data-tree-file="" style="display: flex; alignItems: center; gap: 7px; padding: 6px 8px; borderRadius: 7px; color: #5f6976">
+                <svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="#9aa3b0" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0; marginLeft: 19px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v6h6"></path></svg>
+                composer.json
+              </div>
+            </div>
+          </div>
+          <p style="margin: 16px 0 0; fontSize: 14.5px; color: #5f6976; lineHeight: 1.55; maxWidth: 52ch">Для Laravel к этому добавляется автодополнение фасадов и классов проекта.</p>
+        </div>
+
+        <div data-pane="4" style="display: none">
+          <p style="margin: 0 0 5px; fontSize: 16px; fontWeight: 600; letterSpacing: -.015em">Темы и настройки</p>
+          <p style="margin: 0 0 14px; color: #5f6976; fontSize: 14.5px; lineHeight: 1.5; maxWidth: 58ch">Включая две на нативном материале окна macOS. Применяются мгновенно — без сохранения и перезапуска.</p>
+          <div style="display: flex; alignItems: baseline; gap: 16px; marginBottom: 20px">
+            <span data-ticker="13" style="fontSize: 56px; fontWeight: 600; letterSpacing: -.04em; lineHeight: 1; fontVariantNumeric: tabular-nums">13</span>
+            <span style="color: #5f6976; fontSize: 15px">тем в комплекте,<br>две из них стеклянные</span>
+          </div>
+          <p style="margin: 0 0 16px; color: #5f6976; fontSize: 15px; lineHeight: 1.58; maxWidth: 56ch"><span data-hl="" data-hl-color="#0969da" data-hl-mode="highlight" style="position: relative; display: inline-block">Тема и язык переключаются сразу</span> — без «Сохранить» и перезапуска. «Отмена» откатывает превью.</p>
+          <div style="display: grid; gridTemplateColumns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; marginBottom: 18px">
+            <figure style="margin: 0">
+              <div style="borderRadius: 12px; overflow: hidden; border: 1px solid #e4e7ef; background: linear-gradient(180deg, #f6f8fc, #eaeef6); padding: 14px 14px 0">
+                <img data-blur="" data-blur-delay="60" src="shots/themes.png" alt="Выбор темы в настройках VibeForge" style="width: 100%; display: block; borderRadius: 8px 8px 0 0">
+              </div>
+              <figcaption style="marginTop: 9px; fontSize: 13.5px; color: #5f6976">13 тем, две из них стеклянные</figcaption>
+            </figure>
+            <figure style="margin: 0">
+              <div style="borderRadius: 12px; overflow: hidden; border: 1px solid #e4e7ef; background: linear-gradient(180deg, #f6f8fc, #eaeef6); padding: 14px 14px 0">
+                <img data-blur="" data-blur-delay="140" src="shots/ai-providers.png" alt="Выбор AI-провайдера в настройках VibeForge" style="width: 100%; display: block; borderRadius: 8px 8px 0 0">
+              </div>
+              <figcaption style="marginTop: 9px; fontSize: 13.5px; color: #5f6976">Пять AI-провайдеров на выбор</figcaption>
+            </figure>
+          </div>
+          <div style="display: flex; gap: 8px; flexWrap: wrap"><span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; color: #2d353f; padding: 7px 12px; border: 1px solid #e4e7ef; borderRadius: 8px; background: #fafbfd">Glass Dark</span><span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; color: #2d353f; padding: 7px 12px; border: 1px solid #e4e7ef; borderRadius: 8px; background: #fafbfd">Glass Light</span></div>
+        </div>
+
+        <div data-pane="5" style="display: none">
+          <p style="margin: 0 0 5px; fontSize: 16px; fontWeight: 600; letterSpacing: -.015em">Сниппеты и история</p>
+          <p style="margin: 0 0 14px; color: #5f6976; fontSize: 14.5px; lineHeight: 1.5; maxWidth: 58ch">Локальная база SQLite. История запусков помнит, к какому проекту относился сниппет.</p>
+          <div style="display: flex; alignItems: center; gap: 10px; padding: 14px 16px; border: 1px solid #e4e7ef; borderRadius: 10px; background: #fafbfd; maxWidth: 360px">
+            <code style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; color: #5f6976; whiteSpace: nowrap">~/.vibeforge/snippets.db</code>
+            <button type="button" data-copy="~/.vibeforge/snippets.db" sc-camel-on-click="{{ copyCmd }}" title="Скопировать путь" style="flexShrink: 0; display: inline-flex; alignItems: center; justifyContent: center; width: 30px; height: 30px; border: 1px solid transparent; background: transparent; borderRadius: 8px; color: #5f6976; cursor: pointer; transition: color .2s, background-color .2s, border-color .2s" style-hover="color: #12161c; background: #eef1f7; borderColor: #dfe4ef">
+              <svg data-icon-copy="" width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg data-icon-check="" width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="#1a7f37" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: none"><path d="M20 6 9 17l-5-5"></path></svg>
+              <span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); whiteSpace: nowrap">Скопировать путь</span>
+            </button>
+          </div>
+          <p style="margin: 18px 0 10px; fontFamily: 'IBM Plex Mono', monospace; fontSize: 11.5px; letterSpacing: .1em; textTransform: uppercase; color: #5f6976">История запусков</p>
+          <div style="display: grid; gap: 1px; background: #e4e7ef; border: 1px solid #e4e7ef; borderRadius: 10px; overflow: hidden; maxWidth: 460px">
+            <div style="display: flex; alignItems: center; gap: 12px; padding: 11px 14px; background: #fff; fontSize: 14px">
+              <span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 11.5px; color: #0969da; width: 4ch; flexShrink: 0">TS</span>
+              <span style="flex: 1; color: #2d353f">Проверка ответа API</span>
+              <span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 12px; color: #5f6976">my-app</span>
+            </div>
+            <div style="display: flex; alignItems: center; gap: 12px; padding: 11px 14px; background: #fff; fontSize: 14px">
+              <span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 11.5px; color: #0969da; width: 4ch; flexShrink: 0">PHP</span>
+              <span style="flex: 1; color: #2d353f">Фасад Cache::</span>
+              <span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 12px; color: #5f6976">shop</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <section id="glass" style="position: relative; zIndex: 1; marginTop: 130px; background: #0b1015; color: #eef2f8; overflow: hidden">
+    <div style="position: absolute; inset: 0; background: radial-gradient(60% 50% at 20% 0%, rgba(9,105,218,.28), rgba(11,16,21,0) 70%); pointerEvents: none"></div>
+    <div data-glasscopy="" style="position: relative; maxWidth: 1240px; margin: 0 auto; padding: 120px 32px 130px">
+      <div data-reveal="" style="maxWidth: 720px">
+        <p style="margin: 0 0 18px; fontFamily: 'IBM Plex Mono', monospace; fontSize: 11.5px; letterSpacing: .12em; textTransform: uppercase; color: #9fb1c7">Внешний вид</p>
+        <h2 style="margin: 0; fontSize: clamp(28px, 3.4vw, 46px); lineHeight: 1.08; fontWeight: 600; letterSpacing: -.028em; textWrap: balance" data-words="" data-words-dark="">Дизайн</h2>
+        <p style="margin: 22px 0 0; color: #c3cede; fontSize: 18px; lineHeight: 1.6; textWrap: pretty">Окно выглядит как часть macOS, а не как сайт в рамке. В стеклянных темах оно <span data-hl="" data-hl-mode="underline" data-hl-color="#4796e6" style="position: relative; display: inline-block">по-настоящему прозрачное</span> — рабочий стол за ним размывает сама система.</p>
+      </div>
+      <div data-reveal="" data-reveal-delay="140" style="marginTop: 48px">
+        <img data-blur="" src="shots/editor-dark.png" alt="Окно VibeForge в стеклянной тёмной теме: рабочий стол размыт за прозрачным окном" style="width: 100%; display: block; filter: drop-shadow(0 40px 90px rgba(0,0,0,.5))">
+      </div>
+      <div style="display: grid; gridTemplateColumns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; marginTop: 56px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.1); borderRadius: 14px; overflow: hidden">
+        <div data-reveal="" style="padding: 24px; background: #0d1319">
+          <p style="margin: 0 0 6px; fontSize: 15.5px; fontWeight: 600">Тёмная и светлая</p>
+          <p style="margin: 0; color: #aebbcc; fontSize: 14.5px; lineHeight: 1.55">Стеклянных тем две: тёмная по умолчанию и светлая — для светлой комнаты.</p>
+        </div>
+        <div data-reveal="" data-reveal-delay="80" style="padding: 24px; background: #0d1319">
+          <p style="margin: 0 0 6px; fontSize: 15.5px; fontWeight: 600">Не мешает читать код</p>
+          <p style="margin: 0; color: #aebbcc; fontSize: 14.5px; lineHeight: 1.55">Прозрачность аккуратная: подложка под текстом одна, поэтому код остаётся контрастным.</p>
+        </div>
+        <div data-reveal="" data-reveal-delay="160" style="padding: 24px; background: #0d1319">
+          <p style="margin: 0 0 6px; fontSize: 15.5px; fontWeight: 600">Лёгкая программа</p>
+          <p style="margin: 0; color: #aebbcc; fontSize: 14.5px; lineHeight: 1.55">Настоящее приложение для Mac весом около 7 МБ, а не браузер в обёртке.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="download" style="position: relative; zIndex: 1; maxWidth: 1240px; margin: 0 auto; padding: 120px 32px 0" data-section="" data-pad="">
+    <div data-reveal="" style="maxWidth: 640px">
+      <p style="margin: 0 0 18px; fontFamily: 'IBM Plex Mono', monospace; fontSize: 11.5px; letterSpacing: .12em; textTransform: uppercase; color: #5f6976">Скачать</p>
+      <h2 style="margin: 0; fontSize: clamp(28px, 3.4vw, 44px); lineHeight: 1.1; fontWeight: 600; letterSpacing: -.028em" data-words="">Свежая версия — на странице релизов</h2>
+    </div>
+
+    <div data-reveal="" style="position: relative; marginTop: 36px; borderRadius: 24px; overflow: hidden; border: 1px solid #e4e7ef; background: linear-gradient(180deg, #f4f7fc, #eef2f9)">
+      <div aria-hidden="true" data-warp="" style="position: absolute; inset: 0; perspective: 130px; pointerEvents: none">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 130px; transformOrigin: 50% 0%; transform: rotateX(-90deg); overflow: hidden; backgroundImage: linear-gradient(#d6dEeC 1px, transparent 1px), linear-gradient(90deg, #d6deec 1px, transparent 1px); backgroundSize: 44px 44px; maskImage: linear-gradient(to top, #000, transparent)">
+          <span style="position: absolute; top: 0; left: 13%; width: 2px; height: 100%; background: linear-gradient(to top, rgba(9,105,218,0), #0969da); opacity: 0" data-beam="y" data-dur="3.6" data-delay="0"></span>
+          <span style="position: absolute; top: 0; left: 34%; width: 2px; height: 100%; background: linear-gradient(to top, rgba(9,105,218,0), #4796e6); opacity: 0" data-beam="y" data-dur="4.6" data-delay="0.9"></span>
+          <span style="position: absolute; top: 0; left: 58%; width: 2px; height: 100%; background: linear-gradient(to top, rgba(9,105,218,0), #0969da); opacity: 0" data-beam="y" data-dur="3.1" data-delay="1.8"></span>
+          <span style="position: absolute; top: 0; left: 82%; width: 2px; height: 100%; background: linear-gradient(to top, rgba(9,105,218,0), #7cb7f0); opacity: 0" data-beam="y" data-dur="5.2" data-delay="0.4"></span>
+        </div>
+        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 130px; transformOrigin: 50% 100%; transform: rotateX(90deg); overflow: hidden; backgroundImage: linear-gradient(#d6deec 1px, transparent 1px), linear-gradient(90deg, #d6deec 1px, transparent 1px); backgroundSize: 44px 44px; maskImage: linear-gradient(to bottom, #000, transparent)">
+          <span style="position: absolute; top: 0; left: 21%; width: 2px; height: 100%; background: linear-gradient(to bottom, rgba(9,105,218,0), #0969da); opacity: 0" data-beam="y" data-dur="4.2" data-delay="0.3"></span>
+          <span style="position: absolute; top: 0; left: 47%; width: 2px; height: 100%; background: linear-gradient(to bottom, rgba(9,105,218,0), #7cb7f0); opacity: 0" data-beam="y" data-dur="3.4" data-delay="1.4"></span>
+          <span style="position: absolute; top: 0; left: 74%; width: 2px; height: 100%; background: linear-gradient(to bottom, rgba(9,105,218,0), #4796e6); opacity: 0" data-beam="y" data-dur="5" data-delay="2.1"></span>
+        </div>
+        <div style="position: absolute; top: 0; left: 0; width: 130px; height: 100%; transformOrigin: 0% 50%; transform: rotateY(90deg); overflow: hidden; backgroundImage: linear-gradient(#d6deec 1px, transparent 1px), linear-gradient(90deg, #d6deec 1px, transparent 1px); backgroundSize: 44px 44px; maskImage: linear-gradient(to left, #000, transparent)">
+          <span style="position: absolute; left: 0; top: 24%; height: 2px; width: 100%; background: linear-gradient(to left, rgba(9,105,218,0), #0969da); opacity: 0" data-beam="x" data-dur="4" data-delay="0.6"></span>
+          <span style="position: absolute; left: 0; top: 66%; height: 2px; width: 100%; background: linear-gradient(to left, rgba(9,105,218,0), #7cb7f0); opacity: 0" data-beam="x" data-dur="3.3" data-delay="1.9"></span>
+        </div>
+        <div style="position: absolute; top: 0; right: 0; width: 130px; height: 100%; transformOrigin: 100% 50%; transform: rotateY(-90deg); overflow: hidden; backgroundImage: linear-gradient(#d6deec 1px, transparent 1px), linear-gradient(90deg, #d6deec 1px, transparent 1px); backgroundSize: 44px 44px; maskImage: linear-gradient(to right, #000, transparent)">
+          <span style="position: absolute; left: 0; top: 38%; height: 2px; width: 100%; background: linear-gradient(to right, rgba(9,105,218,0), #4796e6); opacity: 0" data-beam="x" data-dur="4.7" data-delay="1.2"></span>
+          <span style="position: absolute; left: 0; top: 79%; height: 2px; width: 100%; background: linear-gradient(to right, rgba(9,105,218,0), #0969da); opacity: 0" data-beam="x" data-dur="3.6" data-delay="2.4"></span>
+        </div>
+      </div>
+
+      <div style="position: relative; zIndex: 1; padding: 72px 32px; display: flex; justifyContent: center">
+        <div style="width: 100%; maxWidth: 640px; padding: 34px; borderRadius: 22px; background: #fff; border: 1px solid #dfe4ef; boxShadow: 0 24px 70px rgba(18,32,58,.12)">
+          <div style="display: flex; alignItems: center; gap: 14px">
+            <span style="fontSize: 30px; display: inline-block; animation: vfBob 5s ease-in-out infinite">🍎</span>
+            <div>
+              <p style="margin: 0; fontSize: 20px; fontWeight: 600; letterSpacing: -.015em">VibeForge для macOS</p>
+              <p style="margin: 4px 0 0; fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; color: #5f6976">Apple Silicon · .dmg · ~7 МБ</p>
+            </div>
+          </div>
+          <a href="https://github.com/danilakalinin/vibeforge/releases/latest" style="position: relative; display: block; marginTop: 26px; padding: 1.6px; borderRadius: 999px; overflow: hidden; background: #0b3f79; textDecoration: none; boxShadow: 0 14px 34px rgba(9,105,218,.3); transition: transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease" style-hover="transform: translateY(-2px); boxShadow: 0 22px 50px rgba(9,105,218,.42)" style-active="transform: scale(.98)">
+            <span style="position: relative; display: flex; alignItems: center; justifyContent: center; gap: 10px; height: 58px; borderRadius: 999px; background: linear-gradient(180deg, #1177e8, #0969da); color: #fff; fontSize: 17px; fontWeight: 600; letterSpacing: -.01em; boxShadow: inset 0 1px 0 rgba(255,255,255,.22)">
+              <svg width="17" height="17" sc-camel-view-box="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 12l-4-4h2.5V2h3v6H12L8 12zm-6 2h12v1.5H2V14z"></path></svg>
+              <span data-shiny="" style="color: transparent; backgroundImage: linear-gradient(90deg, rgba(255,255,255,.7) 42%, #fff 50%, rgba(255,255,255,.7) 58%); backgroundSize: 260% 100%; backgroundPosition: 160% 0; WebkitBackgroundClip: text; backgroundClip: text">Скачать бесплатно</span>
+            </span>
+          </a>
+          <div style="display: flex; alignItems: center; justifyContent: center; gap: 8px; marginTop: 14px; fontFamily: 'IBM Plex Mono', monospace; fontSize: 12px; color: #5f6976">
+            <span style="width: 6px; height: 6px; borderRadius: 999px; background: #3fb950; display: block; animation: vfPulse 2.4s ease-in-out infinite"></span>
+            последний релиз на GitHub
+          </div>
+          <a href="https://github.com/danilakalinin/vibeforge/releases" style="display: flex; alignItems: center; justifyContent: space-between; gap: 12px; marginTop: 20px; paddingTop: 18px; borderTop: 1px solid #eceff6; color: #2d353f; fontSize: 14.5px; textDecoration: none; transition: color .2s" style-hover="color: #0969da">
+            Все версии и заметки к релизам
+            <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flexShrink: 0"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div data-split="" style="display: grid; gridTemplateColumns: minmax(0, 1fr); gap: 24px; marginTop: 24px; alignItems: start">
+      <div data-reveal="" data-reveal-delay="120" style="padding: 24px; borderRadius: 18px; background: rgba(255,255,255,.86); backdropFilter: blur(8px); border: 1px solid #e4e7ef">
+        <p style="margin: 0 0 8px; fontSize: 16px; fontWeight: 600">Первый запуск</p>
+        <p style="margin: 0 0 16px; color: #5f6976; fontSize: 14.5px; lineHeight: 1.55">Приложение <span data-hl="" data-hl-color="#9a6212" data-hl-mode="underline" style="position: relative; display: inline-block">не подписано сертификатом Apple</span>, поэтому Gatekeeper заблокирует первый запуск. Выполните один раз:</p>
+        <div data-term="" style="border: 1px solid #dde2ec; borderRadius: 12px; overflow: hidden; background: #0d1319; boxShadow: 0 14px 34px rgba(13,19,25,.16)">
+          <div style="display: flex; alignItems: center; gap: 12px; padding: 10px 12px; borderBottom: 1px solid rgba(255,255,255,.08)">
+            <span style="display: flex; gap: 6px">
+              <span style="width: 8px; height: 8px; borderRadius: 999px; background: #ff5f57; display: block"></span>
+              <span style="width: 8px; height: 8px; borderRadius: 999px; background: #febc2e; display: block"></span>
+              <span style="width: 8px; height: 8px; borderRadius: 999px; background: #28c840; display: block"></span>
+            </span>
+            <span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 11px; letterSpacing: .06em; color: #7f8b99">zsh — Terminal</span>
+          </div>
+          <div style="padding: 14px 14px 16px; display: grid; gap: 7px">
+            <div data-term-line="" data-term-text="xattr -cr /Applications/VibeForge.app" style="display: flex; gap: 9px; fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; lineHeight: 1.5">
+              <span style="color: #4796e6; flexShrink: 0">$</span>
+              <span style="color: #e8eef7; wordBreak: break-all"><span data-term-out=""></span><span data-term-caret="" style="display: inline-block; width: .5ch; height: 1.05em; verticalAlign: -.18em; background: #4796e6; opacity: 0"></span></span>
+            </div>
+            <div data-term-line="" data-term-text="Готово. Дальше открывается как обычно." data-term-note="" style="display: flex; gap: 9px; fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; lineHeight: 1.5">
+              <span style="color: #3fb950; flexShrink: 0">✓</span>
+              <span style="color: #8fa0b3"><span data-term-out=""></span><span data-term-caret="" style="display: inline-block; width: .5ch; height: 1.05em; verticalAlign: -.18em; background: #4796e6; opacity: 0"></span></span>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; alignItems: center; gap: 12px; marginTop: 12px; padding: 10px 12px; background: #fff; border: 1px solid #e4e7ef; borderRadius: 10px">
+          <code style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 12.5px; color: #12161c; overflowX: auto; whiteSpace: nowrap; flex: 1">xattr -cr /Applications/VibeForge.app</code>
+          <button type="button" sc-camel-on-click="{{ copyCmd }}" title="Скопировать команду" style="flexShrink: 0; display: inline-flex; alignItems: center; justifyContent: center; width: 32px; height: 32px; border: 1px solid transparent; background: transparent; borderRadius: 8px; color: #5f6976; cursor: pointer; transition: color .2s, background-color .2s, border-color .2s" style-hover="color: #12161c; background: #f3f5fa; borderColor: #dfe4ef">
+            <svg data-icon-copy="" width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <svg data-icon-check="" width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="#1a7f37" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: none"><path d="M20 6 9 17l-5-5"></path></svg>
+            <span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); whiteSpace: nowrap">Скопировать команду</span>
+          </button>
+        </div>
+        <p style="margin: 18px 0 0; paddingTop: 18px; borderTop: 1px solid #e4e7ef; color: #5f6976; fontSize: 14.5px; lineHeight: 1.55"><strong style="color: #2d353f; fontWeight: 600">Удаление:</strong> Help → Uninstall VibeForge… — приложение само снесёт все свои данные.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer style="position: relative; zIndex: 1; marginTop: 120px; borderTop: 1px solid #e4e7ef">
+    <div style="maxWidth: 1240px; margin: 0 auto; padding: 48px 32px 64px; display: flex; alignItems: end; justifyContent: space-between; gap: 40px; flexWrap: wrap">
+      <div>
+        <div style="display: flex; alignItems: center; gap: 10px; marginBottom: 14px">
+          <span style="width: 18px; height: 18px; borderRadius: 5px; background: #0969da; display: block"></span>
+          <span style="fontWeight: 600; fontSize: 15px; letterSpacing: -.3px">VibeForge</span>
+        </div>
+        <p style="margin: 0; color: #5f6976; fontSize: 14.5px">Открытый исходный код · бесплатно</p>
+      </div>
+      <div style="display: flex; alignItems: center; gap: 8px; flexWrap: wrap">
+        <span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 11.5px; letterSpacing: .06em; color: #5f6976; padding: 6px 11px; border: 1px solid #e4e7ef; borderRadius: 999px; background: #fff">Tauri v2</span>
+        <span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 11.5px; letterSpacing: .06em; color: #5f6976; padding: 6px 11px; border: 1px solid #e4e7ef; borderRadius: 999px; background: #fff">Rust</span>
+        <span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 11.5px; letterSpacing: .06em; color: #5f6976; padding: 6px 11px; border: 1px solid #e4e7ef; borderRadius: 999px; background: #fff">React</span>
+        <span style="fontFamily: 'IBM Plex Mono', monospace; fontSize: 11.5px; letterSpacing: .06em; color: #5f6976; padding: 6px 11px; border: 1px solid #e4e7ef; borderRadius: 999px; background: #fff">TypeScript</span>
+        <a href="https://github.com/danilakalinin/vibeforge" style="marginLeft: 6px; display: inline-flex; alignItems: center; gap: 8px; fontSize: 14.5px; color: #2d353f" style-hover="color: #0969da">
+          <svg width="15" height="15" sc-camel-view-box="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.49-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.69 7.69 0 018 4.07c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.19c0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <svg data-cursor="" aria-hidden="true" width="26" height="26" sc-camel-view-box="0 0 16 16" style="position: fixed; top: 0; left: 0; pointerEvents: none; zIndex: 999; opacity: 0; transformOrigin: 0 0; transition: opacity .25s ease; willChange: transform; filter: drop-shadow(0 3px 7px rgba(9,105,218,.35))">
+    <path d="M2.5 1.2 13.2 8.1 8.4 8.6l-2.4 5.2z" fill="#0969da" stroke="#fff" stroke-width="1.1" stroke-linejoin="round"></path>
+  </svg>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;motion&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;cinematic&quot;,&quot;subtle&quot;,&quot;off&quot;],&quot;default&quot;:&quot;cinematic&quot;,&quot;tsType&quot;:&quot;'cinematic'|'subtle'|'off'&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;heroTilt&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:7,&quot;min&quot;:0,&quot;max&quot;:14,&quot;step&quot;:1,&quot;unit&quot;:&quot;deg&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;smoothCursor&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;}}">
+class Component extends DCLogic {
+  wordTimers = [];
+  wordIos = [];
+
+  // Entrance animations are opt-in: nothing is hidden unless the animation clock is
+  // provably running. If it is frozen (background tab, throttled host, capture), the
+  // page simply renders in its final state instead of staying blank.
+  clockRuns() {
+    if (this._clock !== undefined) return this._clock;
+    const t = document.timeline && document.timeline.currentTime;
+    this._clock = typeof t === 'number';
+    if (this._clock) {
+      const t0 = t;
+      setTimeout(() => {
+        const t1 = document.timeline.currentTime;
+        this._clock = t1 > t0;
+        if (!this._clock && this.onSweep) this.onSweep();
+      }, 250);
+    }
+    return this._clock;
+  }
+
+  // Single source of truth for "is this on screen": a scroll/resize sweep that runs
+  // on every mount. Observers are an optimisation on top; nothing depends on them.
+  startSweep() {
+    if (this.sweepBound) return;
+    this.sweepBound = true;
+    const inView = (el) => {
+      const r = el.getBoundingClientRect();
+      if (!r.height && !r.width) return false;
+      return r.top < (window.innerHeight || 0) + 80 && r.bottom > -80;
+    };
+    // Force the end state with transitions OFF. A CSS transition can be frozen
+    // (background tab, throttled clock, print/screenshot capture) and would otherwise
+    // pin the element at opacity 0 forever no matter what target we set.
+    const force = (el, extra) => {
+      el.style.transition = 'none';
+      el.style.animation = 'none';
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+      if (extra) extra(el);
+      void el.offsetWidth;
+    };
+    const sweep = () => {
+      document.querySelectorAll('[data-reveal]').forEach(el => {
+        if (getComputedStyle(el).opacity === '1' || !inView(el)) return;
+        force(el);
+      });
+      document.querySelectorAll('[data-word]').forEach(el => {
+        if (getComputedStyle(el).opacity === '1') return;
+        const host = el.closest('[data-words]');
+        if (!host || !inView(host)) return;
+        force(el, (n) => { n.style.color = host.hasAttribute('data-words-dark') ? '#eef2f8' : '#12161c'; });
+      });
+      document.querySelectorAll('[data-blur]').forEach(el => {
+        // The gallery owns its panes' opacity exclusively.
+        if (el.hasAttribute('data-shotpane')) return;
+        if (getComputedStyle(el).opacity === '1' || !inView(el)) return;
+        force(el, (n) => { n.style.filter = n.dataset.blurFilter || ''; });
+      });
+      // Stall fallback ONLY: never touch a line the typewriter is sequencing, and
+      // only open one whose clip has genuinely stopped changing.
+      document.querySelectorAll('[data-type-line]').forEach(el => {
+        const clip = el.style.clipPath || '';
+        if (clip.indexOf('100%') < 0 && clip.indexOf('%') < 0) return;
+        if (el.dataset.typing === '1' || el.dataset.typeQueued === '1') return;
+        if (el.dataset.lastClip !== clip) { el.dataset.lastClip = clip; el.dataset.clipAt = String(Date.now()); return; }
+        if (Date.now() - Number(el.dataset.clipAt || 0) < 1500) return;
+        el.style.transition = 'none';
+        el.style.clipPath = 'inset(0 -.12em -.2em 0)';
+      });
+    };
+    this.onSweep = () => {
+      if (this.sweepRaf) return;
+      this.sweepRaf = requestAnimationFrame(() => { this.sweepRaf = 0; sweep(); });
+    };
+    window.addEventListener('scroll', this.onSweep, { passive: true });
+    window.addEventListener('resize', this.onSweep);
+    // Re-armed on every mount, so a cleared timer can never orphan the page.
+    this.sweepInterval = setInterval(sweep, 900);
+    sweep();
+  }
+
+  componentDidMount() {
+    this.boot();
+    this.typeSlogan();
+    this.bootTerminals();
+    this.bootTree();
+    this.bootTabs();
+    this.bootUnderline();
+    this.bootCursor();
+    this.bootTickers();
+    this.bootWordReveal();
+    this.bootBlurFade();
+    this.bootMorph();
+    this.bootThemeToggle();
+    this.bootShotTabs();
+    this.bootSourceTabs();
+    this.bootWarp();
+    this.startSweep();
+  }
+
+  // Warp background beams. The page-wide reduced-motion CSS zeroes every CSS
+  // animation, so these run through the Web Animations API instead and stay
+  // visible as a static grid when motion is turned off.
+  bootWarp() {
+    const beams = Array.from(document.querySelectorAll('[data-beam]'));
+    if (!beams.length) return;
+    if (this.props.motion === 'off') { beams.forEach(b => { b.style.opacity = '.25'; }); return; }
+    document.querySelectorAll('[data-shiny]').forEach(s => {
+      s.animate(
+        [{ backgroundPosition: '160% 0' }, { backgroundPosition: '-60% 0' }],
+        { duration: 2600, iterations: Infinity, easing: 'linear' }
+      );
+    });
+    const slow = this.props.motion === 'subtle' ? 1.6 : 1;
+    beams.forEach(b => {
+      const y = b.dataset.beam === 'y';
+      const from = y ? 'translateY(115%)' : 'translateX(115%)';
+      const to = y ? 'translateY(-115%)' : 'translateX(-115%)';
+      b.animate([
+        { transform: from, opacity: 0 },
+        { opacity: 1, offset: .15 },
+        { opacity: 1, offset: .8 },
+        { transform: to, opacity: 0 }
+      ], {
+        duration: parseFloat(b.dataset.dur) * 1000 * slow,
+        delay: parseFloat(b.dataset.delay) * 1000,
+        iterations: Infinity,
+        easing: 'linear'
+      });
+    });
+  }
+
+  // Hero screenshot gallery: segmented control + thumbnail rail select one screen at
+  // a time; panes cross-fade in a fixed stage, so nothing ever overlaps.
+  bootShotTabs() {
+    const tabs = Array.from(document.querySelectorAll('[data-shottab]'));
+    const panes = Array.from(document.querySelectorAll('[data-shotpane]'));
+    const caps = Array.from(document.querySelectorAll('[data-shotcap]'));
+    if (!tabs.length || !panes.length) return;
+    const select = (i) => {
+      tabs.forEach((t, n) => {
+        const on = n === i;
+        t.style.background = on ? '#fff' : 'transparent';
+        t.style.boxShadow = on ? '0 2px 6px rgba(18,32,58,.1)' : 'none';
+        t.style.color = on ? '#12161c' : '#5f6976';
+        t.style.fontWeight = on ? '600' : '500';
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      panes.forEach((p, n) => {
+        const on = n === i;
+        if (!this.clockRuns()) p.style.transition = 'none';
+        p.style.opacity = on ? '1' : '0';
+        p.style.pointerEvents = on ? 'auto' : 'none';
+      });
+      caps.forEach((c, n) => { c.style.display = n === i ? 'block' : 'none'; });
+    };
+    this.onShotTabs = (e) => {
+      const btn = e.target.closest('[data-shottab]');
+      if (!btn) return;
+      select(Number(btn.dataset.shottab));
+    };
+    this.onShotKeys = (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const i = tabs.indexOf(document.activeElement);
+      if (i < 0) return;
+      e.preventDefault();
+      const next = (i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length;
+      tabs[next].focus();
+      select(next);
+    };
+    document.addEventListener('click', this.onShotTabs);
+    document.addEventListener('keydown', this.onShotKeys);
+    select(0);
+  }
+
+  // Window theme wipe: the dark glass screenshot is revealed by a circle growing out
+  // of the toggle, so light → Glass Dark reads as the app repainting instantly.
+  bootThemeToggle() {
+    const btn = document.querySelector('[data-themetoggle]');
+    const dark = document.querySelector('[data-shot-dark]');
+    if (!btn || !dark) return;
+    const sun = btn.querySelector('[data-icon-sun]');
+    const moon = btn.querySelector('[data-icon-moon]');
+    const label = btn.querySelector('[data-themelabel]');
+    const reduced = this.props.motion === 'off' ||
+      (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    let on = false;
+    const paint = () => {
+      dark.style.transition = reduced ? 'none' : 'clip-path .85s cubic-bezier(.16,1,.3,1)';
+      dark.style.clipPath = on ? 'circle(150% at 92% 92%)' : 'circle(0% at 92% 92%)';
+      if (sun) sun.style.display = on ? 'none' : 'block';
+      if (moon) moon.style.display = on ? 'block' : 'none';
+      if (label) label.textContent = on ? 'GitHub Light' : 'Glass Dark';
+      btn.style.background = on ? 'rgba(18,22,28,.72)' : 'rgba(255,255,255,.86)';
+      btn.style.color = on ? '#eef2f8' : '#12161c';
+      btn.style.borderColor = on ? 'rgba(255,255,255,.22)' : 'rgba(255,255,255,.7)';
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    };
+    this.onTheme = () => { on = !on; paint(); };
+    btn.addEventListener('click', this.onTheme);
+    paint();
+  }
+
+  // "Открытый исходный код": the three chips swap which part of the repo the tree shows.
+  bootSourceTabs() {
+    const tabs = Array.from(document.querySelectorAll('[data-srctab]'));
+    const panes = Array.from(document.querySelectorAll('[data-srcpane]'));
+    if (!tabs.length || !panes.length) return;
+    const select = (i) => {
+      tabs.forEach((t, n) => {
+        const active = n === i;
+        t.style.background = active ? '#ddf4ff' : 'rgba(255,255,255,.7)';
+        t.style.borderColor = active ? '#a9c8ee' : '#e4e7ef';
+        t.style.color = active ? '#0a4f9e' : '#5f6976';
+        t.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      panes.forEach((p, n) => {
+        const active = n === i;
+        p.style.display = active ? 'block' : 'none';
+        if (!active) return;
+        p.style.transition = 'none';
+        p.style.opacity = '0';
+        void p.offsetHeight;
+        p.style.transition = 'opacity .32s cubic-bezier(.16,1,.3,1)';
+        p.style.opacity = '1';
+      });
+    };
+    this.onSrcTabs = (e) => {
+      const btn = e.target.closest('[data-srctab]');
+      if (!btn) return;
+      select(tabs.indexOf(btn));
+    };
+    document.addEventListener('click', this.onSrcTabs);
+    select(0);
+  }
+
+  // Section headings resolve word by word: each word rises and settles from a tinted
+  // state into the final ink colour, so the reveal reads as type resolving, not confetti.
+  bootWordReveal() {
+    const heads = Array.from(document.querySelectorAll('[data-words]'));
+    if (!heads.length) return;
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const tints = ['#0969da', '#2f8be3', '#4796e6'];
+    heads.forEach(h => {
+      // Split once, but re-wire on EVERY mount: the wrap flag must never skip the
+      // observer, or a remount leaves words stuck at opacity 0 forever.
+      if (!h.dataset.wordsReady) {
+        h.dataset.wordsReady = '1';
+        const nodes = Array.from(h.childNodes);
+        h.textContent = '';
+        let wi = 0;
+        nodes.forEach(node => {
+          if (node.nodeType === 1) { h.appendChild(node); return; }
+          const text = node.textContent || '';
+          text.split(/(\s+)/).forEach(part => {
+            if (!part.trim()) { h.appendChild(document.createTextNode(part)); return; }
+            const span = document.createElement('span');
+            span.textContent = part;
+            span.setAttribute('data-word', '');
+            span.style.display = 'inline-block';
+            span.dataset.wordIndex = String(wi);
+            h.appendChild(span);
+            wi += 1;
+          });
+        });
+      }
+      if (reduced) return;
+      const words = Array.from(h.querySelectorAll('[data-word]'));
+      const ink = h.hasAttribute('data-words-dark') ? '#eef2f8' : '#12161c';
+      const settle = (w) => {
+        if (!this.clockRuns()) w.style.transition = 'none';
+        w.style.opacity = '1';
+        w.style.transform = 'none';
+        w.style.color = ink;
+      };
+      // Hide only now that the observer is definitely about to be attached, so the
+      // default rendered state is always visible text.
+      if (!this.clockRuns()) { words.forEach(settle); return; }
+      words.forEach((w, i) => {
+        if (!this.arm(w, 'translateY(.35em)')) return;
+        w.style.color = tints[i % tints.length];
+      });
+      let played = false;
+      const play = () => {
+        if (played) return;
+        played = true;
+        words.forEach((w, i) => this.wordTimers.push(setTimeout(() => settle(w), i * 55)));
+      };
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(en => { if (en.isIntersecting) { io.unobserve(en.target); play(); } });
+      }, { threshold: 0.35 });
+      io.observe(h);
+      this.wordIos.push(io);
+      // Safety net: a heading must never stay invisible if the observer never fires.
+      this.wordTimers.push(setTimeout(() => {
+        if (played) return;
+        const r = h.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) play();
+      }, 1200));
+      this.wordTimers.push(setTimeout(() => { words.forEach(settle); played = true; }, 8000));
+    });
+  }
+
+  // Rotating one-line descriptor in the hero badge: each phrase blurs out upward as
+  // the next resolves in, so the badge reads as a short list of what the app is.
+  bootMorph() {
+    const wrap = document.querySelector('[data-morph]');
+    if (!wrap) return;
+    // Re-measure once webfonts land, since Plex Mono is wider than the fallback.
+    if (document.fonts && document.fonts.ready && !this.morphFontsHooked) {
+      this.morphFontsHooked = true;
+      document.fonts.ready.then(() => this.bootMorph()).catch(() => {});
+    }
+    const list = (wrap.dataset.morphList || '').split('|').map(t => t.trim()).filter(Boolean);
+    const slots = Array.from(wrap.querySelectorAll('[data-morph-slot]'));
+    if (list.length < 2 || slots.length < 2) return;
+    const reduced = this.props.motion === 'off' ||
+      (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    // Measure every phrase once in the real rendered font; the wrapper then animates
+    // its width per phrase, so the badge frame tracks the text instead of being
+    // frozen at the widest string.
+    const sizer = wrap.querySelector('[data-morph-sizer]');
+    // Clear any explicit wrapper width first, or the sizer measures the clamped box
+    // instead of the text's own max-content width.
+    wrap.style.width = '';
+    const widths = list.map(t => {
+      if (!sizer) return 0;
+      sizer.textContent = t;
+      return Math.ceil(sizer.getBoundingClientRect().width) + 1;
+    });
+    const setWidth = (n) => { if (widths[n]) wrap.style.width = widths[n] + 'px'; };
+    if (sizer) sizer.textContent = list[0];
+    slots[0].textContent = list[0];
+    setWidth(0);
+    if (reduced) return;
+    let i = 0, front = 0;
+    if (this.morphTimer) clearInterval(this.morphTimer);
+    this.morphTimer = setInterval(() => {
+      if (document.visibilityState !== 'visible') return;
+      const next = (i + 1) % list.length;
+      const back = 1 - front;
+      const inEl = slots[back], outEl = slots[front];
+      inEl.textContent = list[next];
+      setWidth(next);
+      inEl.style.transition = 'none';
+      // Blur/opacity only — no vertical travel, so the badge line never looks uneven.
+      inEl.style.opacity = '0';
+      inEl.style.filter = 'blur(7px)';
+      void inEl.offsetWidth;
+      inEl.style.transition = 'opacity .42s cubic-bezier(.16,1,.3,1), filter .42s ease';
+      inEl.style.opacity = '1';
+      inEl.style.filter = 'blur(0)';
+      outEl.style.opacity = '0';
+      outEl.style.filter = 'blur(7px)';
+      front = back;
+      i = next;
+    }, 2600);
+  }
+
+  // Product screenshots resolve out of a soft blur as they enter view.
+  bootBlurFade() {
+    const els = Array.from(document.querySelectorAll('[data-blur]'));
+    if (!els.length) return;
+    const reduced = this.props.motion === 'off' ||
+      (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    const settle = (el) => { el.style.opacity = '1'; el.style.filter = el.dataset.blurFilter || ''; el.style.transform = 'none'; el.style.animation = 'none'; };
+    if (reduced || !this.clockRuns()) { els.forEach(settle); return; }
+    els.forEach(el => {
+      el.dataset.blurFilter = el.style.filter || '';
+      this.arm(el);
+    });
+    this.blurIo = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        this.blurIo.unobserve(en.target);
+        const el = en.target;
+        const d = Number(el.dataset.blurDelay || 0);
+        this.wordTimers.push(setTimeout(() => {
+          el.style.animation = 'vfBlurFade .95s cubic-bezier(.16,1,.3,1) both';
+          el.style.opacity = '';
+          // The image must never be left invisible if the animation never runs.
+          this.wordTimers.push(setTimeout(() => settle(el), 1800));
+        }, d));
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.15 });
+    els.forEach(el => this.blurIo.observe(el));
+    this.wordTimers.push(setTimeout(() => els.forEach(el => { if (getComputedStyle(el).opacity === '0') settle(el); }), 6000));
+  }
+
+  // Count-up on real figures once they scroll into view.
+  bootTickers() {
+    const els = Array.from(document.querySelectorAll('[data-ticker]'));
+    if (!els.length) return;
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Seed the real value first: the figure must never be readable as 0.
+    els.forEach(el => { el.textContent = el.dataset.ticker; });
+    const run = (el) => {
+      const target = parseFloat(el.dataset.ticker);
+      const decimals = (el.dataset.ticker.split('.')[1] || '').length;
+      if (!Number.isFinite(target)) return;
+      const final = target.toFixed(decimals);
+      if (reduced || document.visibilityState !== 'visible') { el.textContent = final; return; }
+      const dur = 1100;
+      const t0 = performance.now();
+      let done = false;
+      const step = () => {
+        const p = Math.min(1, (performance.now() - t0) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = (target * eased).toFixed(decimals);
+        if (p < 1) { this.tickerRaf = requestAnimationFrame(step); return; }
+        done = true;
+        el.textContent = final;
+      };
+      // The figure must never be left mid-count: if frames stop, snap to the real value.
+      this.wordTimers.push(setTimeout(() => { if (!done) el.textContent = final; }, dur * 2));
+      this.tickerRaf = requestAnimationFrame(step);
+    };
+    const played = new WeakSet();
+    // Hidden panes have no box and never intersect, so expose a hook the tab
+    // switcher calls when a pane becomes visible.
+    this.runTicker = (root) => {
+      (root ? Array.from(root.querySelectorAll('[data-ticker]')) : els).forEach(el => {
+        if (played.has(el)) return;
+        played.add(el);
+        run(el);
+      });
+    };
+    this.tickerIo = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (!en.isIntersecting || played.has(en.target)) return;
+        this.tickerIo.unobserve(en.target);
+        played.add(en.target);
+        run(en.target);
+      });
+    }, { threshold: 0.6 });
+    els.forEach(el => this.tickerIo.observe(el));
+  }
+
+  // Feature panels: the list on the left drives the demo pane on the right.
+  bootTabs() {
+    const wrap = document.querySelector('[data-tabs]');
+    if (!wrap) return;
+    const tabs = Array.from(wrap.querySelectorAll('[data-tab]'));
+    const panes = Array.from(wrap.querySelectorAll('[data-pane]'));
+    if (!tabs.length) return;
+    const box = wrap.querySelector('[data-panebox]');
+    // The card hugs whichever pane is visible. A ResizeObserver is the source of truth, so
+    // the height never depends on a rAF tick landing (it also tracks the terminal typing,
+    // font loading and text rewrap inside a pane).
+    const fitBox = (pane) => {
+      if (!box || !pane) return;
+      // content-box card: height is the content height only; padding is added by the box
+      box.style.height = pane.getBoundingClientRect().height + 'px';
+    };
+    this.paneRo = new ResizeObserver((entries) => {
+      const en = entries[entries.length - 1];
+      if (en && en.target.style.display !== 'none') fitBox(en.target);
+    });
+    const watch = (pane) => {
+      if (this.paneRo) { this.paneRo.disconnect(); this.paneRo.observe(pane); }
+      fitBox(pane);
+    };
+    const select = (idx) => {
+      tabs.forEach((t, i) => {
+        const on = i === idx;
+        t.style.background = on ? '#fff' : 'rgba(255,255,255,.62)';
+        t.style.boxShadow = on ? '0 12px 30px rgba(18,32,58,.08)' : 'none';
+        t.style.borderColor = on ? '#a9c8ee' : '#e4e7ef';
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        const num = t.querySelector('[data-tab-num]');
+        if (num) num.style.color = on ? '#0969da' : '#7a8491';
+      });
+      panes.forEach((p, i) => {
+        const on = i === idx;
+        p.style.display = on ? 'block' : 'none';
+        if (!on) return;
+        // Opacity-only entry: no transform to clear, so nothing can be left stranded.
+        p.style.transform = 'none';
+        p.style.transition = 'none';
+        p.style.opacity = '0';
+        void p.offsetHeight;
+        watch(p);
+        p.style.transition = 'opacity .4s cubic-bezier(.16,1,.3,1)';
+        p.style.opacity = '1';
+        const term = p.querySelector('[data-term]');
+        if (term && this.runTerminal) this.runTerminal(term, true);
+        if (this.runTicker) this.runTicker(p);
+        if (this.drawHighlights) this.drawHighlights(p);
+      });
+    };
+    this.onTabs = (e) => {
+      const btn = e.target.closest('[data-tab]');
+      if (!btn) return;
+      select(tabs.indexOf(btn));
+    };
+    this.onTabKeys = (e) => {
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      const i = tabs.indexOf(document.activeElement);
+      if (i < 0) return;
+      e.preventDefault();
+      const next = (i + (e.key === 'ArrowDown' ? 1 : tabs.length - 1)) % tabs.length;
+      tabs[next].focus();
+      select(next);
+    };
+    tabs.forEach(t => { t.setAttribute('role', 'tab'); });
+    wrap.addEventListener('click', this.onTabs);
+    wrap.addEventListener('keydown', this.onTabKeys);
+    if (box) box.style.transition = 'height .42s cubic-bezier(.16,1,.3,1), box-shadow .3s ease';
+    select(0);
+    this.onTabResize = () => fitBox(panes.find(p => p.style.display !== 'none'));
+    window.addEventListener('resize', this.onTabResize);
+    this.termTimers = this.termTimers || [];
+    this.termTimers.push(setTimeout(this.onTabResize, 400));
+  }
+
+  // Hand-drawn marker strokes: an SVG path is generated per phrase with jittered
+  // control points, so highlights and underlines read as a human pen stroke, then
+  // drawn on scroll-in. Rebuilt on resize because the phrase can rewrap.
+  bootUnderline() {
+    const els = Array.from(document.querySelectorAll('[data-hl]'));
+    if (!els.length) return;
+
+    const rand = (seed) => {
+      let t = seed * 9301 + 49297;
+      return () => { t = (t * 9301 + 49297) % 233280; return t / 233280; };
+    };
+
+    const draw = (el, i) => {
+      const w = el.offsetWidth, h = el.offsetHeight;
+      if (!w || !h) return;
+      const mode = el.dataset.hlMode || 'highlight';
+      const color = el.dataset.hlColor || '#0969da';
+      const r = rand(i + 3);
+      const old = el.querySelector('svg');
+      if (old) old.remove();
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('viewBox', `0 0 ${w + 10} ${h + 6}`);
+      svg.setAttribute('preserveAspectRatio', 'none');
+      svg.setAttribute('aria-hidden', 'true');
+
+      const seg = (yBase, thickness, alpha, wobble) => {
+        const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        const x0 = 3 + r() * 3, x1 = w + 7 - r() * 3;
+        const mid = (x0 + x1) / 2;
+        const y0 = yBase + (r() - 0.5) * wobble;
+        const y1 = yBase + (r() - 0.5) * wobble;
+        const cy = yBase - wobble * (0.6 + r() * 0.6);
+        p.setAttribute('d', `M${x0.toFixed(1)},${y0.toFixed(1)} Q${mid.toFixed(1)},${cy.toFixed(1)} ${x1.toFixed(1)},${y1.toFixed(1)}`);
+        p.setAttribute('stroke', color);
+        p.setAttribute('stroke-width', thickness.toFixed(1));
+        p.setAttribute('stroke-opacity', String(alpha));
+        p.setAttribute('pathLength', '1');
+        svg.appendChild(p);
+        return p;
+      };
+
+      if (mode === 'underline') {
+        seg(h + 1, Math.max(3, h * 0.11), 0.85, 2.4);
+        seg(h + 2.4, Math.max(2, h * 0.07), 0.35, 3.2);
+      } else {
+        seg(h * 0.62, h * 0.74, 0.2, 2.2);
+        seg(h * 0.42, h * 0.34, 0.16, 3);
+      }
+      el.insertBefore(svg, el.firstChild);
+      // Fresh paths start fully dashed; if this element had already drawn, restart the
+      // animation or the rebuild would silently erase the stroke.
+      if (el.classList.contains('vf-on')) {
+        el.classList.remove('vf-on');
+        void el.offsetWidth;
+        el.classList.add('vf-on');
+      }
+    };
+
+    const build = () => els.forEach((el, i) => draw(el, i));
+    build();
+    // Highlights inside a hidden pane have no box to measure; the tab switcher calls
+    // this once the pane is visible.
+    this.drawHighlights = (root) => {
+      Array.from(root.querySelectorAll('[data-hl]')).forEach(el => {
+        const i = els.indexOf(el);
+        draw(el, i < 0 ? 0 : i);
+        el.classList.remove('vf-on');
+        void el.offsetWidth;
+        el.classList.add('vf-on');
+      });
+    };
+    // Fonts land after first paint and change phrase widths — redraw once they do.
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(build).catch(() => {});
+
+    this.ulIo = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        this.ulIo.unobserve(en.target);
+        en.target.classList.add('vf-on');
+      });
+    }, { threshold: 0.85 });
+    els.forEach(el => this.ulIo.observe(el));
+
+    let rt = 0;
+    this.onHlResize = () => {
+      clearTimeout(rt);
+      rt = setTimeout(build, 180);
+    };
+    window.addEventListener('resize', this.onHlResize);
+  }
+
+  // Smooth trailing cursor — pointer devices only, off for touch and reduced motion.
+  bootCursor() {
+    const dot = document.querySelector('[data-cursor]');
+    if (!dot) return;
+    const fine = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!fine || reduced || this.props.smoothCursor === false) { dot.remove(); return; }
+    document.body.classList.add('vf-cursor');
+    let tx = window.innerWidth / 2, ty = window.innerHeight / 2, x = tx, y = ty, scale = 1, ts = 1;
+    this.onCursorMove = (e) => {
+      tx = e.clientX; ty = e.clientY;
+      dot.style.opacity = '1';
+      const over = e.target.closest && e.target.closest('a, button, [data-tab], [data-tree-file], [data-tree-folder]');
+      ts = over ? 1.35 : 1;
+    };
+    this.onCursorOut = () => { dot.style.opacity = '0'; };
+    const loop = () => {
+      x += (tx - x) * 0.2;
+      y += (ty - y) * 0.2;
+      scale += (ts - scale) * 0.16;
+      dot.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0) scale(' + scale.toFixed(3) + ')';
+      this.cursorRaf = requestAnimationFrame(loop);
+    };
+    window.addEventListener('pointermove', this.onCursorMove, { passive: true });
+    document.addEventListener('pointerleave', this.onCursorOut);
+    this.cursorRaf = requestAnimationFrame(loop);
+  }
+
+  // Collapsible project tree in the "Привязка проекта" card.
+  bootTree() {
+    const trees = Array.from(document.querySelectorAll('[data-tree]'));
+    if (!trees.length) return;
+    const tree = { contains: (n) => trees.some(t => t.contains(n)) };
+    this.onTree = (e) => {
+      const folder = e.target.closest('[data-tree-folder]');
+      if (folder && tree.contains(folder)) {
+        const kids = folder.nextElementSibling;
+        const chev = folder.querySelector('[data-tree-chevron]');
+        if (kids && kids.hasAttribute('data-tree-children')) {
+          const open = kids.style.display !== 'none';
+          kids.style.display = open ? 'none' : 'block';
+          if (chev) chev.style.transform = open ? 'rotate(0deg)' : 'rotate(90deg)';
+        }
+        return;
+      }
+      const file = e.target.closest('[data-tree-file]');
+      if (!file || !tree.contains(file)) return;
+      const owner = trees.find(t => t.contains(file));
+      owner.querySelectorAll('[data-tree-file]').forEach(f => {
+        const on = f === file;
+        f.style.background = on ? '#ddf4ff' : 'transparent';
+        f.style.color = on ? '#0a4f9e' : '#5f6976';
+        const icon = f.querySelector('svg');
+        if (icon) icon.setAttribute('stroke', on ? '#0969da' : '#9aa3b0');
+      });
+    };
+    trees.forEach(t => {
+      t.addEventListener('click', this.onTree);
+      t.querySelectorAll('[data-tree-file]').forEach(f => { f.style.cursor = 'pointer'; });
+    });
+  }
+
+  // Terminal blocks: lines type out in sequence the first time the block scrolls into view.
+  bootTerminals() {
+    const terms = Array.from(document.querySelectorAll('[data-term]'));
+    if (!terms.length) return;
+    const run = (term) => {
+      const lines = Array.from(term.querySelectorAll('[data-term-line]'));
+      let blink = null;
+      const step = (i) => {
+        if (i >= lines.length) return;
+        const line = lines[i];
+        const out = line.querySelector('[data-term-out]');
+        const caret = line.querySelector('[data-term-caret]');
+        const text = line.dataset.termText || '';
+        const isLast = i === lines.length - 1;
+        if (blink) { clearInterval(blink); blink = null; }
+        if (caret) caret.style.opacity = '1';
+        let n = 0;
+        const tick = () => {
+          n += 1;
+          if (out) out.textContent = text.slice(0, n);
+          if (n < text.length) { this.termTimers.push(setTimeout(tick, 26)); return; }
+          if (isLast) {
+            let on = true;
+            blink = setInterval(() => {
+              on = !on;
+              if (caret) caret.style.opacity = on ? '1' : '0';
+            }, 520);
+            this.termBlinks.push(blink);
+          } else {
+            if (caret) caret.style.opacity = '0';
+            this.termTimers.push(setTimeout(() => step(i + 1), 420));
+          }
+        };
+        this.termTimers.push(setTimeout(tick, 220));
+      };
+      step(0);
+    };
+    this.termTimers = [];
+    this.termBlinks = [];
+    // Seed the text immediately so the instruction is never invisible (no-JS, no-IO,
+    // reduced motion, screen readers); typing just re-reveals it when it fires.
+    const seed = (term) => {
+      term.querySelectorAll('[data-term-line]').forEach(line => {
+        const out = line.querySelector('[data-term-out]');
+        const full = line.dataset.termText || '';
+        if (out && out.textContent !== full) out.textContent = full;
+      });
+    };
+    terms.forEach(seed);
+    // If the chained timeouts stall (backgrounded tab, throttling), fill the text in
+    // full — a terminal must never be stuck showing half a command.
+    const guard = (term) => {
+      const lines = Array.from(term.querySelectorAll('[data-term-line]'));
+      const budget = 1200 + lines.reduce((a, l) => a + (l.dataset.termText || '').length * 26 + 640, 0);
+      this.termTimers.push(setTimeout(() => seed(term), budget));
+    };
+    const started = new WeakSet();
+    const startOnce = (term) => {
+      if (started.has(term)) return;
+      started.add(term);
+      term.querySelectorAll('[data-term-out]').forEach(o => { o.textContent = ''; });
+      run(term);
+      guard(term);
+    };
+    // Replay a terminal on demand (used when a feature panel becomes visible).
+    this.runTerminal = (term, force) => {
+      if (!force) { startOnce(term); return; }
+      started.add(term);
+      (this.termBlinks || []).forEach(clearInterval);
+      this.termBlinks = [];
+      term.querySelectorAll('[data-term-out]').forEach(o => { o.textContent = ''; });
+      run(term);
+      guard(term);
+    };
+    this.termTimers.push(setTimeout(() => terms.forEach(startOnce), 3000));
+    this.termIo = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        this.termIo.unobserve(en.target);
+        startOnce(en.target);
+      });
+    }, { threshold: 0.35 });
+    terms.forEach(t => this.termIo.observe(t));
+  }
+
+  // Typewriter runs regardless of the motion tweak / OS reduced-motion: it is short,
+  // non-vestibular and part of the headline's identity. Driven in JS so the global
+  // "animation: none" reduced-motion rule cannot freeze it mid-reveal.
+  typeSlogan() {
+    const lines = Array.from(document.querySelectorAll('[data-type-line]'));
+    if (!lines.length) return;
+    if (this.blink) clearInterval(this.blink);
+
+    const OPEN = 'inset(0 -.12em -.2em 0)';
+    const revealAll = () => {
+      lines.forEach(l => { l.dataset.typing = '0'; l.dataset.typeQueued = '0'; l.style.clipPath = OPEN; });
+      const carets = lines[lines.length - 1].querySelectorAll('[data-caret]');
+      carets.forEach(c => { c.style.opacity = '1'; });
+    };
+    // The headline must never be capable of rendering as blank space: skip the
+    // typing entirely when frames won't run, and guard completion either way.
+    if (document.visibilityState !== 'visible' || !this.clockRuns()) { revealAll(); return; }
+    // Mark every line as owned by the typewriter before arming it, so the sweep
+    // cannot open a queued line while an earlier one is still typing.
+    lines.forEach(l => { l.dataset.typeQueued = '1'; l.style.clipPath = 'inset(0 100% -.2em 0)'; });
+    this.wordTimers.push(setTimeout(() => {
+      const stuck = lines.some(l => (l.style.clipPath || '').indexOf('100%') > -1);
+      if (stuck) revealAll();
+    }, 4200));
+    let caretOn = true;
+    let active = null;
+    this.blink = setInterval(() => {
+      caretOn = !caretOn;
+      if (active) active.style.opacity = caretOn ? '1' : '0';
+    }, 480);
+
+    const runLine = (i) => {
+      if (i >= lines.length) return;
+      const line = lines[i];
+      const caret = line.querySelector('[data-caret]');
+      const chars = Math.max(4, line.textContent.trim().length);
+      const dur = Math.min(1600, 90 * chars);
+      if (active) active.style.opacity = '0';
+      active = caret || null;
+      caretOn = true;
+      if (caret) caret.style.opacity = '1';
+      const t0 = performance.now();
+      line.dataset.typing = '1';
+      let finished = false;
+      const finish = () => {
+        if (finished) return;
+        finished = true;
+        line.dataset.typing = '0';
+        line.dataset.typeQueued = '0';
+        line.style.clipPath = OPEN;
+        this.typeTimer = setTimeout(() => runLine(i + 1), 260);
+      };
+      const step = () => {
+        const p = Math.min(1, (performance.now() - t0) / dur);
+        const shown = Math.round(p * chars) / chars;
+        line.style.clipPath = 'inset(0 ' + ((1 - shown) * 100).toFixed(2) + '% -.2em 0)';
+        if (p < 1) { this.typeRaf = requestAnimationFrame(step); return; }
+        finish();
+      };
+      // Per-line completion guard, independent of rAF.
+      this.wordTimers.push(setTimeout(finish, dur * 2 + 400));
+      this.typeRaf = requestAnimationFrame(step);
+    };
+    this.typeTimer = setTimeout(() => runLine(0), 320);
+  }
+  componentWillUnmount() {
+    this.sweepBound = false;
+    if (this.onSweep) {
+      window.removeEventListener('scroll', this.onSweep);
+      window.removeEventListener('resize', this.onSweep);
+    }
+    if (this.sweepInterval) clearInterval(this.sweepInterval);
+    if (this.sweepRaf) cancelAnimationFrame(this.sweepRaf);
+    if (this.io) this.io.disconnect();
+    if (this.onScroll) window.removeEventListener('scroll', this.onScroll);
+    if (this.timer) clearTimeout(this.timer);
+    if (this.typeTimer) clearTimeout(this.typeTimer);
+    if (this.typeRaf) cancelAnimationFrame(this.typeRaf);
+    if (this.blink) clearInterval(this.blink);
+    if (this.termIo) this.termIo.disconnect();
+    if (this.onTree) document.querySelectorAll('[data-tree]').forEach(t => t.removeEventListener('click', this.onTree));
+    const tabs = document.querySelector('[data-tabs]');
+    if (tabs && this.onTabs) tabs.removeEventListener('click', this.onTabs);
+    if (tabs && this.onTabKeys) tabs.removeEventListener('keydown', this.onTabKeys);
+    if (this.ulIo) this.ulIo.disconnect();
+    if (this.onHlResize) window.removeEventListener('resize', this.onHlResize);
+    if (this.onTabResize) window.removeEventListener('resize', this.onTabResize);
+    if (this.paneRo) this.paneRo.disconnect();
+    (this.wordTimers || []).forEach(clearTimeout);
+    (this.wordIos || []).forEach(io => io.disconnect());
+    if (this.tickerIo) this.tickerIo.disconnect();
+    if (this.blurIo) this.blurIo.disconnect();
+    if (this.morphTimer) clearInterval(this.morphTimer);
+    const tb = document.querySelector('[data-themetoggle]');
+    if (tb && this.onTheme) tb.removeEventListener('click', this.onTheme);
+    if (this.onSrcTabs) document.removeEventListener('click', this.onSrcTabs);
+    if (this.onShotTabs) document.removeEventListener('click', this.onShotTabs);
+    if (this.onShotKeys) document.removeEventListener('keydown', this.onShotKeys);
+    if (this.tickerRaf) cancelAnimationFrame(this.tickerRaf);
+    if (this.cursorRaf) cancelAnimationFrame(this.cursorRaf);
+    if (this.onCursorMove) window.removeEventListener('pointermove', this.onCursorMove);
+    if (this.onCursorOut) document.removeEventListener('pointerleave', this.onCursorOut);
+    document.body.classList.remove('vf-cursor');
+    (this.termTimers || []).forEach(clearTimeout);
+    (this.termBlinks || []).forEach(clearInterval);
+  }
+  show(el) {
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+  }
+
+  // Hide an element for an entrance — only ever when the clock is alive.
+  arm(el, from) {
+    if (!this.clockRuns()) return false;
+    el.style.transition = 'none';
+    el.style.opacity = '0';
+    if (from) el.style.transform = from;
+    void el.offsetWidth;
+    el.style.transition = 'opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1), color .7s ease';
+    return true;
+  }
+  boot() {
+    const motion = this.props.motion ?? 'cinematic';
+    const reduced = motion === 'off' ||
+      (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    const els = Array.from(document.querySelectorAll('[data-reveal]'));
+
+    if (reduced) {
+      els.forEach(el => this.show(el));
+      const head = document.querySelector('[data-hero-head]');
+      if (head) Array.from(head.querySelectorAll('*')).concat([head]).forEach(el => {
+        el.style.animation = 'none';
+        if (el.hasAttribute('data-caret') || el.hasAttribute('data-type-line')) {
+          el.style.transform = 'none';
+          return;
+        }
+        this.show(el);
+      });
+    } else {
+      const stagger = motion === 'subtle' ? 0.5 : 1;
+      this.io = new IntersectionObserver((entries) => {
+        entries.forEach(en => {
+          if (!en.isIntersecting) return;
+          const d = Number(en.target.dataset.revealDelay || 0) * stagger;
+          setTimeout(() => this.show(en.target), d);
+          this.io.unobserve(en.target);
+        });
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+      els.forEach(el => this.io.observe(el));
+      this.timer = setTimeout(() => els.forEach(el => this.show(el)), 5000);
+    }
+
+    const nav = document.querySelector('[data-nav]');
+    const shot = document.querySelector('[data-hero-shot]');
+    const tilt = reduced ? 0 : (this.props.heroTilt ?? 7);
+    let raf = 0;
+    const apply = () => {
+      raf = 0;
+      const y = window.scrollY;
+      if (nav) {
+        const on = y > 14;
+        nav.style.height = on ? '58px' : '68px';
+        nav.style.background = on ? 'rgba(255,255,255,.78)' : 'rgba(255,255,255,0)';
+        nav.style.borderBottomColor = on ? '#e4e7ef' : 'transparent';
+        nav.style.backdropFilter = on ? 'blur(20px) saturate(180%)' : 'none';
+        nav.style.WebkitBackdropFilter = nav.style.backdropFilter;
+      }
+      if (shot && !reduced) {
+        const p = Math.min(1, Math.max(0, y / 640));
+        shot.style.transform = 'perspective(1600px) rotateX(' + ((1 - p) * tilt * 0.85).toFixed(2) + 'deg) rotateY(' + ((1 - p) * -3).toFixed(2) + 'deg) scale(' + (0.985 + p * 0.015).toFixed(4) + ')';
+      }
+    };
+    this.onScroll = () => { if (!raf) raf = requestAnimationFrame(apply); };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    apply();
+    if (reduced && shot) { shot.style.animation = 'none'; shot.style.transform = 'none'; this.show(shot); }
+  }
+  renderVals() {
+    return {
+      copyCmd: (e) => {
+        const btn = e.currentTarget;
+        const cmd = btn.dataset.copy || 'xattr -cr /Applications/VibeForge.app';
+        const copyIcon = btn.querySelector('[data-icon-copy]');
+        const checkIcon = btn.querySelector('[data-icon-check]');
+        const done = () => {
+          if (copyIcon) copyIcon.style.display = 'none';
+          if (checkIcon) checkIcon.style.display = 'block';
+          if (this.iconTimer) clearTimeout(this.iconTimer);
+          this.iconTimer = setTimeout(() => {
+            if (copyIcon) copyIcon.style.display = 'block';
+            if (checkIcon) checkIcon.style.display = 'none';
+          }, 2000);
+        };
+        if (navigator.clipboard) navigator.clipboard.writeText(cmd).then(done, done);
+        else done();
+      }
+    };
+  }
+}
+</script>
+
+
+</body></html>
